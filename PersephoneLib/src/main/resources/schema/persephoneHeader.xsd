@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://persephone.gallowdd.pitt.edu/parameters" 
+    targetNamespace="http://persephone.gallowdd.pitt.edu/parameters"
+    elementFormDefault="qualified">
+  
+  <xsd:complexType name="conditionXmlType">
+    <xsd:sequence>
+      <xsd:element name="transmission_mode" minOccurs="1" maxOccurs="1">
+      <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="none" />
+            <xsd:enumeration value="vector" />
+            <xsd:enumeration value="proximity" />
+            <xsd:enumeration value="network" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="exposed_state" minOccurs="1" maxOccurs="1" type="xsd:string" />
+      <xsd:element name="state" minOccurs="1" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="wait_rule" minOccurs="1" maxOccurs="1">
+              <xsd:complexType>
+                <xsd:choice>
+                  <xsd:element name="special" minOccurs="1" maxOccurs="1">
+                    <xsd:simpleType>
+                      <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="zero" />
+                        <xsd:enumeration value="infinite" />
+                      </xsd:restriction>
+                    </xsd:simpleType>
+                  </xsd:element>
+                  <xsd:element name="hours" minOccurs="1" maxOccurs="1" type="xsd:integer" />
+                  <xsd:element name="days" minOccurs="1" maxOccurs="1" type="xsd:integer" />
+                  <xsd:element name="dynamic_agent_variable" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                  <xsd:element name="global_variable" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                  <xsd:element name="until_hour_of_day" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                  <xsd:element name="until_sim_datetime" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                </xsd:choice>
+              </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="default_next_state" minOccurs="1" maxOccurs="1" type="xsd:string" />
+            <xsd:element name="transition_rule" minOccurs="0" maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="next_state" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                  <xsd:element name="resolver" minOccurs="1" maxOccurs="1">
+                    <xsd:complexType>
+                      <xsd:choice>
+                        <xsd:element name="probability" minOccurs="1" maxOccurs="1" type="xsd:float" />
+                        <xsd:element name="if" minOccurs="1" maxOccurs="1" type="ifStatementXmlType" />
+<!--                         <xsd:element name="agent_variable" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                        <xsd:element name="global_variable" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                        <xsd:element name="until_hour_of_day" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                        <xsd:element name="until_sim_datetime" minOccurs="1" maxOccurs="1" type="xsd:string" /> -->
+                      </xsd:choice>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+          <xsd:attribute name="name" type="xsd:string" use="required" />
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:string" use="required" />
+  </xsd:complexType>
+  
+  <xsd:complexType name="dynamicFunctionXmlType">
+    <xsd:sequence>
+      <xsd:element name="java_classname" minOccurs="0" maxOccurs="1" type="xsd:string" />
+      <xsd:element name="return_data_type" minOccurs="1" maxOccurs="1" type="dataTypeXmlEnum" />
+      <xsd:element name="parameters" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="param_name" minOccurs="1" maxOccurs="1" type="xsd:string" />
+            <xsd:element name="param_data_type" minOccurs="1" maxOccurs="1" type="dataTypeXmlEnum" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="ifStatementXmlType">
+    <xsd:sequence>
+      <xsd:element name="left_operand" minOccurs="1" maxOccurs="1" type="operandXmlType" />
+      <xsd:element name="comparison_operator" minOccurs="1" maxOccurs="1" type="comparisonOperatorTypeXmlEnum" />
+      <xsd:element name="right_operand" minOccurs="1" maxOccurs="1" type="operandXmlType" />
+      <xsd:element name="logical_expression" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="operator" minOccurs="1" maxOccurs="1" type="logicalOperatorTypeXmlEnum" />
+            <xsd:element name="if" minOccurs="1" maxOccurs="1" type="ifStatementXmlType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="operandXmlType">
+    <xsd:choice>
+      <xsd:element name="constant_value" minOccurs="1" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="value" minOccurs="1" maxOccurs="1" type="xsd:string" />
+            <xsd:element name="data_type" minOccurs="1" maxOccurs="1" type="dataTypeXmlEnum" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="default_agent_attribute" minOccurs="1" maxOccurs="1" type="xsd:string" />
+      <xsd:element name="dynamic_agent_attribute" minOccurs="1" maxOccurs="1" type="xsd:string" />
+      <xsd:element name="global_attribute" minOccurs="1" maxOccurs="1" type="xsd:string" />
+      <xsd:element name="unary_numerical_operation" minOccurs="1" maxOccurs="1" type="unaryNumericalOperationXmlType" />
+      <xsd:element name="binary_numerical_operation" minOccurs="1" maxOccurs="1" type="binaryNumericalOperationXmlType" />
+    </xsd:choice>
+  </xsd:complexType>
+  
+  <xsd:complexType name="unaryNumericalOperationXmlType">
+    <xsd:sequence>
+      <xsd:element name="operand" minOccurs="1" maxOccurs="1" type="operandXmlType" />
+      <xsd:element name="operator" minOccurs="1" maxOccurs="1" type="mathematicalUnaryOperatorTypeXmlEnum" />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="binaryNumericalOperationXmlType">
+    <xsd:sequence>
+      <xsd:element name="left_operand" minOccurs="1" maxOccurs="1" type="operandXmlType" />
+      <xsd:element name="operator" minOccurs="1" maxOccurs="1" type="mathematicalBinaryOperatorTypeXmlEnum" />
+      <xsd:element name="right_operand" minOccurs="1" maxOccurs="1" type="operandXmlType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  
+  
+  <xsd:complexType name="distributionXmlType">
+    <xsd:choice>
+      <xsd:element name="normal" minOccurs="1" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="mean" minOccurs="1" maxOccurs="1" type="xsd:float" />
+            <xsd:element name="std_dev" minOccurs="1" maxOccurs="1" type="xsd:float" />
+            <xsd:element name="min_val" minOccurs="0" maxOccurs="1" type="xsd:float" />
+            <xsd:element name="max_val" minOccurs="0" maxOccurs="1" type="xsd:float" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="lognormal" minOccurs="1" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="scale" minOccurs="1" maxOccurs="1" type="xsd:float" />
+            <xsd:element name="shape" minOccurs="1" maxOccurs="1" type="xsd:float" />
+            <xsd:element name="min_val" minOccurs="0" maxOccurs="1" type="xsd:float" />
+            <xsd:element name="max_val" minOccurs="0" maxOccurs="1" type="xsd:float" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="uniform" minOccurs="1" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="min_val" minOccurs="1" maxOccurs="1" type="xsd:float" />
+            <xsd:element name="max_val" minOccurs="1" maxOccurs="1" type="xsd:float" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="exponential" minOccurs="1" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="mean" minOccurs="1" maxOccurs="1" type="xsd:float" />
+            <xsd:element name="min_val" minOccurs="0" maxOccurs="1" type="xsd:float" />
+            <xsd:element name="max_val" minOccurs="0" maxOccurs="1" type="xsd:float" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:choice>
+  </xsd:complexType>
+  
+  <xsd:simpleType name="agentJavaClassXmlEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Person" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="locationJavaClassXmlEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Household" />
+      <xsd:enumeration value="Workplace" />
+      <xsd:enumeration value="School" />
+      <xsd:enumeration value="CollegeDorm" />
+      <xsd:enumeration value="Prison" />
+      <xsd:enumeration value="NursingFacility" />
+      <xsd:enumeration value="MilitaryBarracks" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="networkJavaClassXmlEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="edu.pitt.gallowdd.persephone.location.Household" />
+      <xsd:enumeration value="edu.pitt.gallowdd.persephone.location.Workplace" />
+      <xsd:enumeration value="edu.pitt.gallowdd.persephone.location.School" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="dataTypeXmlEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="String" />
+      <xsd:enumeration value="int" />
+      <xsd:enumeration value="double" />
+      <xsd:enumeration value="boolean" />
+      <xsd:enumeration value="void" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="comparisonOperatorTypeXmlEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="gt" />
+      <xsd:enumeration value="lt" />
+      <xsd:enumeration value="eq" />
+      <xsd:enumeration value="ne" />
+      <xsd:enumeration value="gte" />
+      <xsd:enumeration value="lte" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="logicalOperatorTypeXmlEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="or" />
+      <xsd:enumeration value="and" />
+      <xsd:enumeration value="not" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="mathematicalBinaryOperatorTypeXmlEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="add" />
+      <xsd:enumeration value="sub" />
+      <xsd:enumeration value="mult" />
+      <xsd:enumeration value="div" />
+      <xsd:enumeration value="mod" />
+      <xsd:enumeration value="pow" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+    <xsd:simpleType name="mathematicalUnaryOperatorTypeXmlEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="exp" />
+      <xsd:enumeration value="log" />
+      <xsd:enumeration value="sqrt" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+<!--   <xsd:simpleType name="transmissionModeXmlEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="none" />
+      <xsd:enumeration value="vector" />
+      <xsd:enumeration value="proximity" />
+      <xsd:enumeration value="network" />
+    </xsd:restriction>
+  </xsd:simpleType> -->
+  
+  <!-- This enum will be used to know when an agent will be present in a location -->
+  <xsd:simpleType name="agentAsignmentTypeXmlEnum">
+    <xsd:restriction base="xsd:string">
+      <!-- DEFAULT -->
+      <xsd:enumeration value="HOME" />
+      <!-- Mon - Fri, 08:00 - 16:59 / Holidays Off -->
+      <xsd:enumeration value="BANKER" />
+      <!-- 2-4 days selected from Mon - Fri, 08:00 - 16:59 -->
+      <xsd:enumeration value="BANKER_PT" />
+      <!-- Three shifts covered 24 hours a day. Each shift has 0.33 probability of being selected.
+           5 Days selected from Sun - Sat. 08:00 - 15:59, 16:00 - 23:59, 00:00 - 07:59 -->
+      <xsd:enumeration value="SHIFT_24HR" />
+      <!-- Two shifts covered 16 hours a day. Each shift has .5 probability of being selected. 
+           5 days selected from Sun - Sat. 08:00 - 15:59, 16:00 - 23:59 -->
+      <xsd:enumeration value="SHIFT_16HR_1ST_TURN_2ND_TURN" />
+      <!-- Two shifts covered 16 hours a day. Each shift has .5 probability of being selected.
+           5 days selected from Sun - Sat. 16:00 - 23:59, 08:00 - 15:59 -->
+      <xsd:enumeration value="SHIFT_16HR_2ND_TURN_3RD_TURN" />
+      <!-- 5 Days selected from Sun - Sat, 08:00 - 15:59 -->
+      <xsd:enumeration value="STEADY_1ST_TURN" />
+      <!-- 2-4 Days selected from Sun - Sat, 08:00 - 15:59 -->
+      <xsd:enumeration value="STEADY_1ST_TURN_PT" />
+      <!-- 5 Days selected from Sun - Sat, 16:00 - 23:59 -->
+      <xsd:enumeration value="STEADY_2ND_TURN" />
+      <!-- 2-4 Days selected from Sun - Sat, 16:00 - 23:59 -->
+      <xsd:enumeration value="STEADY_2ND_TURN_PT" />
+      <!-- 5 Days selected from Sun - Sat, 00:00 - 07:59 -->
+      <xsd:enumeration value="STEADY_3RD_TURN" />
+      <!-- 2-4 Days selected from Sun - Sat, 00:00 - 07:59 -->
+      <xsd:enumeration value="STEADY_3RD_TURN_PT" />
+      <!-- Three shifts covered 24 hours a day. Each shift has 0.33 probability of being selected. 
+           1 or 2 Days selected from Sat & Sun 08:00 - 15:59, 16:00 - 23:59, 00:00 - 07:59 -->
+      <xsd:enumeration value="WEEKEND_SHIFT_24HR" />
+      <!-- Two shifts covered 16 hours a day. Each shift has .5 probability of being selected.
+            1 or 2 Days elected from Sat & Sun. 08:00 - 15:59, 16:00 - 23:59 -->
+      <xsd:enumeration value="WEEKEND_SHIFT_16HR_1ST_TURN_2ND_TURN" />
+      <!-- Two shifts covered 16 hours a day. Each shift has .5 probability of being selected.
+           1 or 2 Days elected from Sat & Sun. 16:00 - 23:59, 08:00 - 15:59 -->
+      <xsd:enumeration value="WEEKEND_SHIFT_16HR_2ND_TURN_3RD_TURN" />
+      <!-- Mon - Fri, 07:00 - 15:59 / Holidays Off / Summer Break / Winter Break / Spring Break-->
+      <xsd:enumeration value="PRIMARY_SCHOOL" />
+      <!-- Mon - Fri, 07:00 - 15:59 / Holidays Off / Summer Break / Winter Break / Spring Break-->
+      <xsd:enumeration value="SECONDARY_SCHOOL" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+</xsd:schema>
