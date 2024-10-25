@@ -1,52 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persephone_runtime_parameters xmlns="http://persephone.gallowdd.pitt.edu/parameters"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://persephone.gallowdd.pitt.edu/parameters schema/persephoneRuntimeParameters.xsd">
-    <simulation>
-        <home_directory>/Users/ddg5/Eclipse_J2EE_Projects/Persephone</home_directory>
-        <population_directory>/Volumes/DaveSeagate/Persephone_Synthetic_Environment</population_directory>
-        <start_date>2019-09-01</start_date>
-        <end_date>2019-09-30</end_date>
-        <rng_seed>123456</rng_seed>
-        <synthetic_environment>
-            <country>USA</country>
-            <version>Persephone.v1.0</version>
-            <identifier>01001</identifier>
-        </synthetic_environment>
-        <synthetic_environment>
-            <country>USA</country>
-            <version>Persephone.v1.0</version>
-            <identifier>01003</identifier>
-        </synthetic_environment>
-        <synthetic_environment>
-            <country>USA</country>
-            <version>Persephone.v1.0</version>
-            <identifier>01005</identifier>
-        </synthetic_environment>
-        <synthetic_environment>
-            <country>USA</country>
-            <version>Persephone.v1.0</version>
-            <identifier>01007</identifier>
-        </synthetic_environment>
-        <synthetic_environment>
-            <country>USA</country>
-            <version>Persephone.v1.0</version>
-            <identifier>01009</identifier>
-        </synthetic_environment>
-        <synthetic_environment>
-            <country>USA</country>
-            <version>Persephone.v1.0</version>
-            <identifier>01011</identifier>
-        </synthetic_environment>
-    </simulation>
-    <model>
-        <condition name="INF">
-            <transmission_mode>proximity</transmission_mode>
-            <exposed_state>E</exposed_state>
-            <state name="S"></state>
-            <state name="E"></state>
-            <state name="I"></state>
-            <state name="R"></state>
-        </condition>
-    </model>
-</persephone_runtime_parameters>
+<!-- 
+  File: persephoneDefaultRuntimeParameters.xml
+  Description: Runtime parameters that will be used if not overriden by a user xml file
+-->
+<runtime:persephone_runtime_parameters
+    xmlns:common="http://persephone.gallowdd.pitt.edu/xml/common" 
+    xmlns:runtime="http://persephone.gallowdd.pitt.edu/xml/runtime" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://persephone.gallowdd.pitt.edu/xml/runtime schema/persephoneDefaultRuntimeParameters.xsd ">
+  <runtime:simulation>
+    <runtime:home_directory>/Users/ddg5/Eclipse_J2EE_Projects/Persephone</runtime:home_directory>
+    <runtime:population_directory>/Volumes/LaCie/Persephone_Synthetic_Environment</runtime:population_directory>
+    <!-- <runtime:population_directory>/Volumes/DaveSeagate/Persephone_Synthetic_Environment</runtime:population_directory> -->
+    <runtime:start_date>2019-09-01</runtime:start_date>
+    <runtime:end_date>2019-09-30</runtime:end_date>
+    <runtime:rng_seed>123456</runtime:rng_seed>
+    <runtime:synthetic_environment_descriptor>
+      <runtime:country>USA</runtime:country>
+      <runtime:version>Persephone.v1.0</runtime:version>
+      <runtime:identifier>01001</runtime:identifier>
+    </runtime:synthetic_environment_descriptor>
+    <runtime:synthetic_environment_descriptor>
+      <runtime:country>USA</runtime:country>
+      <runtime:version>Persephone.v1.0</runtime:version>
+      <runtime:identifier>01003</runtime:identifier>
+    </runtime:synthetic_environment_descriptor>
+    <runtime:synthetic_environment_descriptor>
+      <runtime:country>USA</runtime:country>
+      <runtime:version>Persephone.v1.0</runtime:version>
+      <runtime:identifier>01005</runtime:identifier>
+    </runtime:synthetic_environment_descriptor>
+    <runtime:synthetic_environment_descriptor>
+      <runtime:country>USA</runtime:country>
+      <runtime:version>Persephone.v1.0</runtime:version>
+      <runtime:identifier>01007</runtime:identifier>
+    </runtime:synthetic_environment_descriptor>
+    <runtime:synthetic_environment_descriptor>
+      <runtime:country>USA</runtime:country>
+      <runtime:version>Persephone.v1.0</runtime:version>
+      <runtime:identifier>01009</runtime:identifier>
+    </runtime:synthetic_environment_descriptor>
+    <runtime:synthetic_environment_descriptor>
+      <runtime:country>USA</runtime:country>
+      <runtime:version>Persephone.v1.0</runtime:version>
+      <runtime:identifier>01011</runtime:identifier>
+    </runtime:synthetic_environment_descriptor>
+  </runtime:simulation>
+
+  <runtime:model>
+    <runtime:user_defined_agent name=""/>
+    <runtime:user_defined_location name="">
+      <runtime:latitude>
+        <runtime:initial_file>
+          <runtime:dir>runtime:dir</runtime:dir>
+          <runtime:filename>runtime:filename</runtime:filename>
+          <runtime:csv_field_name>runtime:csv_field_name</runtime:csv_field_name>
+        </runtime:initial_file>
+      </runtime:latitude>
+      <runtime:longitude>
+        <runtime:initial_file>
+          <runtime:dir>runtime:dir</runtime:dir>
+          <runtime:filename>runtime:filename</runtime:filename>
+          <runtime:csv_field_name>runtime:csv_field_name</runtime:csv_field_name>
+        </runtime:initial_file>
+      </runtime:longitude>
+    </runtime:user_defined_location>
+    <runtime:user_defined_network name=""/>
+    <runtime:condition name="INF">
+      <common:transmission_mode>proximity</common:transmission_mode>
+      <common:exposed_state>E</common:exposed_state>
+      <common:state name="S">
+        <common:wait_rule>
+          <common:special>infinite</common:special>
+        </common:wait_rule>
+        <common:default_next_state>S</common:default_next_state>
+      </common:state>
+      <common:state name="E">
+        <common:wait_rule>
+          <common:special>zero</common:special>
+        </common:wait_rule>
+        <common:default_next_state>E</common:default_next_state>
+      </common:state>
+      <common:state name="Ia">
+        <common:wait_rule>
+          <common:special>zero</common:special>
+        </common:wait_rule>
+        <common:default_next_state>R</common:default_next_state>
+      </common:state>
+      <common:state name="Is">
+        <common:wait_rule>
+          <common:special>zero</common:special>
+        </common:wait_rule>
+        <common:default_next_state>R</common:default_next_state>
+      </common:state>
+      <common:state name="R">
+        <common:wait_rule>
+          <common:special>infinite</common:special>
+        </common:wait_rule>
+        <common:default_next_state>R</common:default_next_state>
+      </common:state>
+    </runtime:condition>
+  </runtime:model>
+  <runtime:message_queue>
+    <runtime:host>http://tempuri.org</runtime:host>
+  </runtime:message_queue>
+</runtime:persephone_runtime_parameters>

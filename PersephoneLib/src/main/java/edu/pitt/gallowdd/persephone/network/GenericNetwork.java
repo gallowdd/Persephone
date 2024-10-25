@@ -1,6 +1,6 @@
 /*
  * Persephone: An Agent-Based Modeling Platform
- * Copyright (c) 2019-2021  David Galloway / University of Pittsburgh
+ * Copyright (c) 2019-2022  David Galloway / University of Pittsburgh
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
 package edu.pitt.gallowdd.persephone.network;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import edu.pitt.gallowdd.persephone.container.IdConnectable;
+import edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer;
 import edu.pitt.gallowdd.persephone.util.Id;
 import edu.pitt.gallowdd.persephone.util.IdException;
 
@@ -33,18 +34,21 @@ public abstract class GenericNetwork {
   
   private static final Logger LOGGER = LogManager.getLogger(GenericNetwork.class.getName());
   
+  /**
+   * The NullNetwork that will be used for all cases where a Null is needed
+   */
+  public static final GenericNetwork NULL_NETWORK = new GenericNetwork() {};
+  
   private final Id id;
-  private IdConnectable mixingContainer;
+  private GenericIdMixingContainer mixingContainer;
   
   /**
-   * Default Constructor used when we don't have an Id already created
-   * @throws IdException
+   * Constructor used to create a NullNetwork
    */
-  protected GenericNetwork() throws IdException
+  private GenericNetwork()
   {
     super();
-    this.id = new Id();
-    GenericNetwork.LOGGER.trace("new instance of GenericNetwork");
+    this.id = Id.NULL_ID;
   }
   
   /**
@@ -64,7 +68,7 @@ public abstract class GenericNetwork {
    * @param id
    * @param mixingContainer
    */
-  protected GenericNetwork(Id id, IdConnectable mixingContainer)
+  protected GenericNetwork(Id id, GenericIdMixingContainer mixingContainer)
   {
     super();
     this.id = id;
@@ -89,7 +93,7 @@ public abstract class GenericNetwork {
    * 
    * @throws IdException if the idString is invalid
    */
-  protected GenericNetwork(String idString, IdConnectable mixingContainer) throws IdException
+  protected GenericNetwork(String idString, GenericIdMixingContainer mixingContainer) throws IdException
   {
     super();
     this.id = new Id(idString);
@@ -108,7 +112,7 @@ public abstract class GenericNetwork {
   /**
    * @return the mixingContainer
    */
-  public IdConnectable getMixingContainer()
+  public GenericIdMixingContainer getMixingContainer()
   {
     return this.mixingContainer;
   }
@@ -116,7 +120,7 @@ public abstract class GenericNetwork {
   /**
    * @param mixingContainer the mixingContainer to set
    */
-  public void setMixingContainer(IdConnectable mixingContainer)
+  public void setMixingContainer(GenericIdMixingContainer mixingContainer)
   {
     this.mixingContainer = mixingContainer;
   }

@@ -41,7 +41,7 @@ import edu.pitt.gallowdd.persephone.util.IdException;
  * @author David Galloway
  *
  */
-public class LocationManager extends Object {
+public class LocationManager {
   
   private static final Logger LOGGER = LogManager.getLogger(LocationManager.class.getName());
   

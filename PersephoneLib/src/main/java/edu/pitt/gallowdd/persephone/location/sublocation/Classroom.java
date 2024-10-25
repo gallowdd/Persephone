@@ -18,7 +18,7 @@
 
 package edu.pitt.gallowdd.persephone.location.sublocation;
 
-import edu.pitt.gallowdd.persephone.container.IdConnectable;
+import edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer;
 import edu.pitt.gallowdd.persephone.location.LocationTypeEnum;
 import edu.pitt.gallowdd.persephone.location.School;
 import edu.pitt.gallowdd.persephone.util.Id;
@@ -52,7 +52,7 @@ public class Classroom extends GenericSublocation {
    * @throws IllegalArgumentException if containingSchool is null (i.e. a Classroom can't exist on its own. It must be contained in a School)
    * @throws IdException if the id is not valid
    */
-  protected Classroom(School containingSchool, IdConnectable mixingContainer) throws IllegalArgumentException, IdException
+  protected Classroom(School containingSchool, GenericIdMixingContainer mixingContainer) throws IllegalArgumentException, IdException
   {
     super(Id.create(Classroom.ID_PREPEND).getIdString(), containingSchool.getId(), mixingContainer);
   }
@@ -81,7 +81,7 @@ public class Classroom extends GenericSublocation {
    * @throws IllegalArgumentException if containingSchool is null (i.e. a Classroom can't exist on its own. It must be contained in a School)
    * @throws IdException if the id is not valid
    */
-  protected Classroom(String id, School containingSchool, IdConnectable mixingContainer) throws IllegalArgumentException, IdException
+  protected Classroom(String id, School containingSchool, GenericIdMixingContainer mixingContainer) throws IllegalArgumentException, IdException
   {
     super(id, containingSchool.getId(), mixingContainer);
   }

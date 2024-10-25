@@ -17,7 +17,8 @@
  */
 package edu.pitt.gallowdd.persephone.location;
 
-import edu.pitt.gallowdd.persephone.container.IdConnectable;
+import edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer;
+import edu.pitt.gallowdd.persephone.event.MixEvent;
 import edu.pitt.gallowdd.persephone.util.Id;
 import edu.pitt.gallowdd.persephone.util.IdException;
 
@@ -65,7 +66,7 @@ public class Workplace extends GenericLocation {
    * @param mixingContainer a container for Ids
    * @throws IdException if the id is invalid
    */
-  protected Workplace(String idString, double latitude, double longitude, IdConnectable mixingContainer) throws IdException
+  protected Workplace(String idString, double latitude, double longitude, GenericIdMixingContainer mixingContainer) throws IdException
   {
     super(idString, latitude, longitude, mixingContainer);
   }
@@ -109,7 +110,7 @@ public class Workplace extends GenericLocation {
    * @param mixingContainer a container for Ids
    * @throws IdException if the id is invalid
    */
-  protected Workplace(String idString, double latitude, double longitude, double elevation, IdConnectable mixingContainer) throws IdException
+  protected Workplace(String idString, double latitude, double longitude, double elevation, GenericIdMixingContainer mixingContainer) throws IdException
   {
     super(idString, latitude, longitude, elevation, mixingContainer);
   }
@@ -118,5 +119,12 @@ public class Workplace extends GenericLocation {
   public LocationTypeEnum getLocationType()
   {
     return LocationTypeEnum.WORKPLACE;
+  }
+
+  @Override
+  public void handleMixEvent(MixEvent mixEvent)
+  {
+    // TODO Auto-generated method stub
+    
   }
 }

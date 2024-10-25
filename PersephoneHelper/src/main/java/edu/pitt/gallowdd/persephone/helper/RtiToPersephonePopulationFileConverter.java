@@ -31,6 +31,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.commons.csv.CSVFormat;
@@ -58,14 +59,16 @@ import edu.pitt.gallowdd.persephone.helper.util.HouseholdFilenameFilter;
 import edu.pitt.gallowdd.persephone.helper.util.PeopleFilenameFilter;
 import edu.pitt.gallowdd.persephone.helper.util.SchoolFilenameFilter;
 import edu.pitt.gallowdd.persephone.helper.util.WorkplaceFilenameFilter;
-import edu.pitt.gallowdd.persephone.synthenvinfo.AgentXmlEnum;
-import edu.pitt.gallowdd.persephone.synthenvinfo.CountryCodeXmlEnum;
-import edu.pitt.gallowdd.persephone.synthenvinfo.LocationXmlEnum;
-import edu.pitt.gallowdd.persephone.synthenvinfo.ObjectFactory;
-import edu.pitt.gallowdd.persephone.synthenvinfo.PopVersionXmlEnum;
-import edu.pitt.gallowdd.persephone.synthenvinfo.SyntheticEnvironment;
-import edu.pitt.gallowdd.persephone.synthenvinfo.SyntheticEnvironment.Agent;
-import edu.pitt.gallowdd.persephone.synthenvinfo.SyntheticEnvironment.Location;
+import edu.pitt.gallowdd.persephone.xml.synthenv.ObjectFactory;
+import edu.pitt.gallowdd.persephone.xml.synthenv.SyntheticEnvironment;
+import edu.pitt.gallowdd.persephone.xml.synthenv.SyntheticEnvironment.Agent;
+import edu.pitt.gallowdd.persephone.xml.synthenv.SyntheticEnvironment.Location;
+import edu.pitt.gallowdd.persephone.xml.common.AgentDatatypeXmlEnum;
+import edu.pitt.gallowdd.persephone.xml.common.AgentFilenameXmlEnum;
+import edu.pitt.gallowdd.persephone.xml.common.CountryCodeXmlEnum;
+import edu.pitt.gallowdd.persephone.xml.common.LocationDatatypeXmlEnum;
+import edu.pitt.gallowdd.persephone.xml.common.LocationFilenameXmlEnum;
+import edu.pitt.gallowdd.persephone.xml.common.PopVersionXmlEnum;
 import edu.pitt.gallowdd.persephone.util.ArraySelector;
 import edu.pitt.gallowdd.persephone.util.ArraySelectorException;
 import edu.pitt.gallowdd.persephone.util.Constants;
@@ -187,57 +190,56 @@ public class RtiToPersephonePopulationFileConverter {
           int gqPeopleCount = RtiToPersephonePopulationFileConverter.parseAndConvertGroupQuartersPeopleFile(pathToPopDir);
           
           Agent synthAgent = factory.createSyntheticEnvironmentAgent();
-          synthAgent.setAgentType(AgentXmlEnum.PERSON);
+          synthAgent.setAgentType(AgentDatatypeXmlEnum.PERSON);
           synthAgent.setEntryCount(BigInteger.valueOf(peopleCount));
-          synthAgent.setFilename("people.csv");
-          synthEnv.getAgent().add(synthAgent);
+          synthAgent.setFilename(AgentFilenameXmlEnum.PEOPLE_CSV);
           
           Agent synthGqAgent = factory.createSyntheticEnvironmentAgent();
-          synthGqAgent.setAgentType(AgentXmlEnum.PERSON);
+          synthGqAgent.setAgentType(AgentDatatypeXmlEnum.PERSON);
           synthGqAgent.setEntryCount(BigInteger.valueOf(gqPeopleCount));
-          synthGqAgent.setFilename("gq_people.csv");
+          synthGqAgent.setFilename(AgentFilenameXmlEnum.GQ_PEOPLE_CSV);
           synthEnv.getAgent().add(synthGqAgent);
           
           Location synthHousehold = factory.createSyntheticEnvironmentLocation();
-          synthHousehold.setLocationType(LocationXmlEnum.HOUSEHOLD);
+          synthHousehold.setLocationType(LocationDatatypeXmlEnum.HOUSEHOLD);
           synthHousehold.setEntryCount(BigInteger.valueOf(householdCount));
-          synthHousehold.setFilename("households.csv");
+          synthHousehold.setFilename(LocationFilenameXmlEnum.HOUSEHOLDS_CSV);
           synthEnv.getLocation().add(synthHousehold);
           
           Location synthSchool = factory.createSyntheticEnvironmentLocation();
-          synthSchool.setLocationType(LocationXmlEnum.SCHOOL);
+          synthSchool.setLocationType(LocationDatatypeXmlEnum.SCHOOL);
           synthSchool.setEntryCount(BigInteger.valueOf(schoolCount));
-          synthSchool.setFilename("schools.csv");
+          synthSchool.setFilename(LocationFilenameXmlEnum.SCHOOLS_CSV);
           synthEnv.getLocation().add(synthSchool);
           
           Location synthWorkplace = factory.createSyntheticEnvironmentLocation();
-          synthWorkplace.setLocationType(LocationXmlEnum.WORKPLACE);
+          synthWorkplace.setLocationType(LocationDatatypeXmlEnum.WORKPLACE);
           synthWorkplace.setEntryCount(BigInteger.valueOf(workplaceCount));
-          synthWorkplace.setFilename("workplaces.csv");
+          synthWorkplace.setFilename(LocationFilenameXmlEnum.WORKPLACES_CSV);
           synthEnv.getLocation().add(synthWorkplace);
           
           Location synthCollege = factory.createSyntheticEnvironmentLocation();
-          synthCollege.setLocationType(LocationXmlEnum.COLLEGE_DORM);
+          synthCollege.setLocationType(LocationDatatypeXmlEnum.COLLEGE_DORM);
           synthCollege.setEntryCount(BigInteger.valueOf(gqCounts[0]));
-          synthCollege.setFilename("college_dorms.csv");
+          synthCollege.setFilename(LocationFilenameXmlEnum.COLLEGE_DORMS_CSV);
           synthEnv.getLocation().add(synthCollege);
           
           Location synthNursing = factory.createSyntheticEnvironmentLocation();
-          synthNursing.setLocationType(LocationXmlEnum.NURSING_FACILITY);
+          synthNursing.setLocationType(LocationDatatypeXmlEnum.NURSING_FACILITY);
           synthNursing.setEntryCount(BigInteger.valueOf(gqCounts[1]));
-          synthNursing.setFilename("nursing_facilities.csv");
+          synthNursing.setFilename(LocationFilenameXmlEnum.NURSING_FACILITIES_CSV);
           synthEnv.getLocation().add(synthNursing);
           
           Location synthPrison = factory.createSyntheticEnvironmentLocation();
-          synthPrison.setLocationType(LocationXmlEnum.PRISON);
+          synthPrison.setLocationType(LocationDatatypeXmlEnum.PRISON);
           synthPrison.setEntryCount(BigInteger.valueOf(gqCounts[2]));
-          synthPrison.setFilename("prisons.csv");
+          synthPrison.setFilename(LocationFilenameXmlEnum.PRISONS_CSV);
           synthEnv.getLocation().add(synthPrison);
           
           Location synthMilitary = factory.createSyntheticEnvironmentLocation();
-          synthMilitary.setLocationType(LocationXmlEnum.MILITARY_BARRACKS);
+          synthMilitary.setLocationType(LocationDatatypeXmlEnum.MILITARY_BARRACKS);
           synthMilitary.setEntryCount(BigInteger.valueOf(gqCounts[3]));
-          synthMilitary.setFilename("military_barracks.csv");
+          synthMilitary.setFilename(LocationFilenameXmlEnum.MILITARY_BARRACKS_CSV);
           synthEnv.getLocation().add(synthMilitary);
           
           HouseholdDAO.deleteAll();
@@ -522,7 +524,7 @@ public class RtiToPersephonePopulationFileConverter {
   {
     int countPeople = 0;
     //sp_id sp_hh_id  age sex race  relate  school_id work_id
-    final String FLD_ID = "sp_id";
+    //final String FLD_ID = "sp_id";
     final String FLD_SP_HH_ID = "sp_hh_id";
     final String FLD_AGE = "age";
     final String FLD_SEX = "sex";
@@ -1173,7 +1175,7 @@ public class RtiToPersephonePopulationFileConverter {
   {
     int countGqPeople = 0;
     //sp_id sp_gq_id  age sex
-    final String FLD_ID = "sp_id";
+    //final String FLD_ID = "sp_id";
     final String FLD_SP_GQ_ID = "sp_gq_id";
     final String FLD_AGE = "age";
     final String FLD_SEX = "sex";
@@ -1280,7 +1282,12 @@ public class RtiToPersephonePopulationFileConverter {
                   Race.ALASKA_NATIVE.getValue(), Race.PACIFIC_ISLANDER.getValue(), Race.TWO_OR_MORE.getValue()};
               double[] raceWeightArray = {57.5, 38.6, 1.5, 2.4, 0.9, 0.9, 0.9};
               ArraySelector<Integer> raceSelector = new ArraySelector<>();
-              yield raceSelector.getRandomItemFromArrayGivenArrayOfWeights(raceArray, raceWeightArray);
+              Optional<Integer> raceValue = raceSelector.getRandomItemFromArrayGivenArrayOfWeights(raceArray, raceWeightArray);
+              if(raceValue.isPresent())
+              {
+                yield raceValue.get().intValue();
+              }
+              yield Constants.INT_UNSET;
             }
             case "NRS" -> {
               // These values come from https://www.cdc.gov/nchs/data/nnhsd/Estimates/nnhs/Estimates_Demographics_Tables.pdf#Table01
@@ -1296,7 +1303,13 @@ public class RtiToPersephonePopulationFileConverter {
                 double[] raceWeightArray = {10.0 * 127100, 21.9 * 40700, 23.7 * 7200 / 5.0, 23.7 * 7200 / 5.0,
                     23.7 * 7200 / 5.0, 23.7 * 7200 / 5.0, 23.7 * 7200 / 5.0};
                 ArraySelector<Integer> raceSelector = new ArraySelector<>();
-                yield raceSelector.getRandomItemFromArrayGivenArrayOfWeights(raceArray, raceWeightArray);
+                
+                Optional<Integer> raceValue = raceSelector.getRandomItemFromArrayGivenArrayOfWeights(raceArray, raceWeightArray);
+                if(raceValue.isPresent())
+                {
+                  yield raceValue.get().intValue();
+                }
+                yield Constants.INT_UNSET;
               }
               else if(age < 75)
               {
@@ -1305,7 +1318,12 @@ public class RtiToPersephonePopulationFileConverter {
                 double[] raceWeightArray = {10.5 * 134200, 18.6 * 34500, 17.8 * 5300 / 5.0, 17.8 * 5300 / 5.0,
                     17.8 * 5300 / 5.0, 17.8 * 5300 / 5.0, 17.8 * 5300 / 5.0};
                 ArraySelector<Integer> raceSelector = new ArraySelector<>();
-                yield raceSelector.getRandomItemFromArrayGivenArrayOfWeights(raceArray, raceWeightArray);
+                Optional<Integer> raceValue = raceSelector.getRandomItemFromArrayGivenArrayOfWeights(raceArray, raceWeightArray);
+                if(raceValue.isPresent())
+                {
+                  yield raceValue.get().intValue();
+                }
+                yield Constants.INT_UNSET;
               }
               else if(age < 85)
               {
@@ -1314,7 +1332,12 @@ public class RtiToPersephonePopulationFileConverter {
                 double[] raceWeightArray = {31.8 * 405800, 29.3 * 54600, 27.5 * 8300 / 5.0, 27.5 * 8300 / 5.0,
                     27.5 * 8300 / 5.0, 27.5 * 8300 / 5.0, 27.5 * 8300 / 5.0};
                 ArraySelector<Integer> raceSelector = new ArraySelector<>();
-                yield raceSelector.getRandomItemFromArrayGivenArrayOfWeights(raceArray, raceWeightArray);
+                Optional<Integer> raceValue = raceSelector.getRandomItemFromArrayGivenArrayOfWeights(raceArray, raceWeightArray);
+                if(raceValue.isPresent())
+                {
+                  yield raceValue.get().intValue();
+                }
+                yield Constants.INT_UNSET;
               }
               else
               {
@@ -1323,7 +1346,12 @@ public class RtiToPersephonePopulationFileConverter {
                 double[] raceWeightArray = {47.7 * 608900, 30.2 * 56300, 31.0 * 9300 / 5.0, 31.0 * 9300 / 5.0,
                     31.0 * 9300 / 5.0, 31.0 * 9300 / 5.0, 31.0 * 9300 / 5.0};
                 ArraySelector<Integer> raceSelector = new ArraySelector<>();
-                yield raceSelector.getRandomItemFromArrayGivenArrayOfWeights(raceArray, raceWeightArray);
+                Optional<Integer> raceValue = raceSelector.getRandomItemFromArrayGivenArrayOfWeights(raceArray, raceWeightArray);
+                if(raceValue.isPresent())
+                {
+                  yield raceValue.get().intValue();
+                }
+                yield Constants.INT_UNSET;
               }
             }
             case "MIL" -> {
@@ -1332,7 +1360,12 @@ public class RtiToPersephonePopulationFileConverter {
                   Race.ALASKA_NATIVE.getValue(), Race.PACIFIC_ISLANDER.getValue(), Race.TWO_OR_MORE.getValue()};
               double[] raceWeightArray = {70.8, 16.8, 4.4, 0.7, 0.3, 1.0, 2.5};
               ArraySelector<Integer> raceSelector = new ArraySelector<>();
-              yield raceSelector.getRandomItemFromArrayGivenArrayOfWeights(raceArray, raceWeightArray);
+              Optional<Integer> raceValue = raceSelector.getRandomItemFromArrayGivenArrayOfWeights(raceArray, raceWeightArray);
+              if(raceValue.isPresent())
+              {
+                yield raceValue.get().intValue();
+              }
+              yield Constants.INT_UNSET;
             }
             case "CLG" -> {
               // These values come from https://nces.ed.gov/programs/coe/indicator_cha.asp
@@ -1340,7 +1373,12 @@ public class RtiToPersephonePopulationFileConverter {
                   Race.ALASKA_NATIVE.getValue(), Race.PACIFIC_ISLANDER.getValue(), Race.TWO_OR_MORE.getValue()};
               double[] raceWeightArray = {11.3, 3.1, 1.4, 0.5, 0.5, 0.5, 0.6};
               ArraySelector<Integer> raceSelector = new ArraySelector<>();
-              yield raceSelector.getRandomItemFromArrayGivenArrayOfWeights(raceArray, raceWeightArray);
+              Optional<Integer> raceValue = raceSelector.getRandomItemFromArrayGivenArrayOfWeights(raceArray, raceWeightArray);
+              if(raceValue.isPresent())
+              {
+                yield raceValue.get().intValue();
+              }
+              yield Constants.INT_UNSET;
             }
             default -> Constants.INT_UNSET;
           };
@@ -1591,7 +1629,7 @@ public class RtiToPersephonePopulationFileConverter {
     {
       File xmlFile = new File(pathToPopDir.toString()
           .replaceAll("FRED_POPULATIONS", "Persephone_Synthetic_Environment")
-          .replaceAll("RTI_2010_ver1_Elevation", "/country/USA/Persephone.v1.0") + Constants.FS + Constants.DEFAULT_SYNTH_ENV_INFO_FILENAME);
+          .replaceAll("RTI_2010_ver1_Elevation", "/country/USA/Persephone.v1.0") + Constants.FS + Constants.SYNTHENV_FILENAME);
       
       //Create JAXB Context
       JAXBContext jaxbContext = JAXBContext.newInstance(SyntheticEnvironment.class);

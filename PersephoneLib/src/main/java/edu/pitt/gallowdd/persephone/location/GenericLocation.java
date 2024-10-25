@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
 package edu.pitt.gallowdd.persephone.location;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -25,8 +26,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import edu.pitt.gallowdd.persephone.container.FullyConnectedIdContainer;
-import edu.pitt.gallowdd.persephone.container.IdConnectable;
+import edu.pitt.gallowdd.persephone.container.FullyConnectedIdMixingContainer;
+import edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer;
+import edu.pitt.gallowdd.persephone.event.LocationEvent;
 import edu.pitt.gallowdd.persephone.event.MixEvent;
 import edu.pitt.gallowdd.persephone.util.Constants;
 import edu.pitt.gallowdd.persephone.util.Id;
@@ -41,8 +43,25 @@ public abstract class GenericLocation {
   
   private static final Logger LOGGER = LogManager.getLogger(GenericLocation.class.getName());
   
+  /**
+   * The Null Location that will be used for all cases where a Null is needed
+   */
+  public static final GenericLocation NULL_LOCATION = new GenericLocation(Id.NULL_ID, Constants.DBL_NULL_LAT_LON_ELEV, Constants.DBL_NULL_LAT_LON_ELEV) {
+    @Override
+    public LocationTypeEnum getLocationType()
+    {
+      return LocationTypeEnum.NULL_TYPE;
+    }
+
+    @Override
+    public void handleMixEvent(MixEvent mixEvent)
+    {
+      GenericLocation.LOGGER.debug("No Mixing Event for NULL_LOCATION");
+    }
+  };
+  
   private final Id id;
-  private IdConnectable mixingContainer;
+  private GenericIdMixingContainer mixingContainer;
   protected double latitude;
   protected double longitude;
   protected double elevation;
@@ -50,11 +69,27 @@ public abstract class GenericLocation {
   /**
    * The base class of any location that does not move.
    * 
-   * @param idString The idString of the location
+   * @param id The id of the location
    * @param locationType the type of location 
    * @param latitude The location's latitude
    * @param longitude The location's longitude
-   * @param elevation The location's elevation
+   */
+  protected GenericLocation(Id id, double latitude, double longitude)
+  {
+    super();
+    this.id = id;
+    this.latitude = latitude;
+    this.longitude =longitude;
+    this.elevation = Constants.DBL_NULL_LAT_LON_ELEV;
+    this.mixingContainer = new FullyConnectedIdMixingContainer();
+  }
+  
+  /**
+   * The base class of any location that does not move.
+   * 
+   * @param idString The idString of the location
+   * @param latitude The location's latitude
+   * @param longitude The location's longitude
    * @throws IdException if the id is not valid
    */
   protected GenericLocation(String idString, double latitude, double longitude) throws IdException
@@ -63,8 +98,8 @@ public abstract class GenericLocation {
     this.id = new Id(idString);
     this.latitude = latitude;
     this.longitude =longitude;
-    this.elevation = Constants.DBL_UNSET;
-    this.mixingContainer = new FullyConnectedIdContainer();
+    this.elevation = Constants.DBL_NULL_LAT_LON_ELEV;
+    this.mixingContainer = new FullyConnectedIdMixingContainer();
   }
   
   /**
@@ -83,7 +118,7 @@ public abstract class GenericLocation {
     this.latitude = latitude;
     this.longitude =longitude;
     this.elevation = elevation;
-    this.mixingContainer = new FullyConnectedIdContainer();
+    this.mixingContainer = new FullyConnectedIdMixingContainer();
   }
   
   /**
@@ -93,12 +128,12 @@ public abstract class GenericLocation {
    * @param mixingContainer a container for Ids
    * @throws IdException if the id is not valid
    */
-  protected GenericLocation(String idString, double latitude, double longitude, IdConnectable mixingContainer) throws IdException 
+  protected GenericLocation(String idString, double latitude, double longitude, GenericIdMixingContainer mixingContainer) throws IdException 
   {
     this.id = new Id(idString);
     this.latitude = latitude;
     this.longitude = longitude;
-    this.elevation = Constants.DBL_UNSET;
+    this.elevation = Constants.DBL_NULL_LAT_LON_ELEV;
     this.mixingContainer = mixingContainer;
   }
   
@@ -110,7 +145,7 @@ public abstract class GenericLocation {
    * @param mixingContainer a container for Ids
    * @throws IdException if the id is not valid
    */
-  protected GenericLocation(String idString, double latitude, double longitude, double elevation, IdConnectable mixingContainer) throws IdException 
+  protected GenericLocation(String idString, double latitude, double longitude, double elevation, GenericIdMixingContainer mixingContainer) throws IdException 
   {
     this.id = new Id(idString);
     this.latitude = latitude;
@@ -138,7 +173,7 @@ public abstract class GenericLocation {
   /**
    * @return the mixingContainer
    */
-  public IdConnectable getMixingContainer()
+  public GenericIdMixingContainer getMixingContainer()
   {
     return this.mixingContainer;
   }
@@ -146,9 +181,9 @@ public abstract class GenericLocation {
   /**
    * Set the mixingContainer
    * 
-   * @param mixingContainer the IdStringMixingContainer to set
+   * @param mixingContainer the mixingContainer to set
    */
-  public void setMixingContainer(IdConnectable mixingContainer)
+  public void setMixingContainer(GenericIdMixingContainer mixingContainer)
   {
     this.mixingContainer = mixingContainer;
   }
@@ -175,10 +210,23 @@ public abstract class GenericLocation {
   abstract public LocationTypeEnum getLocationType();
   
   /**
-   * @param mixEvent
+   * @param locEvent
    */
   @Subscribe
-  abstract public void handleMixEvent(MixEvent mixEvent);
+  abstract public void handleEvent(SimulationEvent locEvent);
+  
+  /**
+   * @param agentEvent
+   */
+  @Subscribe
+  abstract public void handleEvent(AgentEvent agentEvent);
+  
+  /**
+   * @param locEvent
+   */
+  @Subscribe
+  abstract public void handleEvent(LocationEvent locEvent);
+  
   
   /* (non-Javadoc)
    * @see java.lang.Object#equals(Object)

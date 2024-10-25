@@ -95,8 +95,11 @@ public class PersephoneException extends Exception {
     ERR_PARAMS("There was an error trying to load Paramters", 0),
     ERR_XML_VALIDATION("There was an error when trying to Validate XML File: _1_, against XML Schema file: _2_", 2),
     ERR_LOC_PHYSICAL("The was a problem trying to create the physical Location with the parameters [_1_].", 1),
+    ERR_POP_SIZE_EXCEED("The Population [_1_] can no longer add agents.", 1),
+    ERR_POP_TYPE_MATCH("The Population [_1_] can only add agents of type [_2_].", 2),
     ERR_LOC_MGR_SIZE_EXCEED("The Location Manager [_1_] can no longer add locations.", 1),
-    ERR_LOC_MGR_TYPE_MATCH("The Location Manager [_1_] can only add location of type [_2_].", 2),
+    ERR_LOC_MGR_TYPE_MATCH("The Location Manager [_1_] can only add locations of type [_2_].", 2),
+    ERR_MXG_CNTNR_ROLE_TYPE_MATCH("The Mixing Container can not accept agent [_1_] in the role [_2_].", 2),
     ERR_DIR_GRAPH_CRIT("There was a critical error with a directed graph: _1_.", 1);
     
     private final String message;

@@ -40,17 +40,17 @@
             <AppenderRef ref="error_log" level="error" />
             <AppenderRef ref="console_log" level="trace" />
         </Logger>
-        <Logger name="edu.pitt.gallowdd.persephone.controller" level="trace" additivity="false">
+        <Logger name="edu.pitt.gallowdd.persephone.controller" level="debug" additivity="false">
             <AppenderRef ref="trace_log" level="trace" />
             <AppenderRef ref="error_log" level="error" />
             <AppenderRef ref="console_log" level="trace" />
         </Logger>
-        <Logger name="edu.pitt.gallowdd.persephone.overseer" level="trace" additivity="false">
+        <Logger name="edu.pitt.gallowdd.persephone.overseer" level="debug" additivity="false">
             <AppenderRef ref="trace_log" level="trace" />
             <AppenderRef ref="error_log" level="error" />
             <AppenderRef ref="console_log" level="trace" />
         </Logger>
-        <Logger name="edu.pitt.gallowdd.persephone.location.initializer.LocationInitializer" level="info" additivity="info">
+        <Logger name="edu.pitt.gallowdd.persephone.location.initializer" level="debug" additivity="false">
             <AppenderRef ref="trace_log" level="trace" />
             <AppenderRef ref="error_log" level="error" />
             <AppenderRef ref="console_log" level="trace" />

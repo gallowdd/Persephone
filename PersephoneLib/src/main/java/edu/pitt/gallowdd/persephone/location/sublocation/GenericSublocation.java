@@ -21,8 +21,8 @@ package edu.pitt.gallowdd.persephone.location.sublocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import edu.pitt.gallowdd.persephone.container.FullyConnectedIdContainer;
-import edu.pitt.gallowdd.persephone.container.IdConnectable;
+import edu.pitt.gallowdd.persephone.container.FullyConnectedIdMixingContainer;
+import edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer;
 import edu.pitt.gallowdd.persephone.util.Id;
 import edu.pitt.gallowdd.persephone.util.IdException;
 
@@ -38,7 +38,7 @@ public abstract class GenericSublocation {
   
   private final Id id;
   private Id containingLocationId;
-  private final IdConnectable mixingContainer;
+  private final GenericIdMixingContainer mixingContainer;
   
   /**
    * The base class of any sublocation that does not move.
@@ -58,7 +58,7 @@ public abstract class GenericSublocation {
     
     this.id = new Id(idString);
     this.containingLocationId = new Id(containingLocationIdString);
-    this.mixingContainer = new FullyConnectedIdContainer();
+    this.mixingContainer = new FullyConnectedIdMixingContainer();
   }
   
   /**
@@ -79,7 +79,7 @@ public abstract class GenericSublocation {
     
     this.id = new Id(idString);
     this.containingLocationId = new Id(containingLocationId);
-    this.mixingContainer = new FullyConnectedIdContainer();
+    this.mixingContainer = new FullyConnectedIdMixingContainer();
   }
   
   /** 
@@ -88,7 +88,7 @@ public abstract class GenericSublocation {
    * @param mixingContainer a container for Id strings
    * @throws IdException if the idString or the containingLocationIdString is not valid
    */
-  protected GenericSublocation(String idString, String containingLocationIdString, IdConnectable mixingContainer) throws IdException 
+  protected GenericSublocation(String idString, String containingLocationIdString, GenericIdMixingContainer mixingContainer) throws IdException 
   {
     if(idString == null || containingLocationIdString == null)
     {
@@ -108,7 +108,7 @@ public abstract class GenericSublocation {
    * @param mixingContainer a container for Id strings
    * @throws IdException if the idString is not valid
    */
-  protected GenericSublocation(String idString, Id containingLocationId, IdConnectable mixingContainer) throws IdException 
+  protected GenericSublocation(String idString, Id containingLocationId, GenericIdMixingContainer mixingContainer) throws IdException 
   {
     if(idString == null || containingLocationId == null)
     {
@@ -141,7 +141,7 @@ public abstract class GenericSublocation {
   /**
    * @return the mixingContainer
    */
-  public IdConnectable getMixingContainer()
+  public GenericIdMixingContainer getMixingContainer()
   {
     return this.mixingContainer;
   }

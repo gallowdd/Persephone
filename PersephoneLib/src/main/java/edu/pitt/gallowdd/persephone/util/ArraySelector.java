@@ -1,5 +1,7 @@
 package edu.pitt.gallowdd.persephone.util;
 
+import java.util.Optional;
+
 /**
  * 
  * @author David Galloway
@@ -11,10 +13,10 @@ public class ArraySelector<T> {
   /**
    * @param items
    * @param weights
-   * @return the item that was randomly selected from items given the weights
+   * @return the an Optional item that was randomly selected from items given the weights or {@code Optional.empty()} if not found
    * @throws ArraySelectorException if the arrays aren't both the same size
    */
-  public T getRandomItemFromArrayGivenArrayOfWeights(T[] items, double[] weights) throws ArraySelectorException
+  public Optional<T> getRandomItemFromArrayGivenArrayOfWeights(T[] items, double[] weights) throws ArraySelectorException
   {
     int length = items.length;
     if(weights.length != length)
@@ -44,12 +46,13 @@ public class ArraySelector<T> {
         currentUpperBound += probArr[i];
         if(randVal < currentUpperBound)
         {
-          return items[i];
+          return Optional.of(items[i]);
         }
       }
-      return items[length - 1];
+      return Optional.of(items[length - 1]);
     }
-    return null;
+    
+    return Optional.empty();
     
   }
 }

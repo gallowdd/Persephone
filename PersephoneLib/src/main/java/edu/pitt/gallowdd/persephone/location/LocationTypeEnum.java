@@ -1,6 +1,6 @@
 /*
  * Persephone: An Agent-Based Modeling Platform
- * Copyright (c) 2019-2021  David Galloway / University of Pittsburgh
+ * Copyright (c) 2019-2022  David Galloway / University of Pittsburgh
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -133,6 +133,15 @@ public enum LocationTypeEnum
     public String toString()
     {
       return "CELL";
+    }
+  },
+  @SuppressWarnings("javadoc")
+  NULL_TYPE
+  {
+    @Override
+    public String toString()
+    {
+      return "NULL";
     }
   };
   

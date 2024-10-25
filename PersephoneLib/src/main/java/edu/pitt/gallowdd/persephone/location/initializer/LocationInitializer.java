@@ -15,11 +15,11 @@ import edu.pitt.gallowdd.persephone.location.LocationFactory;
 import edu.pitt.gallowdd.persephone.location.LocationTypeEnum;
 import edu.pitt.gallowdd.persephone.location.School;
 import edu.pitt.gallowdd.persephone.location.Workplace;
-import edu.pitt.gallowdd.persephone.parameters.DataTypeXmlEnum;
-import edu.pitt.gallowdd.persephone.parameters.LocationXmlType;
-import edu.pitt.gallowdd.persephone.parameters.LocationXmlType.LocationAttribute.Source;
 import edu.pitt.gallowdd.persephone.util.Constants;
 import edu.pitt.gallowdd.persephone.util.EnumConverterMethods;
+import edu.pitt.gallowdd.persephone.xml.base.LocationXmlType;
+import edu.pitt.gallowdd.persephone.xml.base.LocationXmlType.LocationAttribute.Source;
+import edu.pitt.gallowdd.persephone.xml.common.DatatypeXmlEnum;
 
 /**
  * @author David Galloway
@@ -70,25 +70,25 @@ public class LocationInitializer {
         LocationInitializer.LOGGER.warn("No elevation specified for record");
       }
       
-      switch(locationType.getJavaClass())
+      switch(locationType.getDataType())
       {
-        case EDU_PITT_GALLOWDD_PERSEPHONE_LOCATION_HOUSEHOLD:
+        case HOUSEHOLD:
           retVal = LocationFactory.createLocation(LocationTypeEnum.HOUSEHOLD, id, latitude, longitude, elevation);
           LocationInitializer.initializeHousehold((Household)retVal, locAttributes, record);
-          LocationInitializer.LOGGER.debug(retVal.toString());
+          LocationInitializer.LOGGER.trace("Initialized: " + retVal.toString());
           break;
-        case EDU_PITT_GALLOWDD_PERSEPHONE_LOCATION_WORKPLACE:
+        case WORKPLACE:
           retVal = LocationFactory.createLocation(LocationTypeEnum.WORKPLACE, id, latitude, longitude, elevation);
           LocationInitializer.initializeWorkplace((Workplace)retVal, locAttributes, record);
-          LocationInitializer.LOGGER.debug(retVal.toString());
+          LocationInitializer.LOGGER.trace("Initialized: " + retVal.toString());
           break;
-        case EDU_PITT_GALLOWDD_PERSEPHONE_LOCATION_SCHOOL:
+        case SCHOOL:
           retVal = LocationFactory.createLocation(LocationTypeEnum.SCHOOL, id, latitude, longitude, elevation);
           LocationInitializer.initializeSchool((School)retVal, locAttributes, record);
-          LocationInitializer.LOGGER.debug(retVal.toString());
+          LocationInitializer.LOGGER.trace("Initialized: " + retVal.toString());
           break;
         default:
-          LocationInitializer.LOGGER.fatal("Tried to initialize Unexpected Location Java Type: " + locationType.getJavaClass());
+          LocationInitializer.LOGGER.fatal("Tried to initialize Unexpected Location Java Type: " + locationType.getName());
           System.exit(1);
           break;
       }
@@ -97,7 +97,7 @@ public class LocationInitializer {
     {
       // ABORT
       LocationInitializer.LOGGER.fatal(e);
-      System.exit(1);
+      System.exit(Constants.EX_DATAERR);
     }
     
     return retVal;
@@ -124,7 +124,7 @@ public class LocationInitializer {
     
     for(LocationXmlType.LocationAttribute locAtt : locAttributes)
     {
-      DataTypeXmlEnum javaType = locAtt.getDataType();
+      DatatypeXmlEnum javaType = locAtt.getDataType();
       String attrName = locAtt.getAttrName();
       
       Source attrSrcInfo = locAtt.getSource();
@@ -133,18 +133,23 @@ public class LocationInitializer {
       {
         // ABORT
         LocationInitializer.LOGGER.fatal("The LocationAttribute [" + attrName + "] is not dynamic, but there is no initial source information defined");
-        System.exit(1);
+        System.exit(Constants.EX_DATAERR);
       }
       
-      // <xsd:choice>
-      //     <xsd:element name="initial_file_link" minOccurs="1" maxOccurs="1" type="initFileLinkType" />
-      //     <xsd:element name="link" minOccurs="1" maxOccurs="1" type="linkType" />
-      // </xsd:choice>
-      if(attrSrcInfo.getInitialFileLink() != null)
+      //<xsd:element name="source" minOccurs="0" maxOccurs="1">
+      //<xsd:choice>
+      //    <!-- The initialization file for agents has a field with this information -->
+      //    <xsd:element name="initial_file" minOccurs="1" maxOccurs="1">
+      //
+      //    <!-- The initialization file for agents does NOT have a field with this information, 
+      //         so there will be a separate file with agent ID and this field -->
+      //    <xsd:element name="link_file" minOccurs="1" maxOccurs="1">
+      //</xsd:choice>
+      if(attrSrcInfo.getInitialFile() != null)
       {
         // The data is in the record already, so we just need to get it from the correct field
-        String fieldName = attrSrcInfo.getInitialFileLink().getInitFileCsvFieldName();
-        String convertToEnumFunction = attrSrcInfo.getInitialFileLink().getConvertToEnumFunction();
+        String fieldName = attrSrcInfo.getInitialFile().getCsvFieldName();
+        String convertToEnumFunction = attrSrcInfo.getInitialFile().getConvertToEnumFunction();
         
         switch(javaType)
         {
@@ -153,7 +158,6 @@ public class LocationInitializer {
             BeanUtils.setProperty(household, attrName, dblVal);
             break;
           case INT:
-            System.out.println("fieldName: " + fieldName);
             int intVal = Integer.parseInt(record.get(fieldName));
             if(convertToEnumFunction != null && !convertToEnumFunction.trim().equals(""))
             {
@@ -182,7 +186,7 @@ public class LocationInitializer {
           
         }
       }
-      else if(attrSrcInfo.getLink() != null)
+      else if(attrSrcInfo.getLinkFile() != null)
       {
         
       }
@@ -190,7 +194,7 @@ public class LocationInitializer {
       {
         // ABORT
         LocationInitializer.LOGGER.fatal("The LocationAttribute [" + attrName + "] doesn't seem to have a link defined");
-        System.exit(1);
+        System.exit(Constants.EX_DATAERR);
       }
     }
   }
@@ -211,12 +215,12 @@ public class LocationInitializer {
     if(school == null)
     {
       LocationInitializer.LOGGER.fatal("Tried to initialize null school");
-      System.exit(1);
+      System.exit(Constants.EX_DATAERR);
     }
     
     for(LocationXmlType.LocationAttribute locAtt : locAttributes)
     {
-      DataTypeXmlEnum javaType = locAtt.getDataType();
+      DatatypeXmlEnum javaType = locAtt.getDataType();
       String attrName = locAtt.getAttrName();
       
       Source attrSrcInfo = locAtt.getSource();
@@ -225,18 +229,23 @@ public class LocationInitializer {
       {
         // ABORT
         LocationInitializer.LOGGER.fatal("The LocationAttribute [" + attrName + "] is not dynamic, but there is no initial source information defined");
-        System.exit(1);
+        System.exit(Constants.EX_DATAERR);
       }
       
-      // <xsd:choice>
-      //     <xsd:element name="initial_file_link" minOccurs="1" maxOccurs="1" type="initFileLinkType" />
-      //     <xsd:element name="link" minOccurs="1" maxOccurs="1" type="linkType" />
-      // </xsd:choice>
-      if(attrSrcInfo.getInitialFileLink() != null)
+      //<xsd:element name="source" minOccurs="0" maxOccurs="1">
+      //<xsd:choice>
+      //    <!-- The initialization file for agents has a field with this information -->
+      //    <xsd:element name="initial_file" minOccurs="1" maxOccurs="1">
+      //
+      //    <!-- The initialization file for agents does NOT have a field with this information, 
+      //         so there will be a separate file with agent ID and this field -->
+      //    <xsd:element name="link_file" minOccurs="1" maxOccurs="1">
+      //</xsd:choice>
+      if(attrSrcInfo.getInitialFile() != null)
       {
         // The data is in the record already, so we just need to get it from the correct field
-        String fieldName = attrSrcInfo.getInitialFileLink().getInitFileCsvFieldName();
-        String convertToEnumFunction = attrSrcInfo.getInitialFileLink().getConvertToEnumFunction();
+        String fieldName = attrSrcInfo.getInitialFile().getCsvFieldName();
+        String convertToEnumFunction = attrSrcInfo.getInitialFile().getConvertToEnumFunction();
         
         switch(javaType)
         {
@@ -273,7 +282,7 @@ public class LocationInitializer {
           
         }
       }
-      else if(attrSrcInfo.getLink() != null)
+      else if(attrSrcInfo.getLinkFile() != null)
       {
         
       }
@@ -281,7 +290,7 @@ public class LocationInitializer {
       {
         // ABORT
         LocationInitializer.LOGGER.fatal("The LocationAttribute [" + attrName + "] doesn't seem to have a link defined");
-        System.exit(1);
+        System.exit(Constants.EX_DATAERR);
       }
     }
   }
@@ -302,12 +311,12 @@ public class LocationInitializer {
     if(workplace == null)
     {
       LocationInitializer.LOGGER.fatal("Tried to initialize null workplace");
-      System.exit(1);
+      System.exit(Constants.EX_DATAERR);
     }
     
     for(LocationXmlType.LocationAttribute locAtt : locAttributes)
     {
-      DataTypeXmlEnum javaType = locAtt.getDataType();
+      DatatypeXmlEnum javaType = locAtt.getDataType();
       String attrName = locAtt.getAttrName();
       
       Source attrSrcInfo = locAtt.getSource();
@@ -316,18 +325,23 @@ public class LocationInitializer {
       {
         // ABORT
         LocationInitializer.LOGGER.fatal("The LocationAttribute [" + attrName + "] is not dynamic, but there is no initial source information defined");
-        System.exit(1);
+        System.exit(Constants.EX_DATAERR);
       }
       
-      // <xsd:choice>
-      //     <xsd:element name="initial_file_link" minOccurs="1" maxOccurs="1" type="initFileLinkType" />
-      //     <xsd:element name="link" minOccurs="1" maxOccurs="1" type="linkType" />
-      // </xsd:choice>
-      if(attrSrcInfo.getInitialFileLink() != null)
+      //<xsd:element name="source" minOccurs="0" maxOccurs="1">
+      //<xsd:choice>
+      //    <!-- The initialization file for agents has a field with this information -->
+      //    <xsd:element name="initial_file" minOccurs="1" maxOccurs="1">
+      //
+      //    <!-- The initialization file for agents does NOT have a field with this information, 
+      //         so there will be a separate file with agent ID and this field -->
+      //    <xsd:element name="link_file" minOccurs="1" maxOccurs="1">
+      //</xsd:choice>
+      if(attrSrcInfo.getInitialFile() != null)
       {
         // The data is in the record already, so we just need to get it from the correct field
-        String fieldName = attrSrcInfo.getInitialFileLink().getInitFileCsvFieldName();
-        String convertToEnumFunction = attrSrcInfo.getInitialFileLink().getConvertToEnumFunction();
+        String fieldName = attrSrcInfo.getInitialFile().getCsvFieldName();
+        String convertToEnumFunction = attrSrcInfo.getInitialFile().getConvertToEnumFunction();
         
         switch(javaType)
         {
@@ -364,7 +378,7 @@ public class LocationInitializer {
           
         }
       }
-      else if(attrSrcInfo.getLink() != null)
+      else if(attrSrcInfo.getLinkFile() != null)
       {
         
       }
@@ -372,10 +386,8 @@ public class LocationInitializer {
       {
         // ABORT
         LocationInitializer.LOGGER.fatal("The LocationAttribute [" + attrName + "] doesn't seem to have a link defined");
-        System.exit(1);
+        System.exit(Constants.EX_DATAERR);
       }
     }
   }
-  
-  
 }

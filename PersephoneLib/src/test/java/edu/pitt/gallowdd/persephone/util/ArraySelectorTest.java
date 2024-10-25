@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -127,10 +128,13 @@ class ArraySelectorTest {
     {
       try
       {
-        String item = mySelector.getRandomItemFromArrayGivenArrayOfWeights(myItems, myWeights);
-        itemCountMap.put(item, itemCountMap.get(item) + 1);
+        Optional<String> item = mySelector.getRandomItemFromArrayGivenArrayOfWeights(myItems, myWeights);
+        if(item.isPresent())
+        {
+          itemCountMap.put(item.get(), itemCountMap.get(item.get()) + 1);
+        }
       }
-      catch (ArraySelectorException e)
+      catch(ArraySelectorException e)
       {
         // TODO Auto-generated catch block
         e.printStackTrace();

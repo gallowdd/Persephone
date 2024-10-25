@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -32,7 +33,9 @@ import com.google.common.collect.ImmutableRangeMap;
 import com.google.common.collect.Range;
 import com.google.common.collect.RangeMap;
 
-import edu.pitt.gallowdd.persephone.container.IdConnectable;
+import edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer;
+import edu.pitt.gallowdd.persephone.container.MixingContainerTypeMatchException;
+import edu.pitt.gallowdd.persephone.container.MixingRoleTypeEnum;
 import edu.pitt.gallowdd.persephone.location.LatitudeLongitude;
 import edu.pitt.gallowdd.persephone.util.Id;
 import edu.pitt.gallowdd.persephone.util.IdException;
@@ -43,7 +46,7 @@ import edu.pitt.gallowdd.persephone.util.Utils;
  * 
  * @author David Galloway
  */
-public class GridPatchWeightedIdContainer implements IdConnectable {
+public class GridPatchWeightedIdContainer extends GenericIdMixingContainer {
   
   private static final Logger LOGGER = LogManager.getLogger(GridPatchWeightedIdContainer.class.getName());
   
@@ -66,12 +69,15 @@ public class GridPatchWeightedIdContainer implements IdConnectable {
    * @param maxLongitude the max longitude of this Grid
    * @param patchSizeKilometer the size of a geographic patch in kilometers
    * @param inPatchProbability the probability that two connected agents are from the same geographic patch
+   * @param roleTypes an argument list of MixingRoleTypeEnum that will be used to populate the 
+   *   internal array of roleTypesAcepted
    * 
    * @throws PhysicalLocationException 
    */
-  public GridPatchWeightedIdContainer(double minLatitude, double maxLatitude, double minLongitude, double maxLongitude, double patchSizeKilometer, double inPatchProbability) throws PhysicalLocationException
+  public GridPatchWeightedIdContainer(double minLatitude, double maxLatitude, double minLongitude, double maxLongitude, double patchSizeKilometer, double inPatchProbability, MixingRoleTypeEnum ... roleTypes) throws PhysicalLocationException
   {
-    super();
+    super(roleTypes);
+    
     //super((minLatitude + maxLatitude) / 2.0, (minLongitude + maxLongitude) / 2.0, (minAltitude + maxAltitude) / 2.0);
     
     if(minLatitude < -90.0 || minLatitude >= maxLatitude || minLongitude < -90.0 || minLongitude >= maxLongitude || patchSizeKilometer <= 0.0)
@@ -149,13 +155,30 @@ public class GridPatchWeightedIdContainer implements IdConnectable {
       curLat += latStep;
     }
   }
-//  
+  
   /* (non-Javadoc)
-   * @see edu.pitt.gallowdd.persephone.container.IdConnectable#add(String)
+   * @see edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer#add(Id)
    */
   @Override
-  public void add(Id id)
+  public void add(Id id) throws MixingContainerTypeMatchException
   {
+    this.add(MixingRoleTypeEnum.VISITOR, id);
+  }
+
+  /**
+   * Add the Id to the this collection
+   * 
+   * @param mixingRoleType
+   * @param id
+   * @throws MixingContainerTypeMatchException
+   */
+  public void add(MixingRoleTypeEnum mixingRoleType, Id id) throws MixingContainerTypeMatchException
+  {
+    if(!this.isMixingRoleTypeAccepted(mixingRoleType))
+    {
+      throw new MixingContainerTypeMatchException(id.getIdString(), mixingRoleType);
+    }
+    
     // Just add this to a random patch in the grid
     double lat = this.getRandomLatitudeInGrid();
     double lon = this.getRandomLongitudeInGrid();
@@ -274,28 +297,28 @@ public class GridPatchWeightedIdContainer implements IdConnectable {
   }
   
   /* (non-Javadoc)
-   * @see edu.pitt.gallowdd.persephone.container.IdConnectable#getRandom()
+   * @see edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer#getRandom()
    */
   @Override
-  public Id getRandom()
+  public Optional<Id> getRandom()
   {
     if(this.idLatLonMap.size() == 0)
     {
-      return null;
+      return Optional.empty();
     }
     
     List<Id> keyList = new ArrayList<Id>(this.idLatLonMap.keySet());
     int randomIndex = Utils.getRandomInt(keyList.size());
-    return keyList.get(randomIndex);
+    return Optional.of(keyList.get(randomIndex));
   }
   
   /* (non-Javadoc)
-   * @see edu.pitt.gallowdd.persephone.container.IdConnectable#getConnected(Id)
+   * @see edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer#getConnected(Id)
    */
   @Override
-  public Id getConnected(Id id)
+  public Optional<Id> getConnected(Id id)
   {
-    Id retVal = null;
+    Id tempId = null;
     
     if(this.idLatLonMap.containsKey(id))
     {
@@ -319,12 +342,12 @@ public class GridPatchWeightedIdContainer implements IdConnectable {
           {
             --randomIndex;
           }
-          retVal = tempArr[randomIndex];
+          tempId = tempArr[randomIndex];
         }
       }
       
       // If we either randomly decided that we should pick outside the current patch, or looking in patch yielded no connection
-      if(retVal == null)
+      if(tempId == null)
       {
         List<Id> keyList = new ArrayList<Id>(this.idLatLonMap.keySet());
         int keyListSize = keyList.size();
@@ -343,28 +366,35 @@ public class GridPatchWeightedIdContainer implements IdConnectable {
               --randomIndex;
             }
           }
-          retVal = keyList.get(randomIndex);
+          tempId = keyList.get(randomIndex);
         }
       }
     }
     
-    return retVal;
+    if(tempId == null)
+    {
+      return Optional.empty();
+    }
+    else
+    {
+      return Optional.of(tempId);
+    }
   }
   
   /* (non-Javadoc)
    * @see edu.pitt.gallowdd.persephone.container.IdConnectable#getConnected(String)
    */
   @Override
-  public Id getConnected(String idString)
+  public Optional<Id> getConnected(String idString)
   {
-    Id retVal = null;
+    Id tempId = null;
     
     Id id;
     try
     {
       id = new Id(idString);
     }
-    catch (IdException e)
+    catch(IdException e)
     {
       // Since the idString is invalid, it could not be in the this.idLatLonMap
       return null;
@@ -392,12 +422,12 @@ public class GridPatchWeightedIdContainer implements IdConnectable {
           {
             --randomIndex;
           }
-          retVal = tempArr[randomIndex];
+          tempId = tempArr[randomIndex];
         }
       }
       
       // If we either randomly decided that we should pick outside the current patch, or looking in patch yielded no connection
-      if(retVal == null)
+      if(tempId == null)
       {
         List<Id> keyList = new ArrayList<Id>(this.idLatLonMap.keySet());
         int keyListSize = keyList.size();
@@ -416,51 +446,58 @@ public class GridPatchWeightedIdContainer implements IdConnectable {
               --randomIndex;
             }
           }
-          retVal = keyList.get(randomIndex);
+          tempId = keyList.get(randomIndex);
         }
       }
     }
     
-    return retVal;
+    if(tempId == null)
+    {
+      return Optional.empty();
+    }
+    else
+    {
+      return Optional.of(tempId);
+    }
   }
   
   /* (non-Javadoc)
-   * @see edu.pitt.gallowdd.persephone.container.IdConnectable#getConnected(String, int)
+   * @see edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer#getConnected(ID, int)
    */
   @Override
-  public List<Id> getConnected(Id id, int howMany)
+  public Optional<List<Id>> getConnected(Id id, int howMany)
   {
     if(howMany <= 0)
     {
       GridPatchWeightedIdContainer.LOGGER.warn("howMany must be > 0");
-      return null;
+      return Optional.empty();
     }
     
     if(!this.idLatLonMap.containsKey(id))
     {
-      return null;
+      return Optional.empty();
     }
     
-    List<Id> retList;
+    List<Id> tmpList;
     final int idLatLonMapSize = this.idLatLonMap.size();
     if(howMany >= idLatLonMapSize)
     {
       // We are asking for more connections than are in the entire Grid, so just add every Id that is not idString
-      retList = new ArrayList<Id>(idLatLonMapSize - 1);
+      tmpList = new ArrayList<Id>(idLatLonMapSize - 1);
       GridPatchWeightedIdContainer.LOGGER.warn("Asked for a connected list that is equal to or larger than the number of agents stored");
       
       for(Id idKey : this.idLatLonMap.keySet())
       {
         if(!idKey.equals(id))
         {
-          retList.add(idKey);
+          tmpList.add(idKey);
         }
       }
     }
     else
     {
       // Create an array list of howMany elements
-      retList = new ArrayList<Id>(howMany);
+      tmpList = new ArrayList<Id>(howMany);
       
       final List<Id> tmpListSamePatch = new ArrayList<>();
       final List<Id> tmpListGrid = new ArrayList<>();
@@ -492,109 +529,36 @@ public class GridPatchWeightedIdContainer implements IdConnectable {
         if(Utils.getRandomNumberGenerator().nextDouble() < this.inPatchProbability)
         {
           int randomIndex = Utils.getRandomInt(tmpListSamePatch.size());
-          retList.add(tmpListSamePatch.remove(randomIndex));
+          tmpList.add(tmpListSamePatch.remove(randomIndex));
         }
         else
         {
           int randomIndex = Utils.getRandomInt(tmpListGrid.size());
-          retList.add(tmpListGrid.remove(randomIndex));
+          tmpList.add(tmpListGrid.remove(randomIndex));
         }
       }
     }
     
-    return retList;
+    return Optional.of(tmpList);
   }
   
   /* (non-Javadoc)
-   * @see edu.pitt.gallowdd.persephone.container.IdConnectable#getConnected(String, int)
+   * @see edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer#getConnected(String, int)
    */
   @Override
-  public List<Id> getConnected(String idString, int howMany)
+  public Optional<List<Id>> getConnected(String idString, int howMany)
   {
     Id id;
     try
     {
       id = new Id(idString);
+      return this.getConnected(id, howMany);
     }
-    catch (IdException e)
+    catch(IdException e)
     {
       // Since the idString is invalid, it could not be in the this.idLatLonMap
-      return null;
+      return Optional.empty();
     }
-    
-    if(howMany <= 0)
-    {
-      GridPatchWeightedIdContainer.LOGGER.warn("howMany must be > 0");
-      return null;
-    }
-    
-    if(!this.idLatLonMap.containsKey(id))
-    {
-      return null;
-    }
-    
-    List<Id> retList;
-    final int idLatLonMapSize = this.idLatLonMap.size();
-    if(howMany >= idLatLonMapSize)
-    {
-      // We are asking for more connections than are in the entire Grid, so just add every Id that is not idString
-      retList = new ArrayList<Id>(idLatLonMapSize - 1);
-      GridPatchWeightedIdContainer.LOGGER.warn("Asked for a connected list that is equal to or larger than the number of agents stored");
-      
-      for(Id idKey : this.idLatLonMap.keySet())
-      {
-        if(!idKey.equals(id))
-        {
-          retList.add(idKey);
-        }
-      }
-    }
-    else
-    {
-      // Create an array list of howMany elements
-      retList = new ArrayList<Id>(howMany);
-      
-      final List<Id> tmpListSamePatch = new ArrayList<>();
-      final List<Id> tmpListGrid = new ArrayList<>();
-      
-      // Loop over the entire list of agents to make two lists: one of ids that share the same patch as idString, the other of ids that are in
-      // this grid, but not the same patch
-      for(Id idKey : this.idLatLonMap.keySet())
-      { 
-        LatitudeLongitude latLon = this.idLatLonMap.get(idKey);
-        if(!idKey.equals(id))
-        {
-          if(this.latLonRangeMap.get(latLon.getLatitude()).get(latLon.getLongitude()).contains(idKey))
-          {
-            tmpListSamePatch.add(idKey);
-          }
-          else
-          {
-            tmpListGrid.add(idKey);
-          }
-        }
-      }
-      
-      // Now that I have the two lists, just fill the return List
-      
-      // Fill it with howMany Ids that are not idString
-      for(int i = 0; i < howMany; ++i)
-      {
-        // First check to see if the connected agent is from inElement's patch
-        if(Utils.getRandomNumberGenerator().nextDouble() < this.inPatchProbability)
-        {
-          int randomIndex = Utils.getRandomInt(tmpListSamePatch.size());
-          retList.add(tmpListSamePatch.remove(randomIndex));
-        }
-        else
-        {
-          int randomIndex = Utils.getRandomInt(tmpListGrid.size());
-          retList.add(tmpListGrid.remove(randomIndex));
-        }
-      }
-    }
-    
-    return retList;
   }
   
   /**

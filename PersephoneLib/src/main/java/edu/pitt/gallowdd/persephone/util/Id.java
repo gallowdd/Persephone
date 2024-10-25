@@ -35,21 +35,29 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  **/
 public final class Id implements Comparable<Id>
 {
+  /**
+   * The default Null Id that uses the ID_UNSET String
+   */
+  public static final Id NULL_ID = new Id();
+  
   //\A[A-Z][A-Z][A-Z]?[A-Z]?[A-Z]?[A-Z]?_[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|XXX_0{8}-0{4}-0{4}-0{4}-0{12}\z
   private static final String UUID_PATTERN_STR = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}";
   private static final String ID_UNSET = "XXX_00000000-0000-0000-0000-000000000000";
+  
   // Must be at least Two Capital Letters (up to Six Capital letters) followed by an underscore then the UUID
   //  OR it can be the ID_UNSET match (The OR part allows unset UUID to be validated)
   private static final String ID_PATTERN_STR = "\\A" + "[A-Z][A-Z]?[A-Z]?[A-Z]?[A-Z]?[A-Z]_(?:MGR_)?" + Id.UUID_PATTERN_STR + "|XXX_0{8}-0{4}-0{4}-0{4}-0{12}" + "\\z"; 
   private static Pattern ID_PATTERN = Pattern.compile(Id.ID_PATTERN_STR);
-  
+
   private String idString = null;
+  
+//  private static final NullID = new Id();
   
   /**
    * Default Constructor creates an Id with the value of UNSET
    * i.e. XXX_00000000-0000-0000-0000-000000000000
    */
-  public Id()
+  private Id()
   {
     this.idString = Id.ID_UNSET;
   }

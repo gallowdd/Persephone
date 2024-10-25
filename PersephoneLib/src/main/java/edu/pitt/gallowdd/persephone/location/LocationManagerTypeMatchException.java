@@ -36,6 +36,6 @@ public class LocationManagerTypeMatchException extends PersephoneException {
    */
   public LocationManagerTypeMatchException(String mgrId, String locationTypeStr)
   {
-    super(ErrorCode.ERR_LOC_MGR_SIZE_EXCEED.message(mgrId, locationTypeStr));
+    super(ErrorCode.ERR_LOC_MGR_TYPE_MATCH.message(mgrId, locationTypeStr));
   }
 }

@@ -26,48 +26,38 @@ package edu.pitt.gallowdd.persephone.event;
 public enum EventTypeEnum
 {
   
-  /**
-   * Events that pertain to the simulation itself
+  /*
+   * Simulation Events
    */
-  SIMULATION_EVENT
-  {
-    @Override
-    public String toString()
-    {
-      return "SIM_EVNT";
-    }
-  },
+  ADVANCE_TIME_EVENT(EventBaseTypeEnum.SIMULATION_EVENT, "ADVANCE-TIME"),
   
-  /**
-   * Events that pertain to agents
-   * 
-   * E.g.
-   * <ul>
-   *   <li>Agent Death -- Need to remove all other actions for particular agent from event queues</li>
-   *   <li>Agent Gives Birth -- Need to create new agent(s)</li>
-   *   <li>Agent Will Transition from current State in Condition to new State</li>
-   *   <li>Etc.</li>
-   * </ul>
+  /*
+   * Agent Events
    */
-  AGENT_EVENT,
+  AGENT_DEATH_EVENT(EventBaseTypeEnum.AGENT_EVENT, "DEATH"),
+  AGENT_GIVE_BIRTH_EVENT(EventBaseTypeEnum.AGENT_EVENT, "GIVE-BIRTH"),
+  AGENT_STATE_TRANSITION_EVENT(EventBaseTypeEnum.AGENT_EVENT, "STATE-TRANSITION"),
   
-  /**
-   * Events that pertain to locations
-   * 
-   * E.g. 
-   * <ul>
-   *   <li>Close</li>
-   *   <li>Open</li>
-   *   <li>Etc</li>
-   * </ul>
+  /*
+   *Location Events
    */
-  LOCATION_EVENT
+  LOCATION_START_MIXING_EVENT(EventBaseTypeEnum.LOCATION_EVENT, "MIX-START"),
+  LOCATION_CLOSE_EVENT(EventBaseTypeEnum.LOCATION_EVENT, "CLOSE"),
+  LOCATION_OPEN_EVENT(EventBaseTypeEnum.LOCATION_EVENT, "OPEN"),;
+  
+  private final EventBaseTypeEnum baseType;
+  private final String label;
+  
+  private EventTypeEnum(EventBaseTypeEnum baseType, String label)
   {
-    @Override
-    public String toString()
-    {
-      return "PER";
-    }
-  },;
+    this.baseType = baseType;
+    this.label = label;
+  }
+  
+  @Override
+  public String toString()
+  {
+    return this.baseType.toString() + "->" + this.label;
+  }
   
 }

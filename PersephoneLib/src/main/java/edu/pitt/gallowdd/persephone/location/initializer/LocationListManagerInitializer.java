@@ -32,8 +32,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import edu.pitt.gallowdd.persephone.location.GenericLocation;
-import edu.pitt.gallowdd.persephone.parameters.LocationJavaClassXmlEnum;
-import edu.pitt.gallowdd.persephone.parameters.SimulationXmlType.SyntheticEnvironment;
+import edu.pitt.gallowdd.persephone.xml.common.CountryCodeXmlEnum;
+import edu.pitt.gallowdd.persephone.xml.common.LocationDatatypeXmlEnum;
+import edu.pitt.gallowdd.persephone.xml.common.PopVersionXmlEnum;
+import edu.pitt.gallowdd.persephone.xml.runtime.SimulationXmlType.SyntheticEnvironmentDescriptor;
 import edu.pitt.gallowdd.persephone.util.Params;
 
 /**
@@ -46,23 +48,23 @@ public class LocationListManagerInitializer {
   
   /**
    * @param locations 
-   * @param xmlSyntheticEnvironment the synthetic ecosystem information from the parameter file
+   * @param xmlSyntheticEnvironment the synthetic environment information from the parameter file
    * @param simDate the current date in the simulation
    */
-  public static void initialize(List<GenericLocation> locations, SyntheticEnvironment xmlSyntheticEnvironment)
+  public static void initialize(List<GenericLocation> locations, SyntheticEnvironmentDescriptor xmlSyntheticEnvironment)
   {
-    String country = xmlSyntheticEnvironment.getCountry();
-    String version = xmlSyntheticEnvironment.getVersion();
+    CountryCodeXmlEnum country = xmlSyntheticEnvironment.getCountry();
+    PopVersionXmlEnum version = xmlSyntheticEnvironment.getVersion();
     String identifier = xmlSyntheticEnvironment.getIdentifier();
     
     // Verify that agentTypeName is defined in the parameter file
-    for(int i = 0; i < Params.getLocationTypes().size(); ++i)
+    for(int i = 0; i < Params.getLocations().size(); ++i)
     {
       
-      Path filePath = Paths.get(Params.getPopulationDirectory(), "country", country, version, identifier, 
-          Params.getLocationTypes().get(i).getName() + ".csv");
+      Path filePath = Paths.get(Params.getPopulationDirectory(), "country", country.value(), version.value(), identifier, 
+          Params.getLocations().get(i).getFilename().value());
       
-      LocationJavaClassXmlEnum javaClass = Params.getLocationTypes().get(i).getJavaClass();
+      LocationDatatypeXmlEnum javaClass = Params.getLocations().get(i).getDataType();
       
       try(
           final Reader in = new FileReader(filePath.toFile());
@@ -72,32 +74,32 @@ public class LocationListManagerInitializer {
         {
           locations = new ArrayList<>();
         }
-        Iterable<CSVRecord> records = CSVFormat.RFC4180.withHeader().parse(in);
+        Iterable<CSVRecord> records = CSVFormat.RFC4180.builder().setHeader().setSkipHeaderRecord(true).build().parse(in);
         int locationCount = 0;
         switch(javaClass)
         {
-          case EDU_PITT_GALLOWDD_PERSEPHONE_LOCATION_HOUSEHOLD:
+          case HOUSEHOLD:
             for(CSVRecord record : records) 
             {
-              GenericLocation location = LocationInitializer.initialize(record, Params.getLocationTypes().get(i));
+              GenericLocation location = LocationInitializer.initialize(record, Params.getLocations().get(i));
               locations.add(location);
               ++locationCount;
             }
             LocationListManagerInitializer.LOGGER.debug("Added " + locationCount + " households");
             break;
-          case EDU_PITT_GALLOWDD_PERSEPHONE_LOCATION_SCHOOL:
+          case SCHOOL:
             for(CSVRecord record : records) 
             {
-              GenericLocation location = LocationInitializer.initialize(record, Params.getLocationTypes().get(i));
+              GenericLocation location = LocationInitializer.initialize(record, Params.getLocations().get(i));
               locations.add(location);
               ++locationCount;
             }
             LocationListManagerInitializer.LOGGER.debug("Added " + locationCount + " schools");
             break;
-          case EDU_PITT_GALLOWDD_PERSEPHONE_LOCATION_WORKPLACE:
+          case WORKPLACE:
             for(CSVRecord record : records) 
             {
-              GenericLocation location = LocationInitializer.initialize(record, Params.getLocationTypes().get(i));
+              GenericLocation location = LocationInitializer.initialize(record, Params.getLocations().get(i));
               locations.add(location);
               ++locationCount;
             }

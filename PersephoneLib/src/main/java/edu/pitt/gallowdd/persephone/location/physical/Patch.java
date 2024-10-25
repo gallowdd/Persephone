@@ -1,7 +1,6 @@
 package edu.pitt.gallowdd.persephone.location.physical;
 
-import edu.pitt.gallowdd.persephone.container.IdConnectable;
-import edu.pitt.gallowdd.persephone.util.Constants;
+import edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer;
 
 /**
  * 
@@ -10,7 +9,7 @@ import edu.pitt.gallowdd.persephone.util.Constants;
  */
 public class Patch {
   
-  private final IdConnectable mixingContainer;
+  private final GenericIdMixingContainer mixingContainer;
   private final double minLatitude;
   private final double maxLatitude;
   private final double minLongitude;
@@ -28,7 +27,7 @@ public class Patch {
    * @param maxElevation
    * @throws PhysicalLocationException if minLatitude is >= maxLatitude or minLongitude >= maxLongitude
    */
-  public Patch(IdConnectable mixingContainer, double minLatitude, double maxLatitude, double minLongitude, double maxLongitude,
+  public Patch(GenericIdMixingContainer mixingContainer, double minLatitude, double maxLatitude, double minLongitude, double maxLongitude,
       double minElevation, double maxElevation) throws PhysicalLocationException
   {
     super();

@@ -1,6 +1,7 @@
 package edu.pitt.gallowdd.persephone.agent.attribute;
 
-import org.apache.commons.math3.distribution.NormalDistribution;
+import org.apache.commons.statistics.distribution.ContinuousDistribution;
+import org.apache.commons.statistics.distribution.NormalDistribution;
 
 import com.google.common.collect.ImmutableRangeMap;
 import com.google.common.collect.Range;
@@ -219,6 +220,7 @@ public class PersonHeight {
     Double mean = Constants.DBL_UNSET;
     Double stddev = Constants.DBL_UNSET;
     NormalDistribution normalDist = null;
+    ContinuousDistribution.Sampler normalSampler = null;
     switch(sex)
     {
       case MALE:
@@ -229,12 +231,12 @@ public class PersonHeight {
           break;
         }
         
-        normalDist = new NormalDistribution(Utils.getRandomNumberGenerator(), mean, stddev);
-        
-        retVal = normalDist.sample();
+        normalDist = NormalDistribution.of(mean, stddev);
+        normalSampler = normalDist.createSampler(Utils.getRandomNumberSampler());
+        retVal = normalSampler.sample();
         while(normalDist.cumulativeProbability(retVal) > PersonHeight.MAX_CUM_PROB || normalDist.cumulativeProbability(retVal) < PersonHeight.MIN_CUM_PROB)
         {
-          retVal = normalDist.sample();
+          retVal = normalSampler.sample();
         }
         break;
       case FEMALE:
@@ -244,12 +246,14 @@ public class PersonHeight {
         {
           break;
         }
-        normalDist = new NormalDistribution(Utils.getRandomNumberGenerator(), mean, stddev);
+        
+        normalDist = NormalDistribution.of(mean, stddev);
+        normalSampler = normalDist.createSampler(Utils.getRandomNumberSampler());
+        retVal = normalSampler.sample();
         while(normalDist.cumulativeProbability(retVal) > PersonHeight.MAX_CUM_PROB || normalDist.cumulativeProbability(retVal) < PersonHeight.MIN_CUM_PROB)
         {
-          retVal = normalDist.sample();
+          retVal = normalSampler.sample();
         }
-        retVal = normalDist.sample();
         break;
       case UNSET:
         break;

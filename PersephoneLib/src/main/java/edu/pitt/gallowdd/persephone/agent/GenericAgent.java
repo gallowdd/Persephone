@@ -18,14 +18,16 @@
 
 package edu.pitt.gallowdd.persephone.agent;
 
-import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import edu.pitt.gallowdd.persephone.location.LocationTypeEnum;
 import edu.pitt.gallowdd.persephone.util.Id;
 import edu.pitt.gallowdd.persephone.util.IdException;
 
@@ -35,9 +37,32 @@ import edu.pitt.gallowdd.persephone.util.IdException;
  */
 public abstract class GenericAgent implements Comparable<GenericAgent> {
   
+  private static final Logger LOGGER = LogManager.getLogger(GenericAgent.class.getName());
+  
+  /**
+   * The Null Agent that will be used for all cases where a Null is needed
+   */
+  public static final GenericAgent NULL_AGENT = new GenericAgent(Id.NULL_ID) {
+    
+    @Override
+    public AgentTypeEnum getAgentType()
+    {
+      return AgentTypeEnum.NULL_TYPE;
+    }
+  };
+  
   private final Id id;
-  private final Map<String, Id> assignedLocationMap = new ConcurrentHashMap<>();
+  private final Map<LocationTypeEnum, Id> assignedLocationMap = new ConcurrentHashMap<>();
   private final Map<String, String> dynamicAttributeMap = new ConcurrentHashMap<>();
+  
+  /**
+   * @param id The agent's id
+   */
+  public GenericAgent(Id id)
+  {
+    super();
+    this.id = id;
+  }
   
   /**
    * @param idString The agent's id in String form
@@ -62,7 +87,7 @@ public abstract class GenericAgent implements Comparable<GenericAgent> {
    * @param locationType
    * @return the Id of the locationType assigned to this agent (or null if not found)
    */
-  protected Id getAssignedLocation(String locationType)
+  protected Id getAssignedLocation(LocationTypeEnum locationType)
   {
     return this.assignedLocationMap.get(locationType);
   }
@@ -72,7 +97,7 @@ public abstract class GenericAgent implements Comparable<GenericAgent> {
    * @param locationType
    * @param locationId
    */
-  protected void addAssignedLocation(String locationType, Id locationId)
+  protected void addAssignedLocation(LocationTypeEnum locationType, Id locationId)
   {
     this.assignedLocationMap.put(locationType, locationId);
   }
@@ -82,10 +107,15 @@ public abstract class GenericAgent implements Comparable<GenericAgent> {
    * @param locationType
    * @return the previous LocationId assigned to the locationType for this agent (or null if not found)
    */
-  protected Id removeAssignedLocation(String locationType)
+  protected Id removeAssignedLocation(LocationTypeEnum locationType)
   {
     return this.assignedLocationMap.remove(locationType);
   }
+  
+  /**
+   * @return the AgentType enum of this Agent
+   */
+  abstract public AgentTypeEnum getAgentType();
   
   /* (non-Javadoc)
    * @see java.lang.Object#clone()

@@ -1,6 +1,6 @@
 /*
  * Persephone: An Agent-Based Modeling Platform
- * Copyright (c) 2019-2021  David Galloway / University of Pittsburgh
+ * Copyright (c) 2019-2022  David Galloway / University of Pittsburgh
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ package edu.pitt.gallowdd.persephone.container;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
@@ -44,7 +45,7 @@ import edu.pitt.gallowdd.persephone.util.Utils;
  * 
  * @author David Galloway
  */
-public class DirectedWeightedGraphIdContainer implements IdConnectable {
+public class DirectedWeightedGraphIdContainer extends GenericIdMixingContainer {
   
   private static final Logger LOGGER = LogManager.getLogger(DirectedWeightedGraphIdContainer.class.getName());
   
@@ -60,7 +61,7 @@ public class DirectedWeightedGraphIdContainer implements IdConnectable {
   }
   
   /* (non-Javadoc)
-   * @see edu.pitt.gallowdd.persephone.container.IdConectable#remove(Id)
+   * @see edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer#remove(Id)
    */
   @Override
   public boolean remove(Id id)
@@ -69,7 +70,7 @@ public class DirectedWeightedGraphIdContainer implements IdConnectable {
   }
   
   /* (non-Javadoc)
-   * @see edu.pitt.gallowdd.persephone.container.IdConectablee#remove(String)
+   * @see edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer#remove(String)
    */
   @Override
   public boolean remove(String idString)
@@ -78,7 +79,7 @@ public class DirectedWeightedGraphIdContainer implements IdConnectable {
     {
       return this.completeGraph.removeVertex(new Id(idString));
     }
-    catch (IdException e)
+    catch(IdException e)
     {
       // Since the idString is invalid, it could not be in the this.idSet
       return false;
@@ -86,7 +87,7 @@ public class DirectedWeightedGraphIdContainer implements IdConnectable {
   }
   
   /* (non-Javadoc)
-   * @see edu.pitt.gallowdd.persephone.container.IdConectable#clear(String)
+   * @see edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer#clear()
    */
   @Override
   public void clear()
@@ -94,8 +95,11 @@ public class DirectedWeightedGraphIdContainer implements IdConnectable {
     this.completeGraph.removeAllVertices(this.completeGraph.vertexSet());
   }
   
+  /* (non-Javadoc)
+   * @see edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer#getConnected(Id)
+   */
   @Override
-  public Id getConnected(Id id)
+  public Optional<Id> getConnected(Id id)
   {
     try
     {
@@ -151,14 +155,14 @@ public class DirectedWeightedGraphIdContainer implements IdConnectable {
       System.exit(Constants.EX_SOFTWARE);
     }
     
-    return null;
+    return Optional.empty();
   }
   
   /* (non-Javadoc)
-   * @see edu.pitt.gallowdd.persephone.container.IdConectable#getConnected(String)
+   * @see edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer#getConnected(String)
    */
   @Override
-  public Id getConnected(String idString)
+  public Optional<Id> getConnected(String idString)
   {
     try
     {
@@ -168,12 +172,15 @@ public class DirectedWeightedGraphIdContainer implements IdConnectable {
     catch(IdException e)
     {
       // Since the idString is invalid, it could not be in the this.idSet
-      return null;
+      return Optional.empty();
     }
   }
   
+  /* (non-Javadoc)
+   * @see edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer#getConnected(Id, int)
+   */
   @Override
-  public List<Id> getConnected(Id id, int howMany)
+  public Optional<List<Id>> getConnected(Id id, int howMany)
   {
     try
     {
@@ -216,7 +223,7 @@ public class DirectedWeightedGraphIdContainer implements IdConnectable {
         
         ArraySelector<Id> selector = new ArraySelector<>();
         
-        List<Id> retVal = new ArrayList<>();
+        List<Id> tempList = new ArrayList<>();
         // An ArrayList that I will remove items from as they are selected
         List<Id> tempIdArrList = new ArrayList<>();
         Collections.addAll(tempIdArrList, idArr);
@@ -229,18 +236,27 @@ public class DirectedWeightedGraphIdContainer implements IdConnectable {
         {
           for(int i = 0; i < howMany; ++i)
           {
-             Id selectedId = selector.getRandomItemFromArrayGivenArrayOfWeights(idArr, weightArr);
-             int removeIndex = tempIdArrList.indexOf(selectedId);
-             retVal.add(tempIdArrList.remove(removeIndex));
-             tempDblArrList.remove(removeIndex);
-             
-             int newArrSize = tempIdArrList.size();
-             idArr = new Id[newArrSize];
-             idArr = (Id[])tempIdArrList.toArray();
-             weightArr = new double[newArrSize];
-             for(int j = 0; j < newArrSize; ++j)
+             Optional<Id> selectedOptionalId = selector.getRandomItemFromArrayGivenArrayOfWeights(idArr, weightArr);
+             if(selectedOptionalId.isPresent())
              {
-               weightArr[j] = tempDblArrList.get(j);
+               int removeIndex = tempIdArrList.indexOf(selectedOptionalId.get());
+               tempList.add(tempIdArrList.remove(removeIndex));
+               tempDblArrList.remove(removeIndex);
+               
+               int newArrSize = tempIdArrList.size();
+               idArr = new Id[newArrSize];
+               idArr = (Id[])tempIdArrList.toArray();
+               weightArr = new double[newArrSize];
+               for(int j = 0; j < newArrSize; ++j)
+               {
+                 weightArr[j] = tempDblArrList.get(j);
+               }
+             }
+             else
+             {
+               // There should always be something, so this is not good
+               DirectedWeightedGraphIdContainer.LOGGER.fatal("Was expecting an Id to be present and it was not in DirectedWeightedGraphIdContainer.getConnected()");
+               System.exit(Constants.EX_SOFTWARE);
              }
           }
         }
@@ -249,10 +265,10 @@ public class DirectedWeightedGraphIdContainer implements IdConnectable {
           // I am asking for more Ids than are connected, so just return the entire array as a list
           for(int i = 0; i < idArr.length; ++i)
           {
-            retVal.add(idArr[i]);
+            tempList.add(idArr[i]);
           }
         }
-        return retVal;
+        return Optional.of(tempList);
       }
     }
     catch(ArraySelectorException e)
@@ -266,14 +282,14 @@ public class DirectedWeightedGraphIdContainer implements IdConnectable {
       System.exit(Constants.EX_SOFTWARE);
     }
     
-    return null;
+    return Optional.empty();
   }
   
   /* (non-Javadoc)
-   * @see edu.pitt.gallowdd.persephone.container.IdConectable#getConnected(T, int)
+   * @see edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer#getConnected(String, int)
    */
   @Override
-  public List<Id> getConnected(String idString, int howMany)
+  public Optional<List<Id>> getConnected(String idString, int howMany)
   {
     try
     {
@@ -284,66 +300,78 @@ public class DirectedWeightedGraphIdContainer implements IdConnectable {
     catch(IdException e)
     {
       // Since the idString is invalid, it could not be in the this.idSet
-      return null;
+      return Optional.empty();
     }
   }
   
   /**
+   * Given an idString, return a List of howMany INCOMING connected {@code Id}s
    * 
-   * @param idString the idString to search for
-   * @param howMany
-   * @return a {@code List<String>} of the Id Strings that connect to inId, or {@code null} if none exist
+   * Note: this will return an Optional List of type {@code Id} and will return a List of AT MOST 
+   *   howMany elements of type {@code Id} connected to the id (i.e. if there aren't enough connected to fill the List, 
+   *   then you will get one that is size < howMany)
+   * 
+   * @param idString the id to search for
+   * @param howMany the (MAX) size of the List returned
+   * 
+   * @return An Optional List of at most howMany elements of type {@code Id} connected INCOMING to the id searched for or {@code Optional.empty()} if none
    */
-  public List<Id> getIncomingConnectedIds(String idString, int howMany)
+  public Optional<List<Id>> getIncomingConnectedIds(String idString, int howMany)
   {
     Set<DefaultWeightedEdge> edgeSet = null;
     try
     {
       edgeSet = this.completeGraph.incomingEdgesOf(new Id(idString));
     }
-    catch (IdException e)
+    catch(IdException e)
     {
       // Since the idString is invalid, there can be no connected Ids
-      return null;
+      return Optional.empty();
     }
     
     final int size = edgeSet.size();
     if(size > 0)
     {
-      List<Id> retVal = new ArrayList<>();
+      List<Id> tempList = new ArrayList<>();
       
       if(howMany >= size)
       {
         for(DefaultWeightedEdge tempEdge : edgeSet)
         {
-          retVal.add(this.completeGraph.getEdgeTarget(tempEdge));
+          tempList.add(this.completeGraph.getEdgeTarget(tempEdge));
         }
-        return retVal;
+        return Optional.of(tempList);
       }
       else
       {
         int count = 0;
         for(DefaultWeightedEdge tempEdge : edgeSet)
         {
-          retVal.add(this.completeGraph.getEdgeTarget(tempEdge));
+          tempList.add(this.completeGraph.getEdgeTarget(tempEdge));
           if(++count == howMany)
           {
             break;
           }
         }
-        return retVal;
+        return Optional.of(tempList);
       }
     }
-    return null;
+    return Optional.empty();
   }
   
   /**
+   * Given an idString, return a List of howMany OUTGOING connected {@code Id}s
    * 
-   * @param idString
-   * @param howMany
-   * @return a {@code List<Id>} of the Ids that inIdString connects to, or {@code null} if none exist
+   * Note: this will return an Optional List of type {@code Id} and will return a List of AT MOST 
+   *   howMany elements of type {@code Id} connected to the id (i.e. if there aren't enough connected to fill the List, 
+   *   then you will get one that is size < howMany)
+   * 
+   * @param idString the id to search for
+   * @param howMany the (MAX) size of the List returned
+   * 
+   * @return An Optional List of at most howMany elements of type {@code Id} connected OUTGOING to the id searched for or {@code Optional.empty()} if none
    */
-  public List<Id> getOutgoingConnectedIds(String idString, int howMany)
+  public Optional<List<Id>> getOutgoingConnectedIds(String idString, int howMany)
   {
     Set<DefaultWeightedEdge> edgeSet = null;
         
@@ -354,45 +382,48 @@ public class DirectedWeightedGraphIdContainer implements IdConnectable {
     catch(IdException e)
     {
       // Since the idString is invalid, there can be no connected Ids
-      return null;
+      return Optional.empty();
     }
     
     final int size = edgeSet.size();
     if(size > 0)
     {
-      List<Id> retVal = new ArrayList<>();
+      List<Id> tempList = new ArrayList<>();
       
       if(howMany >= size)
       {
         for(DefaultWeightedEdge tempEdge : edgeSet)
         {
-          retVal.add(this.completeGraph.getEdgeTarget(tempEdge));
+          tempList.add(this.completeGraph.getEdgeTarget(tempEdge));
         }
-        return retVal;
+        return Optional.of(tempList);
       }
       else
       {
         int count = 0;
         for(DefaultWeightedEdge tempEdge : edgeSet)
         {
-          retVal.add(this.completeGraph.getEdgeTarget(tempEdge));
+          tempList.add(this.completeGraph.getEdgeTarget(tempEdge));
           if(++count == howMany)
           {
             break;
           }
         }
-        return retVal;
+        return Optional.of(tempList);
       }
     }
     
-    return null;
+    return Optional.empty();
   }
   
+  /* (non-Javadoc)
+   * @see edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer#getRandom()
+   */
   @Override
-  public Id getRandom()
+  public Optional<Id> getRandom()
   {
     Set<Id> allIdSet = this.completeGraph.vertexSet();
     int randomIndex = Utils.getRandomInt(allIdSet.size());
-    return (Id)allIdSet.toArray()[randomIndex];
+    return Optional.of((Id)allIdSet.toArray()[randomIndex]);
   }
 }

@@ -54,7 +54,7 @@ import edu.pitt.gallowdd.persephone.messaging.Message.MessageType;
 import edu.pitt.gallowdd.persephone.messaging.MessageFactory;
 import edu.pitt.gallowdd.persephone.messaging.record.SynthEnvRec;
 import edu.pitt.gallowdd.persephone.network.GenericNetwork;
-import edu.pitt.gallowdd.persephone.synthenvinfo.SyntheticEnvironment;
+
 import edu.pitt.gallowdd.persephone.util.Constants;
 import edu.pitt.gallowdd.persephone.util.EnumNotFoundException;
 import edu.pitt.gallowdd.persephone.util.Id;
@@ -62,6 +62,7 @@ import edu.pitt.gallowdd.persephone.util.IdException;
 import edu.pitt.gallowdd.persephone.util.OverseerPhase;
 import edu.pitt.gallowdd.persephone.util.Params;
 import edu.pitt.gallowdd.persephone.util.Utils;
+import edu.pitt.gallowdd.persephone.xml.synthenv.SyntheticEnvironment;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
@@ -225,17 +226,17 @@ public class Overseer implements OverseerControllerInterface { //implements Cntr
     final List<List<SynthEnvRec>> tempRetVal = new ArrayList<List<SynthEnvRec>>();
     SynthEnvRec[][] retVal = null;
     
-    int synthEnvCount = Params.getSyntheticEnvironments().size();
+    int synthEnvCount = Params.getSyntheticEnvDescriptors().size();
     long totMemRequired = 0L;
     for(int i = 0; i < synthEnvCount; ++i)
     {
       long memRequired = Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(
-          Params.getSyntheticEnvironments().get(i).getCountry(),
-          Params.getSyntheticEnvironments().get(i).getVersion(),
-          Params.getSyntheticEnvironments().get(i).getIdentifier());
-      SynthEnvRec temp = new SynthEnvRec(Params.getSyntheticEnvironments().get(i).getCountry(), 
-          Params.getSyntheticEnvironments().get(i).getVersion(), 
-          Params.getSyntheticEnvironments().get(i).getIdentifier(), 
+          Params.getSyntheticEnvDescriptors().get(i).getCountry().value(),
+          Params.getSyntheticEnvDescriptors().get(i).getVersion().value(),
+          Params.getSyntheticEnvDescriptors().get(i).getIdentifier());
+      SynthEnvRec temp = new SynthEnvRec(Params.getSyntheticEnvDescriptors().get(i).getCountry().value(), 
+          Params.getSyntheticEnvDescriptors().get(i).getVersion().value(), 
+          Params.getSyntheticEnvDescriptors().get(i).getIdentifier(), 
           memRequired);
       myEnvironmentList.add(temp);
       Overseer.LOGGER.debug("Added syntheticEnvironment: " + temp.toString());
@@ -463,7 +464,7 @@ public class Overseer implements OverseerControllerInterface { //implements Cntr
       normalizationMap.forEach((typeMap, idMap) -> { 
         Overseer.LOGGER.trace(typeMap + ":");
         idMap.forEach((idKey, idValue) -> {
-          Overseer.LOGGER.trace(" -> " + idKey.getIdString() + ": " + idValue.getIdString());
+          Overseer.LOGGER.trace(">> " + idKey.getIdString() + ": " + idValue.getIdString());
         });
       });
       ovrsr.normalizeControllerMappingsPhase(normalizationMap.get(TypeMapping.LOCATION), normalizationMap.get(TypeMapping.NETWORK));
@@ -543,16 +544,17 @@ public class Overseer implements OverseerControllerInterface { //implements Cntr
     final long gigaByte = 1024L * 1024L * 1024L;
     final double memoryPerAgent = 2.0 * (double)gigaByte / 1000000.0;    // (2GB / 1 Million agents)
     final double memoryPerLocation = 1.0 * (double)gigaByte / 100000.0;  // (1GB / 100000 locations)
-    long retVal = Overseer.availMemory;
+    long retVal = 0L;
     
     try 
     {
       Unmarshaller unmarshaller = null;
-      JAXBContext jc = JAXBContext.newInstance(Constants.JAXB_SYNTHENVINFO_CNTXT);
+      JAXBContext jc = JAXBContext.newInstance(Constants.JAXB_SYNTHENV_CNTXT);
       unmarshaller = jc.createUnmarshaller();
-      Path filePath = Paths.get(Params.getPopulationDirectory(), "country", country, version, identifier, Constants.DEFAULT_SYNTH_ENV_INFO_FILENAME);
+      Path filePath = Paths.get(Params.getPopulationDirectory(), "country", country, version, identifier, Constants.SYNTHENV_FILENAME);
+      Overseer.LOGGER.trace("filePath = " + filePath);
       String xmlFilename = filePath.toString();
-      if(Utils.validateXmlFile(xmlFilename, Constants.DEFAULT_SYNTH_ENV_INFO_SCHEMA_FILENAME))
+      if(Utils.validateXmlFile(xmlFilename, Constants.SYNTHENV_SCHEMA_FILENAME))
       {
         SyntheticEnvironment synthEnvInfo = (SyntheticEnvironment)unmarshaller.unmarshal(new StreamSource(new File(xmlFilename)));
         
@@ -660,12 +662,12 @@ public class Overseer implements OverseerControllerInterface { //implements Cntr
           if(msg == null)
           {
             Overseer.LOGGER.fatal("Null message in threadCommArr");
-            System.exit(1);
+            System.exit(Constants.EX_NOINPUT);
           }
           if(!msg.getSenderId().equals(testControllerId))
           {
             Overseer.LOGGER.fatal("Message sender [" + msg.getSenderId() + "] is not the expected sender from task [" + testControllerId + "]");
-            System.exit(1);
+            System.exit(Constants.EX_IOERR);
           }
           if(msg.getType() == MessageType.CNTRLLR_INIT_OUT)
           {
@@ -675,7 +677,7 @@ public class Overseer implements OverseerControllerInterface { //implements Cntr
                 if(this.agentToControllerMap.put(((ControllerInitOutMessage)msg).getAgentId(), msg.getSenderId()) != null)
                 {
                   Overseer.LOGGER.fatal("Duplicate agent is not allowed (i.e. agents can only be in one controller)");
-                  System.exit(1);
+                  System.exit(Constants.EX_DATAERR);
                 }
                 break;
               case NETWORK_ADD:
@@ -701,7 +703,7 @@ public class Overseer implements OverseerControllerInterface { //implements Cntr
           else
           {
             Overseer.LOGGER.fatal("INCORRECT RETURN MESSAGE. Expected " + MessageType.CNTRLLR_INIT_OUT.toString() + ", but received " + msg.getType().toString());
-            System.exit(1);
+            System.exit(Constants.EX_IOERR);
           }
         });
       // Clear out the queue
@@ -715,8 +717,9 @@ public class Overseer implements OverseerControllerInterface { //implements Cntr
   }
   
   /**
-   * return a Map of TypeMapping to Id to Id Maps. 
-   * @throws IdException the Controller Id is invalid
+   * 
+   * @param locationIdToNotifyControllerId
+   * @param networkIdToNotifyControllerId
    */
   private void normalizeControllerMappingsPhase(Map<Id, Id> locationIdToNotifyControllerId, Map<Id, Id> networkIdToNotifyControllerId)
   {
@@ -742,6 +745,10 @@ public class Overseer implements OverseerControllerInterface { //implements Cntr
       
       this.threadCommArr[index].add(normalizeMsg);
     });
+  }
+  
+  private void agentInitializationPhase()
+  {
     
   }
   

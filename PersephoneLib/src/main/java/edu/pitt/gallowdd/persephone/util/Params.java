@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 import javax.xml.transform.stream.StreamSource;
 
@@ -38,10 +39,16 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.primitives.Ints;
 
 import edu.pitt.gallowdd.persephone.PersephoneException.ErrorCode;
-import edu.pitt.gallowdd.persephone.parameters.AgentXmlType;
-import edu.pitt.gallowdd.persephone.parameters.LocationXmlType;
-import edu.pitt.gallowdd.persephone.parameters.PersephoneParameters;
-import edu.pitt.gallowdd.persephone.parameters.SimulationXmlType;
+import edu.pitt.gallowdd.persephone.xml.base.AgentXmlType;
+import edu.pitt.gallowdd.persephone.xml.base.LocationXmlType;
+import edu.pitt.gallowdd.persephone.xml.base.PersephoneBaseParameters;
+//import edu.pitt.gallowdd.persephone.xml.common.AgentXmlEnum;
+//import edu.pitt.gallowdd.persephone.xml.common.LocationXmlEnum;
+import edu.pitt.gallowdd.persephone.xml.runtime.PersephoneRuntimeParameters;
+import edu.pitt.gallowdd.persephone.xml.runtime.SimulationXmlType;
+import edu.pitt.gallowdd.persephone.xml.runtime.SimulationXmlType.SyntheticEnvironmentDescriptor;
+import edu.pitt.gallowdd.persephone.xml.runtime.UserDefinedAgentXmlType;
+import edu.pitt.gallowdd.persephone.xml.runtime.UserDefinedLocationXmlType;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
@@ -49,7 +56,7 @@ import jakarta.xml.bind.Unmarshaller;
 
 /**
  * This class contains all of the static parameters used by the Persephone Agent-Based Modeling Platform. 
- * In most cases, these will be set during initialization by reading from the file defaultProps.xml
+ * In most cases, these will be set during initialization by reading from TODO //the file defaultProps.xml
  * 
  * @author David Galloway
  **/
@@ -61,30 +68,43 @@ public final class Params {
   static {
     try
     {
-      JAXBContext jc = JAXBContext.newInstance(Constants.JAXB_PARAMETERS_CNTXT);
+      JAXBContext jc = JAXBContext.newInstance(Constants.JAXB_BASE_PARAM_CNTXT);
       Params.unmarshaller = jc.createUnmarshaller();
+      // Load the base parameter values
+      Params.loadBaseParameters();
     }
     catch(JAXBException e)
     {
       Params.LOGGER.fatal(e);
-      System.exit(1);
+      System.exit(Constants.EX_CONFIG);
     }
     
-    // Load the default values
-    Params.loadParametersFromDefaultFile();
+    try
+    {
+      JAXBContext jc = JAXBContext.newInstance(Constants.JAXB_RUNTIME_PARAM_CNTXT);
+      Params.unmarshaller = jc.createUnmarshaller();
+      // Load the base parameter values
+      Params.loadDefaultRuntimeParameters();
+    }
+    catch(JAXBException e)
+    {
+      Params.LOGGER.fatal(e);
+      System.exit(Constants.EX_CONFIG);
+    }
   }
   
   // Simulation Parameters
   private static String HOME_DIRECTORY;
   private static String POPULATION_DIRECTORY;
-  //private static ImmutableList<PopulationType> POPULATIONS;
-  private static List<SimulationXmlType.SyntheticEnvironment> SYNTHETIC_ENVIRONMENTS;
-  private static ImmutableList<AgentXmlType> AGENT_TYPES;
-  private static ImmutableList<LocationXmlType> LOCATION_TYPES;
+  private static List<SyntheticEnvironmentDescriptor> SYNTH_ENV_DESCRIPTORS;
+  private static ImmutableList<AgentXmlType> AGENTS;
+  private static ImmutableList<LocationXmlType> LOCATIONS;
+  private static Optional<ImmutableList<UserDefinedAgentXmlType>> USER_DEFINED_AGENTS;
+  private static Optional<ImmutableList<UserDefinedLocationXmlType>> USER_DEFINED_LOCATIONS;
   private static LocalDate START_DATE;
   private static LocalDate END_DATE;
   
-  private static int SEED;
+  private static long SEED;
   
   // JMS Queuing
   private static String MQ_HOST;
@@ -130,27 +150,43 @@ public final class Params {
 //  }
   
   /**
-   * @return the SYNTHETIC_ENVIRONMENTS
+   * @return the SYNTH_ENV_DESCRIPTORS
    */
-  public static List<SimulationXmlType.SyntheticEnvironment> getSyntheticEnvironments()
+  public static List<SyntheticEnvironmentDescriptor> getSyntheticEnvDescriptors()
   {
-    return Params.SYNTHETIC_ENVIRONMENTS;
+    return Params.SYNTH_ENV_DESCRIPTORS;
   }
   
   /**
-   * @return the AGENT_TYPES
+   * @return the AGENTS
    */
-  public static ImmutableList<AgentXmlType> getAgentTypes()
+  public static ImmutableList<AgentXmlType> getAgents()
   {
-    return Params.AGENT_TYPES;
+    return Params.AGENTS;
   }
   
   /**
-   * @return the LOCATION_TYPES
+   * @return the LOCATIONS
    */
-  public static ImmutableList<LocationXmlType> getLocationTypes()
+  public static ImmutableList<LocationXmlType> getLocations()
   {
-    return Params.LOCATION_TYPES;
+    return Params.LOCATIONS;
+  }
+  
+  /**
+   * @return the USER_DEFINED_AGENTS
+   */
+  public static Optional<ImmutableList<UserDefinedAgentXmlType>> getUserDefinedAgents()
+  {
+    return Params.USER_DEFINED_AGENTS;
+  }
+  
+  /**
+   * @return the USER_DEFINED_LOCATIONS
+   */
+  public static Optional<ImmutableList<UserDefinedLocationXmlType>> getUserDefinedLocations()
+  {
+    return Params.USER_DEFINED_LOCATIONS;
   }
   
   /**
@@ -180,7 +216,7 @@ public final class Params {
   /**
    * @return the SEED
    */
-  public static int getSeed()
+  public static long getSeed()
   {
     return Params.SEED;
   }
@@ -235,61 +271,107 @@ public final class Params {
   /**
    * 
    */
-  private static void loadParametersFromDefaultFile()
+  private static void loadBaseParameters()
   {
     
     try 
     {
       //Parameters params = new Parameters();
-      if(Utils.validateXmlFile(Constants.DEFAULT_PARAM_FILENAME, Constants.DEFAULT_PARAM_SCHEMA_FILENAME))
+      if(Utils.validateXmlFile(Constants.BASE_PARAM_FILENAME, Constants.BASE_PARAM_SCHEMA_FILENAME))
       {
-        PersephoneParameters persephoneParams = (PersephoneParameters)Params.unmarshaller.unmarshal(new StreamSource(new File(Utils.getResource(Constants.DEFAULT_PARAM_FILENAME))));
+        PersephoneBaseParameters persephoneBaseParams = (PersephoneBaseParameters)Params.unmarshaller.unmarshal(new StreamSource(new File(Utils.getResource(Constants.BASE_PARAM_FILENAME))));
         
-        Params.HOME_DIRECTORY = persephoneParams.getSimulation().getHomeDirectory();
+        List<AgentXmlType> agents = persephoneBaseParams.getAgent();
+        List<LocationXmlType> locations = persephoneBaseParams.getLocation();
+        
+        Params.AGENTS = ImmutableList.copyOf(agents);
+        Params.LOGGER.trace("Default AGENTS:");
+        Params.AGENTS.forEach(agent -> {
+          Params.LOGGER.trace("... << " + agent.getName());
+        });
+        
+        Params.LOCATIONS = ImmutableList.copyOf(locations);
+        Params.LOGGER.trace("Default LOCATIONS:");
+        Params.LOCATIONS.forEach(loc -> {
+          Params.LOGGER.trace("... << " + loc.getName());
+        });
+      }
+      else
+      {
+        throw new RuntimeException("Error validating xml file, " + Constants.BASE_PARAM_FILENAME + " against xsd file, " + Constants.BASE_PARAM_SCHEMA_FILENAME);
+      }
+    }
+    catch(RuntimeException | IOException | JAXBException e)
+    {
+      Params.LOGGER.fatal(ErrorCode.ERR_PARAMS.message(), e);
+      System.exit(Constants.EX_DATAERR);
+    }
+  }
+  
+  /**
+   * 
+   */
+  private static void loadDefaultRuntimeParameters()
+  {
+    
+    try 
+    {
+      //Parameters params = new Parameters();
+      if(Utils.validateXmlFile(Constants.DEFAULT_RUNTIME_PARAM_FILENAME, Constants.DEFAULT_RUNTIME_PARAM_SCHEMA_FILENAME))
+      {
+        PersephoneRuntimeParameters persephoneRuntimeParams = (PersephoneRuntimeParameters)Params.unmarshaller.unmarshal(new StreamSource(new File(Utils.getResource(Constants.DEFAULT_RUNTIME_PARAM_FILENAME))));
+        
+        Params.HOME_DIRECTORY = persephoneRuntimeParams.getSimulation().getHomeDirectory();
         Params.LOGGER.trace("Default HOME_DIRECTORY << " + Params.HOME_DIRECTORY);
-        Params.POPULATION_DIRECTORY = persephoneParams.getSimulation().getPopulationDirectory();
+        Params.POPULATION_DIRECTORY = persephoneRuntimeParams.getSimulation().getPopulationDirectory();
         Params.LOGGER.trace("Default POPULATION_DIRECTORY << " + Params.POPULATION_DIRECTORY);
-        Params.SEED = persephoneParams.getSimulation().getRngSeed().intValue();
+        Params.SEED = persephoneRuntimeParams.getSimulation().getRngSeed().longValue();
         Params.LOGGER.trace("Default SEED << " + Params.SEED);
         
         LocalDate localDate = LocalDate.of(
-            persephoneParams.getSimulation().getStartDate().getYear(), 
-            persephoneParams.getSimulation().getStartDate().getMonth(), 
-            persephoneParams.getSimulation().getStartDate().getDay());
+            persephoneRuntimeParams.getSimulation().getStartDate().getYear(), 
+            persephoneRuntimeParams.getSimulation().getStartDate().getMonth(), 
+            persephoneRuntimeParams.getSimulation().getStartDate().getDay());
         Params.START_DATE = localDate;
         Params.LOGGER.trace("Default START_DATE << " + Params.START_DATE);
         
         localDate = LocalDate.of(
-            persephoneParams.getSimulation().getEndDate().getYear(), 
-            persephoneParams.getSimulation().getEndDate().getMonth(), 
-            persephoneParams.getSimulation().getEndDate().getDay());
+            persephoneRuntimeParams.getSimulation().getEndDate().getYear(), 
+            persephoneRuntimeParams.getSimulation().getEndDate().getMonth(), 
+            persephoneRuntimeParams.getSimulation().getEndDate().getDay());
         Params.END_DATE = localDate;
         Params.LOGGER.trace("Default END_DATE << " + Params.END_DATE);
         
-        List<SimulationXmlType.SyntheticEnvironment> synthEnvironments = persephoneParams.getSimulation().getSyntheticEnvironment();
+        List<SimulationXmlType.SyntheticEnvironmentDescriptor> synthEnvironments = persephoneRuntimeParams.getSimulation().getSyntheticEnvironmentDescriptor();
         
-        List<AgentXmlType> agentTypes = persephoneParams.getSimulation().getModel().getAgent();
-        List<LocationXmlType> locationTypes = persephoneParams.getSimulation().getModel().getLocation();
+        List<UserDefinedAgentXmlType> userDefinedAgents = persephoneRuntimeParams.getModel().getUserDefinedAgent();
+        List<UserDefinedLocationXmlType> userDefinedLocations = persephoneRuntimeParams.getModel().getUserDefinedLocation();
         
-        Params.SYNTHETIC_ENVIRONMENTS = ImmutableList.copyOf(synthEnvironments);
+        Params.SYNTH_ENV_DESCRIPTORS = ImmutableList.copyOf(synthEnvironments);
         
-        Params.LOGGER.trace("Default SYNTHETIC_ENVIRONMENTS:");
-        Params.SYNTHETIC_ENVIRONMENTS.forEach(pop -> {
+        Params.LOGGER.trace("Default SYNTH_ENV_DESCRIPTORS:");
+        Params.SYNTH_ENV_DESCRIPTORS.forEach(pop -> {
           Params.LOGGER.trace("... << " + pop.getCountry() + ":" + pop.getVersion() + ":" + pop.getIdentifier());
         });
         
+        Params.USER_DEFINED_AGENTS = (userDefinedAgents == null ? Optional.empty() : Optional.of(ImmutableList.copyOf(userDefinedAgents)));
+        if(Params.USER_DEFINED_AGENTS.isPresent())
+        {
+          Params.LOGGER.trace("Default USER_DEFINED_AGENTS:");
+          Params.USER_DEFINED_AGENTS.get().forEach(agent -> {
+            Params.LOGGER.trace("... << " + agent.getName());
+          });
+        }
         
-        Params.AGENT_TYPES = ImmutableList.copyOf(agentTypes);
-        Params.LOGGER.trace("Default AGENT_TYPES:");
-        Params.AGENT_TYPES.forEach(agentType -> {
-          Params.LOGGER.trace("... << " + agentType.getName() + ":" + agentType.getJavaClass().toString());
-        });
-        
-        Params.LOCATION_TYPES = ImmutableList.copyOf(locationTypes);
-        Params.LOGGER.trace("Default LOCATION_TYPES:");
-        Params.LOCATION_TYPES.forEach(locType -> {
-          Params.LOGGER.trace("... << " + locType.getName() + ":" + locType.getJavaClass().toString());
-        });
+        Params.USER_DEFINED_LOCATIONS = (userDefinedLocations == null ? Optional.empty() : Optional.of(ImmutableList.copyOf(userDefinedLocations)));
+        if( Params.USER_DEFINED_LOCATIONS.isPresent())
+        {
+          Params.LOGGER.trace("Default USER_DEFINED_LOCATIONS:");
+          Params.USER_DEFINED_LOCATIONS.get().forEach(loc -> {
+            Params.LOGGER.trace("... << " + loc.getName());
+          });
+        }
+
 
 //      
 //      // Default Messaging Parameters
@@ -319,9 +401,9 @@ public final class Params {
   
   /**
    * 
-   * @param userParamsFilename
+   * @param userRuntimeParamsFilename
    */
-  public static void loadParametersFromUserFile(String userParamsFilename)
+  public static void loadRuntimeParametersFromUserFile(String userRuntimeParamsFilename)
   {
     try 
     {  
@@ -329,7 +411,7 @@ public final class Params {
       
       FileBasedConfigurationBuilder<XMLConfiguration> builder =
           new FileBasedConfigurationBuilder<XMLConfiguration>(XMLConfiguration.class)
-              .configure(params.xml().setFileName(userParamsFilename)
+              .configure(params.xml().setFileName(userRuntimeParamsFilename)
                                      .setExpressionEngine(new XPathExpressionEngine()));
       XMLConfiguration config = builder.getConfiguration();
       
@@ -404,389 +486,4 @@ public final class Params {
       System.exit(1);
     }  
   }
-  
-//  private static String getResource(String filename) throws FileNotFoundException
-//  {
-//    URL resource = Params.class.getClassLoader().getResource(filename);
-//    Objects.requireNonNull(resource);
-//    return resource.getFile();
-//  }
-  
-  /*
-   *             <xsd:element name="rng_seed" minOccurs="1" maxOccurs="1" type="xsd:integer"/>
-            <xsd:element name="population" minOccurs="1" maxOccurs="unbounded">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="country" minOccurs="1" maxOccurs="1" type="xsd:string"/>
-                        <xsd:element name="version" minOccurs="1" maxOccurs="1" type="xsd:string"/>
-                        <xsd:element name="identifier" minOccurs="1" maxOccurs="1" type="xsd:string"/>
-                        <xsd:element name="agents" minOccurs="1" maxOccurs="unbounded" type="agentType"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-            
-   */
-  
-//  /**
-//   * A transfer class for holding Population Information
-//   */
-//  public static final class XmlPopulationInfo {
-//    private final String identifier;
-//    private final String country;
-//    private final String version;
-//    private final XmlAgentInfo agentInfo;
-//    
-//    /**
-//     * Construct an XmlPopulationInfo
-//     * @param identifier the identifier to set
-//     * @param country the country to set
-//     * @param version the version to set
-//     * @param agentInfo the agentInfo to add to this list
-//     */
-//    public XmlPopulationInfo(String identifier, String country, String version, XmlAgentInfo agentInfo)
-//    {
-//      this.identifier = identifier.trim();
-//      this.country = country.trim();
-//      this.version = version.trim();
-//      this.agentInfo = agentInfo;
-//    }
-//    
-//    /**
-//     * @return the identifiers
-//     */
-//    public String getIdentifiers()
-//    {
-//      return this.identifier;
-//    }
-//    
-//    /**
-//     * @return the Country
-//     */
-//    public String getCountry()
-//    {
-//      return this.country;
-//    }
-//    
-//    /**
-//     * @return the version
-//     */
-//    public String getVersion()
-//    {
-//      return this.version;
-//    }
-//    
-//    /**
-//     * @return the agentInfo
-//     */
-//    public XmlAgentInfo getAgentInfo()
-//    {
-//      return this.agentInfo;
-//    }
-//    
-//    /* (non-Javadoc)
-//     * @see java.lang.Object#equals(Object)
-//     */
-//    @Override
-//    public boolean equals(Object obj) {
-//      if(this == obj)
-//      {
-//        return true;
-//      }
-//      
-//      if(obj == null)
-//      {
-//        return false;
-//      }
-//      
-//      if(getClass() != obj.getClass())
-//      {
-//        return false;
-//      }
-//      
-//      XmlPopulationInfo rhs = (XmlPopulationInfo)obj;
-//      EqualsBuilder equalsBuilder = new EqualsBuilder();
-//      equalsBuilder.append(this.identifier, rhs.identifier);
-//      equalsBuilder.append(this.country, rhs.country);
-//      equalsBuilder.append(this.version, rhs.version);
-//      equalsBuilder.append(this.agentInfo, rhs.agentInfo);
-//      
-//      return equalsBuilder.isEquals();
-//    }
-//    
-//    /* (non-Javadoc)
-//     * @see java.lang.Object#toString()
-//     */
-//    @Override
-//    public String toString()
-//    {
-//      return new ToStringBuilder(this)
-//          .append("identifier", this.identifier)
-//          .append("country", this.country)
-//          .append("version", this.version)
-//          .append("agentInfo", this.agentInfo)
-//          .toString();
-//    }
-//  }
-  
-//  /*
-//   *             
-//                <xsd:complexType name="agentType">
-//        <xsd:sequence>
-//            <xsd:element name="name" minOccurs="1" maxOccurs="1" type="xsd:string"/>
-//            <xsd:element name="java_class" minOccurs="1" maxOccurs="1" type="agentJavaClassTypeEnum"/>
-//            <xsd:element name="agent_attribute" minOccurs="0" maxOccurs="unbounded">
-//                <xsd:complexType>
-//                    <xsd:sequence>
-//                        <xsd:element name="name" minOccurs="1" maxOccurs="1" type="xsd:string"/>
-//                        <xsd:element name="data_type" minOccurs="1" maxOccurs="1" type="agentAttributeJavaTypeEnum"/>
-//                        <xsd:element name="is_dynamic" minOccurs="1" maxOccurs="1" type="xsd:boolean"/>
-//                        <!-- The way to assign attributes to agents that are in the initial population files -->
-//                        <xsd:element name="initial_source" minOccurs="1" maxOccurs="1">
-//                            <xsd:complexType>
-//                                <xsd:choice>
-//                                    <xsd:element name="link" minOccurs="1" maxOccurs="1" type="xsd:string"/>
-//                                    <xsd:element name="distribution" minOccurs="1" maxOccurs="1" type="distributionType"/>
-//                                </xsd:choice>
-//                            </xsd:complexType>
-//                        </xsd:element>
-//                        <!-- The way to assign attributes to agents that are created during the course of the simulation -->
-//                        <xsd:element name="dynamic_source" minOccurs="0" maxOccurs="1">
-//                            <xsd:complexType>
-//                                <xsd:choice>
-//                                    <xsd:element name="distribution"  minOccurs="1" maxOccurs="1" type="distributionType"/>
-//                                </xsd:choice>
-//                            </xsd:complexType>
-//                        </xsd:element>
-//                    </xsd:sequence>
-//                </xsd:complexType>
-//            </xsd:element>
-//            <xsd:element name="agent_assginment" minOccurs="0" maxOccurs="unbounded" type="agentAssignmentType"/>
-//        </xsd:sequence>
-//    </xsd:complexType>
-//   */
-//  
-//  /**
-//   * A transfer class for holding Agent Information
-//   */
-//  public static final class XmlAgentInfo {
-//    private final String name;
-//    private final String javaClassname;
-//    private final List<XmlAgentAttributeInfo> agentAttributes;
-//    private final String agentAssignments = "";
-//    
-//    /**
-//     * Construct an XmlAgentInfo
-//     * @param name 
-//     * @param javaClassname 
-//     * @param agentAttributes 
-//     */
-//    public XmlAgentInfo(String name, String javaClassname, List<XmlAgentAttributeInfo> agentAttributes)
-//    {
-//      this.name = name.trim();
-//      this.javaClassname = javaClassname.trim();
-//      if(agentAttributes != null)
-//      {
-//        this.agentAttributes = agentAttributes;
-//      }
-//      else
-//      {
-//        this.agentAttributes = new ArrayList<>();
-//      }
-//    }
-//    
-//    /**
-//     * Construct an XmlAgentInfo
-//     * @param name 
-//     * @param javaClassname 
-//     * @param agentAttributeArr 
-//     */
-//    public XmlAgentInfo(String name, String javaClassname, XmlAgentAttributeInfo [] agentAttributeArr)
-//    {
-//      this.name = name.trim();
-//      this.javaClassname = javaClassname.trim();
-//      this.agentAttributes = new ArrayList<>();
-//      if(agentAttributeArr != null)
-//      {
-//        for(int i = 0; i < agentAttributeArr.length; ++i)
-//        {
-//          this.agentAttributes.add(agentAttributeArr[i]);
-//        }
-//      }
-//    }
-//    
-//    /**
-//     * @return the name
-//     */
-//    public String getName()
-//    {
-//      return this.name;
-//    }
-//    
-//    /**
-//     * @return the javaClassname
-//     */
-//    public String getJavaClassName()
-//    {
-//      return this.javaClassname;
-//    }
-//    
-//    /* (non-Javadoc)
-//     * @see java.lang.Object#equals(Object)
-//     */
-//    @Override
-//    public boolean equals(Object obj) {
-//      if(this == obj)
-//      {
-//        return true;
-//      }
-//      
-//      if(obj == null)
-//      {
-//        return false;
-//      }
-//      
-//      if(getClass() != obj.getClass())
-//      {
-//        return false;
-//      }
-//      
-//      XmlAgentInfo rhs = (XmlAgentInfo)obj;
-//      EqualsBuilder equalsBuilder = new EqualsBuilder();
-////      equalsBuilder.append(this.identifier, rhs.identifier);
-////      equalsBuilder.append(this.country, rhs.country);
-////      equalsBuilder.append(this.version, rhs.version);
-//      return equalsBuilder.isEquals();
-//    }
-//    
-//    /* (non-Javadoc)
-//     * @see java.lang.Object#toString()
-//     */
-//    @Override
-//    public String toString()
-//    {
-//      return new ToStringBuilder(this)
-////          .append("identifier", this.identifier)
-////          .append("country", this.country)
-////          .append("version", this.version)
-//          .toString();
-//    }
-//  }
-  
-//  /**
-//   * A transfer class for holding Agent Attribute Information
-//   */
-//  public static final class XmlAgentAttributeInfo {
-//    
-//    private final String name;
-//    private final String dataType;
-//    private final boolean isDynamic;
-//    private final String initialSource;
-//    private final String dynamicSource;
-//    
-//    /**
-//     * Construct an XmlAgentAttributeInfo
-//     * @param name 
-//     * @param dataType 
-//     * @param isDynamict
-//     */
-//    public XmlAgentAttributeInfo(String name, String dataType, boolean isDynamic)
-//    {
-//      this.name = name.trim();
-//      this.dataType = dataType.trim();
-//      this.isDynamic = isDynamic;
-//      this.initialSource = Constants.STRING_UNSET;
-//      this.dynamicSource = Constants.STRING_UNSET;
-//    }
-//    
-//    /**
-//     * @return the name
-//     */
-//    public String getName()
-//    {
-//      return this.name;
-//    }
-//    
-//    /**
-//     * @return the dataType
-//     */
-//    public String getDataType()
-//    {
-//      return this.dataType;
-//    }
-//    
-//    /**
-//     * @return the isDynamic
-//     */
-//    public boolean isDynamic()
-//    {
-//      return this.isDynamic;
-//    }
-//    
-//    /* (non-Javadoc)
-//     * @see java.lang.Object#equals(Object)
-//     */
-//    @Override
-//    public boolean equals(Object obj) {
-//      if(this == obj)
-//      {
-//        return true;
-//      }
-//      
-//      if(obj == null)
-//      {
-//        return false;
-//      }
-//      
-//      if(getClass() != obj.getClass())
-//      {
-//        return false;
-//      }
-//      
-//      XmlAgentAttributeInfo rhs = (XmlAgentAttributeInfo)obj;
-//      EqualsBuilder equalsBuilder = new EqualsBuilder();
-//      equalsBuilder.append(this.name, rhs.name);
-//      equalsBuilder.append(this.dataType, rhs.dataType);
-//      equalsBuilder.append(this.isDynamic, rhs.isDynamic);
-//      return equalsBuilder.isEquals();
-//    }
-//    
-//    /* (non-Javadoc)
-//     * @see java.lang.Object#toString()
-//     */
-//    @Override
-//    public String toString()
-//    {
-//      return new ToStringBuilder(this)
-////          .append("identifier", this.identifier)
-////          .append("country", this.country)
-////          .append("version", this.version)
-//          .toString();
-//    }
-//  }
-//  /*
-//   * <xsd:element name="initial_file_link" minOccurs="1" maxOccurs="1" type="initFileLinkType" />
-//                  <xsd:element name="link" minOccurs="1" maxOccurs="1" type="linkType" />
-//                  <xsd:element name="distribution" minOccurs="1" maxOccurs="1" type="distributionType" />
-//                  
-//                          <xsd:element name="init_file_csv_field_name" minOccurs="1" maxOccurs="1" type="xsd:string" />
-//        <xsd:element name="convert_to_enum_function" minOccurs="0" maxOccurs="1" type="xsd:string" />
-//        
-//                <xsd:element name="link_file_name" minOccurs="1" maxOccurs="1" type="xsd:string" />
-//        <xsd:element name="link_file_csv_field_name" minOccurs="1" maxOccurs="1" type="xsd:string" />
-//        <xsd:element name="convert_to_enum_function" minOccurs="0" maxOccurs="1" type="xsd:string" />
-//   */
-//  public static final class XmlAgentAttributeInitType {
-//    
-//    public enum AttributeInitType { 
-//      INIT_FILE_LINK,
-//      LINK,
-//      DISTRIBUTION,
-//      UNSET
-//    }
-//    
-//    private AttributeInitType initType = AttributeInitType.UNSET;
-//    private String fileCSVFieldName = Constants.STRING_UNSET;
-//    private String convertToEnumFunction = Constants.STRING_UNSET;
-//    private String linkFileName = Constants.STRING_UNSET;
-//  }
 }

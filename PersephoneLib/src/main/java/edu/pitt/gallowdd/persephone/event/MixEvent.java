@@ -9,24 +9,24 @@ import edu.pitt.gallowdd.persephone.util.Id;
  * @author David Galloway
  *
  */
-public class MixEvent implements Event {
+public class MixEvent extends LocationEvent {
   
   private LocationTypeEnum locationType;
   private int currentHour;
   
-  @Override
-  public EventTypeEnum getType()
-  {
-    // TODO Auto-generated method stub
-    return null;
-  }
+//  @Override
+//  public EventTypeEnum getType()
+//  {
+//    // TODO Auto-generated method stub
+//    return null;
+//  }
 
-  @Override
-  public Id getId()
-  {
-    // TODO Auto-generated method stub
-    return null;
-  }
+//  @Override
+//  public Id getId()
+//  {
+//    // TODO Auto-generated method stub
+//    return null;
+//  }
   
   /**
    * 
@@ -35,6 +35,7 @@ public class MixEvent implements Event {
    */
   public MixEvent(LocationTypeEnum locationType, int currentHour)
   {
+//    super(locationType, simDay, currentHour);
     this.locationType = locationType;
     this.currentHour = currentHour;
   }
@@ -55,6 +56,4 @@ public class MixEvent implements Event {
     return this.currentHour;
   }
 
-
-  
 }

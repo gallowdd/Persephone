@@ -35,9 +35,10 @@ import edu.pitt.gallowdd.persephone.agent.GenericAgent;
 import edu.pitt.gallowdd.persephone.agent.Person;
 import edu.pitt.gallowdd.persephone.agent.attribute.PersonBMI;
 import edu.pitt.gallowdd.persephone.agent.attribute.PersonHeight;
-import edu.pitt.gallowdd.persephone.parameters.AgentXmlType;
-import edu.pitt.gallowdd.persephone.parameters.AgentXmlType.AgentAttribute.Source;
-import edu.pitt.gallowdd.persephone.parameters.DataTypeXmlEnum;
+import edu.pitt.gallowdd.persephone.xml.base.AgentXmlType;
+import edu.pitt.gallowdd.persephone.xml.base.AgentXmlType.AgentAttribute.Source;
+import edu.pitt.gallowdd.persephone.xml.common.DatatypeXmlEnum;
+import edu.pitt.gallowdd.persephone.util.Constants;
 import edu.pitt.gallowdd.persephone.util.EnumConverterMethods;
 import edu.pitt.gallowdd.persephone.util.IdException;
 
@@ -57,27 +58,27 @@ public class AgentInitializer {
   /**
    * 
    * @param record a record from a CVS Population file
-   * @param agentXmlType the Agent Information from the parameter file
+   * @param agentXml the Agent Information from the parameter file
    * @param simDate the current date in the simulation
    * @return An agent Of the Type requested
    */
-  public static GenericAgent initialize(CSVRecord record, AgentXmlType agentXmlType, LocalDate simDate)
+  public static GenericAgent initialize(CSVRecord record, AgentXmlType agentXml, LocalDate simDate)
   {
     GenericAgent retVal = null;
     
     try
     {
-      List<AgentXmlType.AgentAttribute> agentAttributes = agentXmlType.getAgentAttribute();
+      List<AgentXmlType.AgentAttribute> agentAttributes = agentXml.getAgentAttribute();
       
       // Every record must have a field "id"
       String id = record.get("id");
-      switch(agentXmlType.getJavaClass())
+      switch(agentXml.getDataType())
       {
-        case EDU_PITT_GALLOWDD_PERSEPHONE_AGENT_PERSON:
+        case PERSON:
           retVal = AgentFactory.createAgent(AgentTypeEnum.PERSON, id);
           AgentInitializer.initializePerson((Person)retVal, agentAttributes, record, simDate);
           break;
-        case EDU_PITT_GALLOWDD_PERSEPHONE_AGENT_TEST:
+        default:
           break;
       }
     }
@@ -85,7 +86,7 @@ public class AgentInitializer {
     {
       // ABORT
       AgentInitializer.LOGGER.fatal(e);
-      System.exit(1);
+      System.exit(Constants.EX_DATAERR);
     }
     
     return retVal;
@@ -106,7 +107,7 @@ public class AgentInitializer {
   {
     for(AgentXmlType.AgentAttribute agentAtt : agentAttributes)
     {
-      DataTypeXmlEnum javaType = agentAtt.getDataType();
+      DatatypeXmlEnum javaType = agentAtt.getDataType();
       String attrName = agentAtt.getAttrName();
       
       Source attrSrcInfo = agentAtt.getSource();
@@ -115,14 +116,14 @@ public class AgentInitializer {
       {
         // ABORT
         AgentInitializer.LOGGER.fatal("The AgentAttribute [" + attrName + "] is not dynamic, but there is no initial source information defined");
-        System.exit(1);
+        System.exit(Constants.EX_DATAERR);
       }
       
-      if(attrSrcInfo.getInitialFileLink() != null)
+      if(attrSrcInfo.getInitialFile() != null)
       {
         // The data is in the record already, so we just need to get it from the correct field
-        String fieldName = attrSrcInfo.getInitialFileLink().getInitFileCsvFieldName();//init_file_csv_field_name
-        String convertToEnumFunction = attrSrcInfo.getInitialFileLink().getConvertToEnumFunction();
+        String fieldName = attrSrcInfo.getInitialFile().getCsvFieldName();
+        String convertToEnumFunction = attrSrcInfo.getInitialFile().getConvertToEnumFunction();
         
         switch(javaType)
         {
@@ -159,7 +160,7 @@ public class AgentInitializer {
           
         }
       }
-      else if(attrSrcInfo.getLink() != null)
+      else if(attrSrcInfo.getLinkFile() != null)
       {
         
       }
@@ -167,7 +168,7 @@ public class AgentInitializer {
       {
         // ABORT
         AgentInitializer.LOGGER.fatal("The AgentAttribute [" + attrName + "] doesn't seem to have a link defined");
-        System.exit(1);
+        System.exit(Constants.EX_DATAERR);
       }
       
       person.setBirthdateFromInitAge(false, simDate);

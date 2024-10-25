@@ -35,6 +35,15 @@ public enum AgentTypeEnum
     {
       return "PER";
     }
+  },
+  @SuppressWarnings("javadoc")
+  NULL_TYPE
+  {
+    @Override
+    public String toString()
+    {
+      return "NULL";
+    }
   };
   
   public abstract String toString();

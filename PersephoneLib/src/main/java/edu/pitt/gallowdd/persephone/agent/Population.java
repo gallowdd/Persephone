@@ -18,82 +18,200 @@
 
 package edu.pitt.gallowdd.persephone.agent;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
+import edu.pitt.gallowdd.persephone.event.AdvanceTimeEvent;
 import edu.pitt.gallowdd.persephone.event.MixEvent;
+import edu.pitt.gallowdd.persephone.util.Constants;
 import edu.pitt.gallowdd.persephone.util.Id;
+import edu.pitt.gallowdd.persephone.util.IdException;
 
 /**
- * A group of agents
+ * A Population holds an ArrayList of at most {@code Constants.POPULATION_MAX_SUBSCRIBER_COUNT} and sends events out to them as necessary.
+ * The Population manages a particular type ({@code AgentTypeEnum}) of agents. If a user attempts to add an agent not of the type managed, 
+ * an exception will be raised.
  * 
  * @author David Galloway
  *
- * @param <T> the type of agents in this population (must be a subclass of GenericAgent)
  */
-public class Population<T extends GenericAgent> {
+public class Population extends Object {
   
-  private final Map<Id, T> agentIdMap;
+  private static final Logger LOGGER = LogManager.getLogger(Population.class.getName());
+  
+  private final Id id;
+  private final EventBus eventBus;
+  private final AgentTypeEnum agentTypeManaged;
+  private final List<GenericAgent> agentArrLst = new ArrayList<>(Constants.POPULATION_MAX_SUBSCRIBER_COUNT);
+  private boolean isInitialized;
   
   /**
    * 
+   * @param agentTypeManaged
+   * @throws IdException if id String is invalid
    */
-  public Population()
+  public Population(AgentTypeEnum agentTypeManaged) throws IdException
   {
-    this.agentIdMap = new HashMap<>();
+    this.id = Id.create(agentTypeManaged.toString() + "POP");
+    this.eventBus = new EventBus(this.id.getIdString());
+    this.agentTypeManaged = agentTypeManaged;
+    this.isInitialized = false;
   }
   
   /**
+   * Add an agent to this Population. If the agent's type is not the same as the type being managed, 
+   * this will throw a PopulationTypeMatchException. 
+   * If this Population doesn't have space to add another agent, it will throw a PopulationSizeExceededException
    * 
-   * @param agentId
-   * @return {@code true} if the internal map contains the agent ID, {@code false} otherwise
+   * @param agent the GenericAgent to add to this Population
+   * @return {@code true} if the location is added correctly to this Location Manager's internal list (as specified by {@code Collection.add})
+   * @throws PopulationSizeExceededException if agentArrLst is already at {@code size() == Constants.MANAGER_MAX_SUBSCRIBER_COUNT}
+   * @throws PopulationTypeMatchException the agentType of the agent does not match the agentTypeManaged of this AgentManager
    */
-  public boolean contains(Id agentId)
+  public boolean addAgent(GenericAgent agent) throws PopulationSizeExceededException, PopulationTypeMatchException
   {
-    return this.agentIdMap.containsKey(agentId);
+    if(agent.getAgentType() == this.agentTypeManaged)
+    {
+      if(this.agentArrLst.size() < Constants.POPULATION_MAX_SUBSCRIBER_COUNT)
+      {
+        boolean isAdded =  this.agentArrLst.add(agent);
+        
+        // If we have already done the bulk registration of listeners, then from now on we must register new ones as they are added
+        if(this.isInitialized)
+        {
+          this.eventBus.register(agent);
+        }
+        return isAdded;
+      }
+      else
+      {
+        throw new PopulationSizeExceededException(this.id.getIdString());
+      }
+    }
+    
+    throw new PopulationTypeMatchException(this.id.getIdString(), this.agentTypeManaged.toString());
   }
   
   /**
+   * Remove a GenericAgent from this Population
    * 
-   * @param agentId
-   * @return the agent stored in this controller or null if not found
+   * @param agent the agent to remove
+   * @return {@code true} if the agent is removed from this Population, {@code false} otherwise
    */
-  public T getAgent(Id agentId)
+  public boolean removeAgent(GenericAgent agent)
   {
-    return this.agentIdMap.get(agentId);
+    if(this.agentArrLst.contains(agent))
+    {
+      boolean isRemoved = this.agentArrLst.remove(agent);
+      if(isRemoved)
+      {
+        // Unregister the location from the event bus
+        try
+        {
+          this.eventBus.unregister(agent);
+        }
+        catch(IllegalArgumentException e)
+        {
+          Population.LOGGER.warn("Tried to unregister Agent [" + agent.getId() + 
+              "], but it has not been registered with the EventBus.");
+        }
+      }
+      return isRemoved;
+    }
+    
+    return false;
   }
   
   /**
-   * Maps agent's Id to the agent itself in this table.
+   * Remove a GenericAgent from this Population
    * 
-   * @param agent the agent to add
-   * @return the previous agent associated with key, or @code{null} if there was no mapping for key
+   * @param agentId the id of the agent to remove
+   * @return {@code true} if the agent is removed from this Population, {@code false} otherwise
    */
-  public T addAgent(T agent)
+  public boolean removeAgent(Id agentId)
   {
-    return this.agentIdMap.put(agent.getId(), agent);
+    GenericAgent agentToRemove = null;
+    for(int i = 0; i < this.agentArrLst.size(); ++i)
+    {
+      if(this.agentArrLst.get(i).getId().equals(agentId))
+      {
+        agentToRemove = this.agentArrLst.get(i);
+        break;
+      }
+    }
+    
+    if(agentToRemove != null)
+    {
+      boolean isRemoved = this.agentArrLst.remove(agentToRemove);
+      if(isRemoved)
+      {
+        // Unregister the agent from the event bus
+        try
+        {
+          this.eventBus.unregister(agentToRemove);
+        }
+        catch(IllegalArgumentException e)
+        {
+          Population.LOGGER.warn("Tried to unregister Agent [" + agentId + 
+              "], but it has not been registered with the EventBus.");
+        }
+      }
+      return isRemoved;
+    }
+    
+    return false;
   }
   
   /**
-   * Removes the key (and its corresponding value) from this map. This method does nothing if the key is not in the map.
+   * It is significantly faster to add all of the listeners to a list first, then use parallelStream to bulk register.
+   * This method also sets the isInitialized flag so additional listeners will be added dynamically.
    * 
-   * @param agentId the Id of the agent to remove
-   * @return the removed agent or @code{null} if not found
+   * This method should be called after all of the initial listeners are added
+   * 
+   * @return true if the bulk register is successful, false otherwise (this LocationManager has already performed a bulk registration)
    */
-  public T removeAgent(Id agentId)
+  public boolean registerListeners()
   {
-    return this.agentIdMap.remove(agentId);
+    if(!this.isInitialized)
+    {
+      this.agentArrLst.parallelStream().forEach(tmpListener -> {
+        this.eventBus.register(tmpListener);
+      });
+      this.isInitialized = true;
+      return true;
+    }
+    
+    return false;
   }
   
   /**
-   * 
+   * @param advanceTimeEvent
+   */
+  @Subscribe
+  public void handleAdvanceTimeEvent(AdvanceTimeEvent advanceTimeEvent)
+  {
+    if(advanceTimeEvent.getTimestep().equals("Hour"))
+    {
+      this.eventBus.post(advanceTimeEvent);
+    }
+  }
+  
+  /**
    * @param mixEvent
    */
   @Subscribe
   public void handleMixEvent(MixEvent mixEvent)
   {
-    
+    //TODO
+//    if(mixEvent.getAgentType() == this.agentTypeManaged)
+//    {
+//      
+//    }
   }
 }

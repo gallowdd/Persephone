@@ -21,13 +21,12 @@ package edu.pitt.gallowdd.persephone.agent.activity;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * An enumeration of all Acitvity Types in the application
+ * An enumeration of all Schedule Types in the application
  *  
  * @author David Galloway
  */
 public enum ScheduleType
 {
-  
   /**
    * Mon - Fri, 08:00 - 16:59 / Holidays Off
    */

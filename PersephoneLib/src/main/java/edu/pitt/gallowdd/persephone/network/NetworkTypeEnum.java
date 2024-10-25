@@ -62,6 +62,15 @@ public enum NetworkTypeEnum
     {
       return "NTWKU";
     }
+  },
+  @SuppressWarnings("javadoc")
+  NULL_TYPE
+  {
+    @Override
+    public String toString()
+    {
+      return "NULL";
+    }
   };
   
   public abstract String toString();

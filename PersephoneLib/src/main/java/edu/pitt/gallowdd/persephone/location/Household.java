@@ -1,6 +1,6 @@
 /*
  * Persephone: An Agent-Based Modeling Platform
- * Copyright (c) 2019-2021  David Galloway / University of Pittsburgh
+ * Copyright (c) 2019-2022  David Galloway / University of Pittsburgh
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
 package edu.pitt.gallowdd.persephone.location;
 
-import edu.pitt.gallowdd.persephone.container.IdConnectable;
+import edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer;
 import edu.pitt.gallowdd.persephone.event.MixEvent;
 import edu.pitt.gallowdd.persephone.util.Constants;
 import edu.pitt.gallowdd.persephone.util.Id;
@@ -71,7 +72,7 @@ public class Household extends GenericLocation {
    * @param mixingContainer a container for Ids
    * @throws IdException if the id is invalid
    */
-  protected Household(String idString, double latitude, double longitude, IdConnectable mixingContainer) throws IdException
+  protected Household(String idString, double latitude, double longitude, GenericIdMixingContainer mixingContainer) throws IdException
   {
     super(idString, latitude, longitude, mixingContainer);
   }
@@ -115,7 +116,7 @@ public class Household extends GenericLocation {
    * @param mixingContainer a container for Ids
    * @throws IdException if the id is invalid
    */
-  protected Household(String idString, double latitude, double longitude, double elevation, IdConnectable mixingContainer) throws IdException
+  protected Household(String idString, double latitude, double longitude, double elevation, GenericIdMixingContainer mixingContainer) throws IdException
   {
     super(idString, latitude, longitude, elevation, mixingContainer);
   }

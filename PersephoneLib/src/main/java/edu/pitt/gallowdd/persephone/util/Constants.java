@@ -39,6 +39,7 @@ public final class Constants {
   public static final String DIGITS = "0123456789";
   public static final UUID DEFAULT_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
   public static final int MANAGER_MAX_SUBSCRIBER_COUNT = 1000;
+  public static final int POPULATION_MAX_SUBSCRIBER_COUNT = 10000;
   
   // Exit codes that are standard for C/C++
   
@@ -90,12 +91,17 @@ public final class Constants {
   
   public static final Gson GSON = new Gson();
   
-  public static final String DEFAULT_PARAM_FILENAME = "persephoneDefaultParams.xml";
-  public static final String DEFAULT_PARAM_SCHEMA_FILENAME = "schema/persephoneDefaultParameters.xsd";
-  public static final String DEFAULT_SYNTH_ENV_INFO_SCHEMA_FILENAME = "schema/syntheticEnvironmentInfo.xsd";
-  public static final String DEFAULT_SYNTH_ENV_INFO_FILENAME = "syntheticEnvironmentInfo.xml";
+  // The Base Parameters are ones that should only be changed by a developer and should be in the excutable jar file
+  public static final String BASE_PARAM_FILENAME = "persephoneBaseParams.xml";
+  public static final String BASE_PARAM_SCHEMA_FILENAME = "schema/persephoneBaseParameters.xsd";
   
-  public static final String JAXB_PARAMETERS_CNTXT = "edu.pitt.gallowdd.persephone.parameters";
-  public static final String JAXB_SYNTHENVINFO_CNTXT = "edu.pitt.gallowdd.persephone.synthenvinfo";
+  public static final String DEFAULT_RUNTIME_PARAM_FILENAME = "persephoneDefaultRuntimeParams.xml";
+  public static final String DEFAULT_RUNTIME_PARAM_SCHEMA_FILENAME = "schema/persephoneDefaultRuntimeParameters.xsd";
+  public static final String SYNTHENV_FILENAME = "syntheticEnvironmentInfo.xml";
+  public static final String SYNTHENV_SCHEMA_FILENAME = "schema/persephoneSyntheticEnvironment.xsd";
+
+  public static final String JAXB_BASE_PARAM_CNTXT = "edu.pitt.gallowdd.persephone.xml.base";
+  public static final String JAXB_RUNTIME_PARAM_CNTXT = "edu.pitt.gallowdd.persephone.xml.runtime";
+  public static final String JAXB_SYNTHENV_CNTXT = "edu.pitt.gallowdd.persephone.xml.synthenv";
 
 }

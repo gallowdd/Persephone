@@ -1,4 +1,4 @@
-/*
+ /*
  * Persephone: An Agent-Based Modeling Platform
  * Copyright (c) 2019-2021  David Galloway / University of Pittsburgh
  * 
@@ -24,7 +24,7 @@ package edu.pitt.gallowdd.persephone.event;
  *
  */
 public class EventFactory {
-  
+  //TODO
   /**
    * 
    * @param type the Event type to create
@@ -33,15 +33,15 @@ public class EventFactory {
   public static Event createEvent(EventTypeEnum type)
   {
     var retVal = switch(type) {
-      case AGENT_ACTION -> new ;
-      case FEBRUARY, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER -> 1;
-      case MARCH, MAY, APRIL, AUGUST -> 2;
+//      case AGENT_ACTION -> new ;
+//      case FEBRUARY, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER -> 1;
+//      case MARCH, MAY, APRIL, AUGUST -> 2;
       default -> 0; 
     };
     
     
     
-    return retVal;
+    return null;
   }
 
 }

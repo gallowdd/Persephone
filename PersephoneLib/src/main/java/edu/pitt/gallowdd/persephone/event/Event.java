@@ -18,9 +18,6 @@
 
 package edu.pitt.gallowdd.persephone.event;
 
-import edu.pitt.gallowdd.persephone.agent.GenericAgent;
-import edu.pitt.gallowdd.persephone.controller.Controller;
-import edu.pitt.gallowdd.persephone.util.Id;
 import edu.pitt.gallowdd.persephone.util.Params;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -33,16 +30,17 @@ import org.apache.logging.log4j.Logger;
  * @author David Galloway
  *
  */
-public abstract class Event implements Comparable<Event> {
+public abstract class Event {
   
   private static final Logger LOGGER = LogManager.getLogger(Event.class.getName());
   
-  private final int simDay;
-  private final int simHour;
-  private final boolean isRepeating;
-  private final EventTypeEnum type;
+  protected final int simDay;
+  protected final int simHour;
+  protected boolean isRepeating;
+  protected final EventTypeEnum type;
   
   /**
+   * @param type 
    * @param simDay  the simulation day that this event should occur
    * @param simHour  the hour of the simulation day that this event should occur
    */
@@ -107,7 +105,10 @@ public abstract class Event implements Comparable<Event> {
   public int hashCode()
   {
     return new HashCodeBuilder()
-      .append(this.id)
+      .append(this.simDay)
+      .append(this.simHour)
+      .append(this.type)
+      .append(this.isRepeating)
       .toHashCode();
   }
   
@@ -128,18 +129,23 @@ public abstract class Event implements Comparable<Event> {
     Event other = (Event)obj;
     
     return new EqualsBuilder()
-      .append(this.id, other.id)
+      .append(this.simDay, other.simDay)
+      .append(this.simHour, other.simHour)
+      .append(this.type, other.type)
+      .append(this.isRepeating, other.isRepeating)
       .isEquals();
   }
   
-  /* (non-Javadoc)
-   * @see java.lang.Comparable#compareTo(java.lang.Object)
-   */
-  @Override
-  public int compareTo(Event o)
-  {
-    return new CompareToBuilder()
-      .append(this.id, o.id)
-      .toComparison();
-  }
+//  /* (non-Javadoc)
+//   * @see java.lang.Comparable#compareTo(java.lang.Object)
+//   */
+//  @Override
+//  public int compareTo(Event o)
+//  {
+//    return new CompareToBuilder()
+//      .append(this.simDay, o.simDay)
+//      .append(this.simHour, o.simHour)
+//      .append(this.type, o.type)
+//      .toComparison();
+//  }
 }

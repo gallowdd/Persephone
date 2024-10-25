@@ -18,7 +18,7 @@
 
 package edu.pitt.gallowdd.persephone.location.sublocation;
 
-import edu.pitt.gallowdd.persephone.container.IdConnectable;
+import edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer;
 import edu.pitt.gallowdd.persephone.location.CollegeDorm;
 import edu.pitt.gallowdd.persephone.location.LocationTypeEnum;
 import edu.pitt.gallowdd.persephone.util.Id;
@@ -52,7 +52,7 @@ public class CollegeDormRoom extends GenericSublocation {
    * @throws IllegalArgumentException if containingDorm is null (i.e. a CollegeDormRoom can't exist on its own. It must be contained in a CollegeDorm)
    * @throws IdException if the id is not valid
    */
-  protected CollegeDormRoom(CollegeDorm containingDorm, IdConnectable mixingContainer) throws IllegalArgumentException, IdException
+  protected CollegeDormRoom(CollegeDorm containingDorm, GenericIdMixingContainer mixingContainer) throws IllegalArgumentException, IdException
   {
     super(Id.create(CollegeDormRoom.ID_PREPEND).getIdString(), containingDorm.getId(), mixingContainer);
   }
@@ -81,7 +81,7 @@ public class CollegeDormRoom extends GenericSublocation {
    * @throws IllegalArgumentException if containingSchool is null (i.e. a CollegeDormRoom can't exist on its own. It must be contained in a CollegeDorm)
    * @throws IdException if the id is not valid
    */
-  protected CollegeDormRoom(String id, CollegeDorm containingDorm, IdConnectable mixingContainer) throws IllegalArgumentException, IdException
+  protected CollegeDormRoom(String id, CollegeDorm containingDorm, GenericIdMixingContainer mixingContainer) throws IllegalArgumentException, IdException
   {
     super(id, containingDorm.getId(), mixingContainer);
   }

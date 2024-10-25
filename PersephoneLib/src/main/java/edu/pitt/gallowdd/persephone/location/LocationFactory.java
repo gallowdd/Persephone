@@ -21,7 +21,7 @@ package edu.pitt.gallowdd.persephone.location;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import edu.pitt.gallowdd.persephone.container.IdConnectable;
+import edu.pitt.gallowdd.persephone.container.GenericIdMixingContainer;
 import edu.pitt.gallowdd.persephone.util.IdException;
 
 /**
@@ -76,6 +76,9 @@ public class LocationFactory {
           break;
         case PRISON_CELL:
           break;
+        case NULL_TYPE:
+          retVal = GenericLocation.NULL_LOCATION;
+          break;
         default:
           break;
       }
@@ -119,6 +122,23 @@ public class LocationFactory {
           break;
         case GRID:
           break;
+        case COLLEGE_DORM:
+          break;
+        case COLLEGE_DORM_ROOM:
+          break;
+        case MILITARY_BARRACKS:
+          break;
+        case NURSING_FACILITY:
+          break;
+        case PRISON:
+          break;
+        case PRISON_CELL:
+          break;
+        case NULL_TYPE:
+          retVal = GenericLocation.NULL_LOCATION;
+          break;
+        default:
+          break;
       }
     }
     catch(IdException e)
@@ -138,7 +158,7 @@ public class LocationFactory {
    * @param mixingContainer
    * @return a new Location of the specified LocationType
    */
-  public static GenericLocation createLocation(LocationTypeEnum type, String id, double latitude, double longitude, IdConnectable mixingContainer)
+  public static GenericLocation createLocation(LocationTypeEnum type, String id, double latitude, double longitude, GenericIdMixingContainer mixingContainer)
   {
     GenericLocation retVal = null;
     try
@@ -160,6 +180,23 @@ public class LocationFactory {
           break;
         case GRID:
           break;
+        case COLLEGE_DORM:
+          break;
+        case COLLEGE_DORM_ROOM:
+          break;
+        case MILITARY_BARRACKS:
+          break;
+        case NURSING_FACILITY:
+          break;
+        case PRISON:
+          break;
+        case PRISON_CELL:
+          break;
+        case NULL_TYPE:
+          retVal = GenericLocation.NULL_LOCATION;
+          break;
+        default:
+          break;
       }
     }
     catch(IdException e)
@@ -180,7 +217,7 @@ public class LocationFactory {
    * @param mixingContainer
    * @return a new Location of the specified LocationType
    */
-  public static GenericLocation createLocation(LocationTypeEnum type, String id, double latitude, double longitude, double elevation, IdConnectable mixingContainer)
+  public static GenericLocation createLocation(LocationTypeEnum type, String id, double latitude, double longitude, double elevation, GenericIdMixingContainer mixingContainer)
   {
     GenericLocation retVal = null;
     try
@@ -202,6 +239,23 @@ public class LocationFactory {
           break;
         case GRID:
           break;
+        case COLLEGE_DORM:
+          break;
+        case COLLEGE_DORM_ROOM:
+          break;
+        case MILITARY_BARRACKS:
+          break;
+        case NURSING_FACILITY:
+          break;
+        case PRISON:
+          break;
+        case PRISON_CELL:
+          break;
+        case NULL_TYPE:
+          retVal = GenericLocation.NULL_LOCATION;
+          break;
+        default:
+          break;
       }
     }
     catch(IdException e)
@@ -221,17 +275,42 @@ public class LocationFactory {
    */
   public static GenericLocation createLocation(LocationTypeEnum type, String id, GenericLocation containingLocation)
   {
+    GenericLocation retVal = null;
+    
     switch(type)
     {
       case CLASSROOM:
+        break;
       case HOUSEHOLD:
+        break;
       case OFFICE:
+        break;
       case SCHOOL:
+        break;
       case WORKPLACE:
+        break;
       case GRID:
+        break;
+      case COLLEGE_DORM:
+        break;
+      case COLLEGE_DORM_ROOM:
+        break;
+      case MILITARY_BARRACKS:
+        break;
+      case NURSING_FACILITY:
+        break;
+      case PRISON:
+        break;
+      case PRISON_CELL:
+        break;
+      case NULL_TYPE:
+        retVal = GenericLocation.NULL_LOCATION;
+        break;
+      default:
+        break;
     }
     
-    return null;
+    return retVal;
   }
   
 }

@@ -2,7 +2,7 @@ package edu.pitt.gallowdd.persephone.event;
 
 /**
  * 
- * @author David Gallowau
+ * @author David Galloway
  *
  */
 public class AdvanceTimeEvent {

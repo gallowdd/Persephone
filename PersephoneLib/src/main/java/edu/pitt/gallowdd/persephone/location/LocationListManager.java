@@ -111,7 +111,7 @@ public class LocationListManager {
   {
     boolean isAdded = false;
     
-    for (LocationManager locationMgr : this.locationMgrSet)
+    for(LocationManager locationMgr : this.locationMgrSet)
     {
       try
       {
@@ -119,14 +119,14 @@ public class LocationListManager {
         isAdded = true;
         break;
       }
-      catch (LocationManagerSizeExceededException e)
+      catch(LocationManagerSizeExceededException e)
       {
         // If this LocationListManager has already done the bulk registration of its
         // listeners, then make sure that
         // the locationManager has performed ITS bulk registration
-        if (this.isInitialized)
+        if(this.isInitialized)
         {
-          if (locationMgr.registerListeners())
+          if(locationMgr.registerListeners())
           {
             this.eventBus.register(locationMgr);
           }
@@ -134,7 +134,7 @@ public class LocationListManager {
         
         // Try next one
       }
-      catch (LocationManagerTypeMatchException e)
+      catch(LocationManagerTypeMatchException e)
       {
         LocationListManager.LOGGER.fatal(e);
         throw new RuntimeException(e);
@@ -142,7 +142,7 @@ public class LocationListManager {
     }
 
     // If all of the LocationManagers are full, create a new one and add it
-    if (!isAdded)
+    if(!isAdded)
     {
 
       LocationManager newLocMgr;
@@ -151,7 +151,7 @@ public class LocationListManager {
         newLocMgr = new LocationManager(location.getLocationType());
         newLocMgr.addLocation(location);
       }
-      catch (LocationManagerSizeExceededException | LocationManagerTypeMatchException | IdException e)
+      catch(LocationManagerSizeExceededException | LocationManagerTypeMatchException | IdException e)
       {
         LocationListManager.LOGGER.fatal(e);
         throw new RuntimeException(e);

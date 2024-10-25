@@ -72,8 +72,28 @@ public enum OverseerPhase
     }
   },
   
+  @SerializedName("OverseerAssignLocationsToAgentsRequest")
+  OVRSR_LOC2AGT_RQST(4)
+  {
+    @Override
+    public String toString()
+    {
+      return "OverseerAssignLocationsToAgentsRequest";
+    }
+  },
+  
+  @SerializedName("ControllerAssignLocationsToAgentsResponse")
+  CNTRLR_LOC2AGT_RQST(5)
+  {
+    @Override
+    public String toString()
+    {
+      return "ControllerAssignLocationsToAgentsResponse";
+    }
+  },
+  
   @SerializedName("OutOfRange")
-  OUT_OF_RANGE(4)
+  OUT_OF_RANGE(6)
   {
     @Override
     public String toString()

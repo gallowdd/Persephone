@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:common="http://persephone.gallowdd.pitt.edu/xml/common"
+    targetNamespace="http://persephone.gallowdd.pitt.edu/xml/synthenv"
+    xmlns="http://persephone.gallowdd.pitt.edu/xml/synthenv" 
+    elementFormDefault="qualified">
+    
+  <xsd:import namespace="http://persephone.gallowdd.pitt.edu/xml/common" schemaLocation="persephoneCommon.xsd"/>
+  
+  <xsd:element name="synthetic_environment">
+    <xsd:complexType mixed="false">
+      <xsd:sequence>
+        <xsd:element name="identifier" minOccurs="1" maxOccurs="1" type="xsd:string" />
+        <xsd:element name="country" minOccurs="1" maxOccurs="1" type="common:countryCodeXmlEnum" />
+        <xsd:element name="version" minOccurs="1" maxOccurs="1" type="common:popVersionXmlEnum" />
+        <xsd:element name="agent" minOccurs="1" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="agent_type" minOccurs="1" maxOccurs="1" type="common:agentDatatypeXmlEnum" />
+              <xsd:element name="filename" minOccurs="1" maxOccurs="1" type="common:agentFilenameXmlEnum" />
+              <xsd:element name="entry_count" minOccurs="1" maxOccurs="1" type="xsd:integer" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="location" minOccurs="1" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="location_type" minOccurs="1" maxOccurs="1" type="common:locationDatatypeXmlEnum" />
+              <xsd:element name="filename" minOccurs="1" maxOccurs="1" type="common:locationFilenameXmlEnum" />
+              <xsd:element name="entry_count" minOccurs="1" maxOccurs="1" type="xsd:integer" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  
+</xsd:schema>

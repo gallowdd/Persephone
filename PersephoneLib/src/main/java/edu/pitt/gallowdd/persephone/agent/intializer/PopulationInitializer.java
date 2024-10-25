@@ -34,9 +34,10 @@ import org.apache.logging.log4j.Logger;
 
 import edu.pitt.gallowdd.persephone.agent.GenericAgent;
 import edu.pitt.gallowdd.persephone.agent.Person;
-import edu.pitt.gallowdd.persephone.parameters.AgentJavaClassXmlEnum;
-import edu.pitt.gallowdd.persephone.parameters.SimulationXmlType.SyntheticEnvironment;
+
 import edu.pitt.gallowdd.persephone.util.Params;
+import edu.pitt.gallowdd.persephone.xml.common.AgentDatatypeXmlEnum;
+import edu.pitt.gallowdd.persephone.xml.runtime.SimulationXmlType.SyntheticEnvironmentDescriptor;
 
 /**
  * @author David Galloway
@@ -63,23 +64,23 @@ public class PopulationInitializer {
    *  </model>
    * 
    * @param population 
-   * @param xmlSyntheticEnvironment the synthetic ecosystem information from the parameter file
+   * @param xmlSyntheticEnvironment the synthetic environment information from the parameter file
    * @param simDate the current date in the simulation
    */
-  public static void initialize(List<GenericAgent> population, SyntheticEnvironment xmlSyntheticEnvironment, LocalDate simDate)
+  public static void initialize(List<GenericAgent> population, SyntheticEnvironmentDescriptor xmlSyntheticEnvironment, LocalDate simDate)
   {
-    String country = xmlSyntheticEnvironment.getCountry();
-    String version = xmlSyntheticEnvironment.getVersion();
+    String country = xmlSyntheticEnvironment.getCountry().value();
+    String version = xmlSyntheticEnvironment.getVersion().value();
     String identifier = xmlSyntheticEnvironment.getIdentifier();
     
     // Verify that agentTypeName is defined in the parameter file
-    for(int i = 0; i < Params.getAgentTypes().size(); ++i)
+    for(int i = 0; i < Params.getAgents().size(); ++i)
     {
       
       Path filePath = Paths.get(Params.getPopulationDirectory(), "country", country, version, identifier, 
-          Params.getAgentTypes().get(i).getName() + ".csv");
+          Params.getAgents().get(i).getFilename().value());
       
-      AgentJavaClassXmlEnum javaClass = Params.getAgentTypes().get(i).getJavaClass();
+      AgentDatatypeXmlEnum javaClass = Params.getAgents().get(i).getDataType();
       
       try(
           final Reader in = new FileReader(filePath.toFile());
@@ -87,7 +88,7 @@ public class PopulationInitializer {
       {
         switch(javaClass)
         {
-          case EDU_PITT_GALLOWDD_PERSEPHONE_AGENT_PERSON:
+          case PERSON:
             if(population == null)
             {
               population = new ArrayList<>();
@@ -101,17 +102,15 @@ public class PopulationInitializer {
                 System.exit(1);
               }
             }
-            Iterable<CSVRecord> records = CSVFormat.RFC4180.withHeader().parse(in);
+            Iterable<CSVRecord> records = CSVFormat.RFC4180.builder().setHeader().setSkipHeaderRecord(true).build().parse(in);
             int personCount = 0;
             for(CSVRecord record : records) 
             {
-              GenericAgent agent = AgentInitializer.initialize(record, Params.getAgentTypes().get(i), simDate);
+              GenericAgent agent = AgentInitializer.initialize(record, Params.getAgents().get(i), simDate);
               population.add(agent);
               ++personCount;
             }
             PopulationInitializer.LOGGER.debug("Created a Person Population of " + personCount + " agents");
-            break;
-          case EDU_PITT_GALLOWDD_PERSEPHONE_AGENT_TEST:
             break;
           default:
             break;

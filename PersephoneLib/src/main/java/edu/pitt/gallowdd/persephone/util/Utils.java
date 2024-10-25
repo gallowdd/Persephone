@@ -24,6 +24,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+import java.util.Random;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
@@ -31,8 +32,9 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
-import org.apache.commons.math3.random.JDKRandomGenerator;
-import org.apache.commons.math3.random.Well44497b;
+import org.apache.commons.rng.UniformRandomProvider;
+import org.apache.commons.rng.core.source64.L128X1024Mix;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
@@ -49,15 +51,17 @@ import edu.pitt.gallowdd.persephone.PersephoneException.ErrorCode;
 public final class Utils {
 
   private static final Logger LOGGER = LogManager.getLogger(Utils.class.getName());
-  private static Well44497b RAND_GEN;
-  private static JDKRandomGenerator EXTERNAL_RAND_GEN;
+  private static L128X1024Mix RAND_SAMPLER;
+  // The Random Number Generator that will be used to shuffle lists
+  private static Random EXTERNAL_RAND_GEN;
   
   static
   {
     try
     {
-      Utils.RAND_GEN = new Well44497b(Params.getSeed());
-      Utils.EXTERNAL_RAND_GEN = new JDKRandomGenerator(Params.getSeed());
+      long[] seedArr =  { Params.getSeed() };
+      Utils.RAND_SAMPLER = new L128X1024Mix(seedArr);
+      Utils.EXTERNAL_RAND_GEN = new Random(Params.getSeed());
     }
     catch(Exception e)
     {
@@ -121,7 +125,7 @@ public final class Utils {
    **/
   public static double getRandom()
   {
-    return Utils.RAND_GEN.nextDouble();
+    return Utils.RAND_SAMPLER.nextDouble();
   }
   
   /**
@@ -133,14 +137,23 @@ public final class Utils {
    **/
   public static int getRandomInt(int n) throws IllegalArgumentException 
   {
-    return Utils.RAND_GEN.nextInt(n);
+    return Utils.RAND_SAMPLER.nextInt(n);
+  }
+  
+  /**
+   * 
+   * @return the static RandomNumberSampler used by the simulation
+   */
+  public static UniformRandomProvider getRandomNumberSampler()
+  {
+    return Utils.RAND_SAMPLER;
   }
   
   /**
    * 
    * @return the static RandomNumberGenerator used by the simulation
    */
-  public static JDKRandomGenerator getRandomNumberGenerator()
+  public static Random getRandomNumberGenerator()
   {
     return Utils.EXTERNAL_RAND_GEN;
   }
@@ -155,7 +168,14 @@ public final class Utils {
   public static String getResource(String filename) throws FileNotFoundException
   {
     URL resource = Params.class.getClassLoader().getResource(filename);
-    Objects.requireNonNull(resource);
+    try
+    {
+      Objects.requireNonNull(resource);
+    }
+    catch(NullPointerException e)
+    {
+      throw new FileNotFoundException("File not found: " + filename);
+    }
     return resource.getFile();
   }
   
@@ -229,6 +249,7 @@ public final class Utils {
     }
     catch(SAXException | IOException e)
     {
+      Utils.LOGGER.error(e);
       Utils.LOGGER.error(ErrorCode.ERR_XML_VALIDATION.message(xmlFileName, xmlSchemaFileName), e);
       return false;
     }

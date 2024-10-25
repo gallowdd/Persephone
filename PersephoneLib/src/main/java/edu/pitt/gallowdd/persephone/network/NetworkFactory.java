@@ -28,11 +28,14 @@ public class NetworkFactory extends Object {
    * 
    * @param type
    * @param idString
+   * @param edgeCount 
+   * @param nodeCount 
    * 
    * @return a new Network of the specified NetworkType
    */
-  public static GenericNetwork createNetwork(NetworkTypeEnum type, String idString)
+  public static GenericNetwork createNetwork(NetworkTypeEnum type, String idString, int edgeCount, int nodeCount)
   {
+    GenericNetwork retVal = null;
     switch(type)
     {
       case DIRECTED_NETWORK:
@@ -43,11 +46,14 @@ public class NetworkFactory extends Object {
         break;
       case UNDIRECTED_WEIGHTED_NETWORK:
         break;
+      case NULL_TYPE:
+        retVal = GenericNetwork.NULL_NETWORK;
+        break;
       default:
         break;
     }
     
-    return null;
+    return retVal;
   }
   
   /**
@@ -56,8 +62,9 @@ public class NetworkFactory extends Object {
    * 
    * @return a new Network of the specified NetworkType
    */
-  public static GenericNetwork createLocation(NetworkTypeEnum type)
+  public static GenericNetwork createNetwork(NetworkTypeEnum type)
   {
+    GenericNetwork retVal = null;
     switch(type)
     {
       case DIRECTED_NETWORK:
@@ -68,11 +75,13 @@ public class NetworkFactory extends Object {
         break;
       case UNDIRECTED_WEIGHTED_NETWORK:
         break;
+      case NULL_TYPE:
+        retVal = GenericNetwork.NULL_NETWORK;
+        break;
       default:
         break;
     }
     
-    return null;
+    return retVal;
   }
-  
 }

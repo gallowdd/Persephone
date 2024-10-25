@@ -19,6 +19,8 @@
 package edu.pitt.gallowdd.persephone.agent;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -29,6 +31,7 @@ import edu.pitt.gallowdd.persephone.PersephoneException.ErrorCode;
 import edu.pitt.gallowdd.persephone.agent.attribute.CensusRelationship;
 import edu.pitt.gallowdd.persephone.agent.attribute.Race;
 import edu.pitt.gallowdd.persephone.agent.attribute.Sex;
+import edu.pitt.gallowdd.persephone.location.LocationTypeEnum;
 import edu.pitt.gallowdd.persephone.util.Constants;
 import edu.pitt.gallowdd.persephone.util.Id;
 import edu.pitt.gallowdd.persephone.util.IdException;
@@ -56,6 +59,7 @@ public class Person extends GenericAgent {
   private Sex sex;
   private Race race;
   private CensusRelationship relationship;
+  private final Map<LocationTypeEnum, Id> favoriteLocationMap;
   
   /**
    * Create a new Person agent (used if creating a new agent with a random id)
@@ -71,6 +75,7 @@ public class Person extends GenericAgent {
     this.sex = Sex.UNSET;
     this.race = Race.UNSET;
     this.relationship = CensusRelationship.UNDEFINED;
+    this.favoriteLocationMap = new HashMap<>();
   }
   
   /**
@@ -89,6 +94,7 @@ public class Person extends GenericAgent {
     this.sex = Sex.UNSET;
     this.race = Race.UNSET;
     this.relationship = CensusRelationship.UNDEFINED;
+    this.favoriteLocationMap = new HashMap<>();
   }
   
   /**
@@ -110,6 +116,7 @@ public class Person extends GenericAgent {
     this.sex = sex;
     this.race = race;
     this.relationship = CensusRelationship.UNDEFINED;
+    this.favoriteLocationMap = new HashMap<>();
   }
   
   /**
@@ -132,6 +139,7 @@ public class Person extends GenericAgent {
     this.sex = sex;
     this.race = race;
     this.relationship = CensusRelationship.UNDEFINED;
+    this.favoriteLocationMap = new HashMap<>();
   }
   
   /**
@@ -215,6 +223,24 @@ public class Person extends GenericAgent {
   }
   
   /**
+   * Adds a locationId to the agent's internal favorite places list.
+   * Note:
+   *  1) an agent can only have one Id for any particular LocationType, so assigning 
+   *     to the an already set LocationType will replace the old one
+   *  2) since this is an AGENT'S internal list, there is no verification that the ID 
+   *     is of a location that is accessible (e.g. an agent can have a favorite place 
+   *     that does not exist or is not of the same type as the LocationType would suggest 
+   *     ... "my favorite school my household")
+   *     
+   * @param type the location type to map
+   * @param locationId the ID of the location
+   */
+  public void assignLocationToAgent(LocationTypeEnum type, Id locationId)
+  {
+    this.favoriteLocationMap.put(type, locationId);
+  }
+  
+  /**
    * @param initAge the initAge to set
    */
   public void setInitAge(int initAge) 
@@ -263,6 +289,15 @@ public class Person extends GenericAgent {
   public LocalDate getBirthdate() 
   {
     return this.birthdate;
+  }
+  
+  /* (non-Javadoc)
+   * @see edu.pitt.gallowdd.persephone.agent.GenericAgent#getAgentType()
+   */
+  @Override
+  public AgentTypeEnum getAgentType()
+  {
+    return AgentTypeEnum.PERSON;
   }
   
   /* (non-Javadoc)
@@ -329,4 +364,5 @@ public class Person extends GenericAgent {
         .append("relationship", this.relationship)
         .toString();
   }
+
 }

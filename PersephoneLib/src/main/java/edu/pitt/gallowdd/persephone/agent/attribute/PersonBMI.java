@@ -1,6 +1,7 @@
 package edu.pitt.gallowdd.persephone.agent.attribute;
 
-import org.apache.commons.math3.distribution.LogNormalDistribution;
+import org.apache.commons.statistics.distribution.ContinuousDistribution;
+import org.apache.commons.statistics.distribution.LogNormalDistribution;
 
 import com.google.common.collect.ImmutableRangeMap;
 import com.google.common.collect.Range;
@@ -188,6 +189,7 @@ public class PersonBMI {
     Double scale = Constants.DBL_UNSET;
     Double shape = Constants.DBL_UNSET;
     LogNormalDistribution logNormalDist = null;
+    ContinuousDistribution.Sampler logNormalSampler = null;
     switch(sex)
     {
       case MALE:
@@ -197,12 +199,12 @@ public class PersonBMI {
         {
           break;
         }
-        
-        logNormalDist = new LogNormalDistribution(Utils.getRandomNumberGenerator(), scale, shape);
-        retVal = logNormalDist.sample();
+        logNormalDist = LogNormalDistribution.of(scale, shape);
+        logNormalSampler = logNormalDist.createSampler(Utils.getRandomNumberSampler());
+        retVal = logNormalSampler.sample();
         while(logNormalDist.cumulativeProbability(retVal) > PersonBMI.MAX_CUM_PROB || logNormalDist.cumulativeProbability(retVal) < PersonBMI.MIN_CUM_PROB)
         {
-          retVal = logNormalDist.sample();
+          retVal = logNormalSampler.sample();
         }
         break;
       case FEMALE:
@@ -212,11 +214,12 @@ public class PersonBMI {
         {
           break;
         }
-        logNormalDist = new LogNormalDistribution(Utils.getRandomNumberGenerator(), scale, shape);
-        retVal = logNormalDist.sample();
+        logNormalDist = LogNormalDistribution.of(scale, shape);
+        logNormalSampler = LogNormalDistribution.of(scale, shape).createSampler(Utils.getRandomNumberSampler());
+        retVal = logNormalSampler.sample();
         while(logNormalDist.cumulativeProbability(retVal) > PersonBMI.MAX_CUM_PROB || logNormalDist.cumulativeProbability(retVal) < PersonBMI.MIN_CUM_PROB)
         {
-          retVal = logNormalDist.sample();
+          retVal = logNormalSampler.sample();
         }
         break;
       case UNSET:

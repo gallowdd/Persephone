@@ -34,8 +34,11 @@ import java.util.function.Predicate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import edu.pitt.gallowdd.persephone.agent.AgentTypeEnum;
 import edu.pitt.gallowdd.persephone.agent.GenericAgent;
+import edu.pitt.gallowdd.persephone.agent.PopulationManager;
 import edu.pitt.gallowdd.persephone.agent.intializer.PopulationInitializer;
+import edu.pitt.gallowdd.persephone.container.MixingContainerTypeMatchException;
 import edu.pitt.gallowdd.persephone.location.GenericLocation;
 import edu.pitt.gallowdd.persephone.location.LocationListManager;
 import edu.pitt.gallowdd.persephone.location.LocationTypeEnum;
@@ -47,9 +50,9 @@ import edu.pitt.gallowdd.persephone.messaging.ControllerNormalizeInMessage;
 import edu.pitt.gallowdd.persephone.messaging.Message;
 import edu.pitt.gallowdd.persephone.messaging.Message.MessageType;
 import edu.pitt.gallowdd.persephone.messaging.MessageFactory;
-//import edu.pitt.gallowdd.persephone.messaging.record.SynthEnvRec;
 import edu.pitt.gallowdd.persephone.network.GenericNetwork;
 import edu.pitt.gallowdd.persephone.overseer.OverseerControllerInterface;
+import edu.pitt.gallowdd.persephone.util.Constants;
 import edu.pitt.gallowdd.persephone.util.EnumNotFoundException;
 import edu.pitt.gallowdd.persephone.util.Id;
 import edu.pitt.gallowdd.persephone.util.IdException;
@@ -57,7 +60,7 @@ import edu.pitt.gallowdd.persephone.util.OverseerPhase;
 import edu.pitt.gallowdd.persephone.util.Params;
 
 /**
- * This is the base class for any container of agents, locations, and networks that will be running in its own thread
+ * This is the default class for any container of agents, locations, and networks that will be running in its own thread
  * 
  * @author David Galloway
  **/
@@ -73,8 +76,11 @@ public class Controller implements Comparable<Controller>, Callable<ControllerOu
   private final Id id;
   //private final Population<GenericAgent> agents = new Population<>();
   
-  private final Set<GenericAgent> agents = new HashSet<>();
+//  private final Set<GenericAgent> agents = new HashSet<>();
+  private final Map<AgentTypeEnum, PopulationManager> agents = new HashMap<>();
   private final Map<LocationTypeEnum, LocationListManager> locations = new HashMap<>();
+  private final Map<Id, Set<Id>> locationToAgentSetMap = new HashMap<>();
+  
   //private final Map<String, GenericLocation> locationIdMap = new ConcurrentHashMap<>();
   //private final Map<Id, GenericNetwork> networkIdMap = new HashMap<>();
   private final Set<GenericNetwork> networks = new HashSet<>();
@@ -217,8 +223,17 @@ public class Controller implements Comparable<Controller>, Callable<ControllerOu
    */
   public boolean containsAgent(Id agentId)
   {
-    final Predicate<GenericAgent> predicate = agent -> agent.getId().equals(agentId);
-    return this.agents.stream().anyMatch(predicate);
+    boolean retVal = false;
+    
+    for(Map.Entry<AgentTypeEnum, PopulationManager> pair : this.agents.entrySet())
+    {
+      if(pair.getValue().contains(agentId))
+      {
+        retVal = true;
+        break;
+      }
+    }
+    return retVal;
   }
   
   /**
@@ -237,23 +252,29 @@ public class Controller implements Comparable<Controller>, Callable<ControllerOu
     {
       return false;
     }
-    
   }
   
   /**
+   * Check each PopulationManager to see if it contains the agentId. If one does, then get the GenericAgent and return it.
    * 
    * @param agentId
    * @return the agent stored in this controller or null if not found
    */
   public GenericAgent getAgent(Id agentId)
   {
-    final Predicate<GenericAgent> predicate = agent -> agent.getId().equals(agentId);
-    final Optional<GenericAgent> matchingAgent = this.agents.stream().filter(predicate).findFirst();
+    for(Map.Entry<AgentTypeEnum, PopulationManager> pair : this.agents.entrySet())
+    {
+      if(pair.getValue().contains(agentId))
+      {
+        return pair.getValue().getAgent(agentId);
+      }
+    }
     
-    return matchingAgent.orElse(null);
+    return null;
   }
   
   /**
+   * Check each PopulationManager to see if it contains the agentId. If one does, then get the GenericAgent and return it.
    * 
    * @param agentIdString
    * @return the agent stored in this controller or null if not found
@@ -275,53 +296,118 @@ public class Controller implements Comparable<Controller>, Callable<ControllerOu
    * Add the agent to the set of agents in this controller
    * 
    * @param agent the agent to add
-   * @return the @code{true} if the agent was added, or @code{false} if the agent is already in the set
    */
-  public boolean addAgent(GenericAgent agent)
+  public void addAgent(GenericAgent agent)
   {
-    return this.agents.add(agent);
+    if(this.agents.containsKey(agent.getAgentType()))
+    {
+      this.agents.get(agent.getAgentType()).addAgent(agent);
+    }
+    else
+    {
+      PopulationManager populationMgr =  null;
+      try
+      {
+        populationMgr = new PopulationManager();
+      }
+      catch(IdException e)
+      {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      populationMgr.addAgent(agent);
+      this.agents.put(agent.getAgentType(), populationMgr);
+    }
   }
   
   /**
    * Removes the agent the Controller's set of agents
    * 
    * @param agent the agent to remove
-   * @return @code{true} if the agent is removed or @code{false} if not found
    */
-  public boolean removeAgent(GenericAgent agent)
+  public void removeAgent(GenericAgent agent)
   {
-   return this.agents.remove(agent);
+   if(this.agents.containsKey(agent.getAgentType()))
+   {
+     this.agents.get(agent.getAgentType()).removeAgent(agent.getId());
+   }
   }
   
   /**
    * Removes the agent the Controller's set of agents
    * 
    * @param agentId the Id of the agent to remove
-   * @return @code{true} if the agent is removed or @code{false} if not found
    */
-  public boolean removeAgent(Id agentId)
+  public void removeAgent(Id agentId)
   {
-    final Predicate<GenericAgent> predicate = agent -> agent.getId().equals(agentId);
-    return this.agents.removeIf(predicate);
+    for(Map.Entry<AgentTypeEnum, PopulationManager> pair : this.agents.entrySet())
+    {
+      if(pair.getValue().contains(agentId))
+      {
+        pair.getValue().removeAgent(agentId);
+      }
+    }
   }
   
   /**
    * Removes the key (and its corresponding value) from this map. This method does nothing if the key is not in the map.
    * 
    * @param agentIdString the idString of the agent to remove
-   * @return @code{true} if the agent is removed or @code{false} if not found
    */
-  public boolean removeAgent(String agentIdString)
+  public void removeAgent(String agentIdString)
   {
     try
     {
       final Id agentId = new Id(agentIdString);
-      return this.removeAgent(agentId);
+      this.removeAgent(agentId);
     }
     catch(IdException e)
     {
+      // Id is invalid so do nothing
+      return;
+    }
+  }
+  
+  /**
+   * Assign an agent of to a location. Both the agent and the location, must be present
+   * in this controller or the method will return false immediately.
+   * 
+   * @param agentId the ID of the agent to add to the location
+   * @param locationId the ID of the location
+   * @return true if the agent is added, false if the agent is not assigned (for any reason)
+   */
+  public boolean assignAgentToLocation(Id agentId, Id locationId)
+  {
+    boolean retVal = false;
+    
+    if(!this.containsAgent(agentId))
+    {
       return false;
     }
+    
+    if(!this.containsLocation(locationId))
+    {
+      return false;
+    }
+    
+    try
+    {
+      for(Map.Entry<LocationTypeEnum, LocationListManager> pair : this.locations.entrySet())
+      {
+        if(pair.getValue().contains(locationId))
+        {
+          pair.getValue().getLocation(locationId).getMixingContainer().add(agentId);
+          retVal = true;
+          break;
+        }
+      }
+    }
+    catch(MixingContainerTypeMatchException e)
+    {
+      Controller.LOGGER.error(e);
+    }
+    
+    return retVal;
   }
   
   /**
@@ -377,7 +463,16 @@ public class Controller implements Comparable<Controller>, Callable<ControllerOu
     }
     else
     {
-      LocationListManager locListMgr = new LocationListManager();
+      LocationListManager locListMgr =  null;
+      try
+      {
+        locListMgr = new LocationListManager();
+      }
+      catch(IdException e)
+      {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
       locListMgr.addLocation(loc);
       this.locations.put(loc.getLocationType(), locListMgr);
     }
@@ -484,7 +579,7 @@ public class Controller implements Comparable<Controller>, Callable<ControllerOu
   
   private void initialize()
   {
-    final int paramSynthEnvSize = Params.getSyntheticEnvironments().size();
+    final int paramSynthEnvSize = Params.getSyntheticEnvDescriptors().size();
     // This list will keep track of the indices of the synthetic environments in the Parameter XML that we are using for this Controller
     final List<Integer> syntheticEnvironmentIndexList = new ArrayList<>();
     
@@ -504,13 +599,12 @@ public class Controller implements Comparable<Controller>, Callable<ControllerOu
         String popId = null;
         Controller.LOGGER.trace(this.id.getIdString() + ": " + synthEnv.toString());
         
-        
         int synthEcosystemIndex = -1;
         for(int i = 0; i < paramSynthEnvSize; ++i)
         {
-          country = Params.getSyntheticEnvironments().get(i).getCountry();
-          version = Params.getSyntheticEnvironments().get(i).getVersion();
-          popId = Params.getSyntheticEnvironments().get(i).getIdentifier();
+          country = Params.getSyntheticEnvDescriptors().get(i).getCountry().value();
+          version = Params.getSyntheticEnvDescriptors().get(i).getVersion().value();
+          popId = Params.getSyntheticEnvDescriptors().get(i).getIdentifier();
           
           if(country.equals(synthEnv.country()) &&
              version.equals(synthEnv.version()) &&
@@ -569,11 +663,11 @@ public class Controller implements Comparable<Controller>, Callable<ControllerOu
             break;
           case UNSET:
             Controller.LOGGER.fatal("Unrecognized Request Type for Message, " + cntrllrNrmlzMsg.toString());
-            System.exit(1);
+            System.exit(Constants.EX_SOFTWARE);
             break;
           default:
             Controller.LOGGER.fatal("Unrecognized Request Type for Message, " + cntrllrNrmlzMsg.toString());
-            System.exit(1);
+            System.exit(Constants.EX_SOFTWARE);
             break;
           
         }
@@ -608,14 +702,12 @@ public class Controller implements Comparable<Controller>, Callable<ControllerOu
     final List<Id> addedAgentIds = new LinkedList<>();
     final List<GenericAgent> addedAgents = new LinkedList<>();
     
-    PopulationInitializer.initialize(addedAgents, Params.getSyntheticEnvironments().get(synthEcosystemIndex), this.overseer.getSimDateTime().toLocalDate());
+    PopulationInitializer.initialize(addedAgents, Params.getSyntheticEnvDescriptors().get(synthEcosystemIndex), this.overseer.getSimDateTime().toLocalDate());
     
     for(GenericAgent agent : addedAgents)
     {
-      if(this.addAgent(agent))
-      {
-        addedAgentIds.add(agent.getId());
-      }
+      this.addAgent(agent);
+      addedAgentIds.add(agent.getId());
     }
     
     Controller.LOGGER.debug("addedAgents.size() = " + addedAgents.size());
@@ -636,8 +728,7 @@ public class Controller implements Comparable<Controller>, Callable<ControllerOu
     final List<Id> addedLocationIds = new LinkedList<>();
     final List<GenericLocation> addedLocations = new LinkedList<>();
       
-    LocationListManagerInitializer.initialize(addedLocations, Params.getSyntheticEnvironments().get(synthEcosystemIndex));//.initialize(addedAgents, Params.getSyntheticEnvironments().get(synthEcosystemIndex), this.overseer.getSimDateTime().toLocalDate());
-    
+    LocationListManagerInitializer.initialize(addedLocations, Params.getSyntheticEnvDescriptors().get(synthEcosystemIndex));
     
     for(GenericLocation location : addedLocations)
     {
@@ -658,6 +749,32 @@ public class Controller implements Comparable<Controller>, Callable<ControllerOu
     Controller.LOGGER.debug("threadCommQueue.size() = " + this.threadCommQueue.size());
   }
   
+  private void readAgentToLocationFiles(int synthEcosystemIndex)
+  {
+    final List<Id> addedAgentIds = new LinkedList<>();
+    final List<GenericAgent> addedAgents = new LinkedList<>();
+    
+    PopulationInitializer.initialize(addedAgents, Params.getSyntheticEnvDescriptors().get(synthEcosystemIndex), this.overseer.getSimDateTime().toLocalDate());
+    
+    for(GenericAgent agent : addedAgents)
+    {
+      this.addAgent(agent);
+      addedAgentIds.add(agent.getId());
+    }
+    
+    Controller.LOGGER.debug("addedAgents.size() = " + addedAgents.size());
+    Controller.LOGGER.debug("addedAgentIds.size() = " + addedAgentIds.size());
+    // Let the overseer know all of the agents we added by adding them to the queue
+    addedAgentIds.forEach(agentId -> {
+      ControllerInitOutMessage retMsg = (ControllerInitOutMessage)MessageFactory.getMessageInstance(MessageType.CNTRLLR_INIT_OUT, this.id);
+      retMsg.setInitOutType(ControllerInitOutType.AGENT_ADD);
+      retMsg.setAgentId(agentId);
+      this.threadCommQueue.add(retMsg);
+    });
+    
+    Controller.LOGGER.debug("threadCommQueue.size() = " + this.threadCommQueue.size());
+  }
+  
   /* (non-Javadoc)
    * @see java.util.concurrent.Callable#call()
    */
@@ -666,9 +783,11 @@ public class Controller implements Comparable<Controller>, Callable<ControllerOu
   {
     try
     {
-      this.initialize();
       Controller.LOGGER.debug(this.id.getIdString() + " PHASE[" + OverseerPhase.valueOf(this.phaser.getPhase()).toString() + "]. Waiting for others to advance ...");
+      this.initialize();
+      //Controller.LOGGER.debug(this.id.getIdString() + " PHASE[" + OverseerPhase.valueOf(this.phaser.getPhase()).toString() + "]. Waiting for others to advance ...");
       this.phaser.arriveAndAwaitAdvance();
+      
       Controller.LOGGER.debug(this.id.getIdString() + " PHASE[" + OverseerPhase.valueOf(this.phaser.getPhase()).toString() + "]. Waiting for others to advance ...");
       this.phaser.arriveAndAwaitAdvance();
       Controller.LOGGER.debug(this.id.getIdString() + " PHASE[" + OverseerPhase.valueOf(this.phaser.getPhase()).toString() + "]. Waiting for others to advance ...");
@@ -676,16 +795,13 @@ public class Controller implements Comparable<Controller>, Callable<ControllerOu
       this.normalize();
       Controller.LOGGER.debug(this.id.getIdString() + " PHASE[" + OverseerPhase.valueOf(this.phaser.getPhase()).toString() + "]. Waiting for others to advance ...");
       this.phaser.arriveAndAwaitAdvance();
+      
+      this.assignLocationsToAgents();
     }
-    catch(RuntimeException e)
+    catch(RuntimeException| EnumNotFoundException e)
     {
       this.phaser.arriveAndDeregister();
       throw new InterruptedException(e.getMessage());
-    }
-    catch(EnumNotFoundException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
     }
     
     return null;

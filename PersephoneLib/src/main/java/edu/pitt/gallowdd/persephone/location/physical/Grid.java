@@ -21,6 +21,7 @@ package edu.pitt.gallowdd.persephone.location.physical;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import edu.pitt.gallowdd.persephone.event.MixEvent;
 import edu.pitt.gallowdd.persephone.location.GenericLocation;
 import edu.pitt.gallowdd.persephone.location.LocationTypeEnum;
 import edu.pitt.gallowdd.persephone.util.Id;
@@ -191,6 +192,13 @@ public class Grid extends GenericLocation {
         .append("elevation", this.elevation)
         .append("patchSizeKilometer", this.patchSizeKilometer)
         .toString();
+  }
+
+  @Override
+  public void handleMixEvent(MixEvent mixEvent)
+  {
+    // TODO Auto-generated method stub
+    
   }
 
 }
