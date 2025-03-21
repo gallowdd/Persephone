@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  File: persephoneBaseParameters.xml
+  Description: Parameters that will only be modified by developers
+-->
+<b:persephone_base_parameters
+    xmlns:b="http://persephone.gallowdd.pitt.edu/xml/base"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://persephone.gallowdd.pitt.edu/xml/base schema/persephoneBaseParameters.xsd">
+  <b:agent name="Person">
+    <b:data_type>Person</b:data_type>
+    <b:filename>people.csv</b:filename>
+    <b:agent_attribute attr_name="initAge">
+      <b:data_type>int</b:data_type>
+      <b:source>
+        <b:initial_file>
+          <b:csv_field_name>age</b:csv_field_name>
+        </b:initial_file>
+      </b:source>
+    </b:agent_attribute>
+    <b:agent_attribute attr_name="sex">
+      <b:data_type>String</b:data_type>
+      <b:source>
+        <b:initial_file>
+          <b:csv_field_name>sex</b:csv_field_name>
+          <b:convert_to_enum_function>stringToSexEnum</b:convert_to_enum_function>
+        </b:initial_file>
+      </b:source>
+    </b:agent_attribute>
+    <b:agent_attribute attr_name="race">
+      <b:data_type>int</b:data_type>
+      <b:source>
+        <b:initial_file>
+          <b:csv_field_name>race_code</b:csv_field_name>
+          <b:convert_to_enum_function>intToRaceEnum</b:convert_to_enum_function>
+        </b:initial_file>
+      </b:source>
+    </b:agent_attribute>
+    <b:agent_attribute attr_name="relationship">
+      <b:data_type>int</b:data_type>
+      <b:source>
+        <b:initial_file>
+          <b:csv_field_name>relationship_code</b:csv_field_name>
+          <b:convert_to_enum_function>intToRelationshipEnum</b:convert_to_enum_function>
+        </b:initial_file>
+      </b:source>
+    </b:agent_attribute>
+  </b:agent>
+  <b:agent name="GroupQuartersPerson">
+    <b:data_type>Person</b:data_type>
+    <b:filename>gq_people.csv</b:filename>
+    <b:agent_attribute attr_name="initAge">
+      <b:data_type>int</b:data_type>
+      <b:source>
+        <b:initial_file>
+          <b:csv_field_name>age</b:csv_field_name>
+        </b:initial_file>
+      </b:source>
+    </b:agent_attribute>
+    <b:agent_attribute attr_name="sex">
+      <b:data_type>String</b:data_type>
+      <b:source>
+        <b:initial_file>
+          <b:csv_field_name>sex</b:csv_field_name>
+          <b:convert_to_enum_function>stringToSexEnum</b:convert_to_enum_function>
+        </b:initial_file>
+      </b:source>
+    </b:agent_attribute>
+    <b:agent_attribute attr_name="race">
+      <b:data_type>int</b:data_type>
+      <b:source>
+        <b:initial_file>
+          <b:csv_field_name>race_code</b:csv_field_name>
+          <b:convert_to_enum_function>intToRaceEnum</b:convert_to_enum_function>
+        </b:initial_file>
+      </b:source>
+    </b:agent_attribute>
+    <b:agent_attribute attr_name="relationship">
+      <b:data_type>int</b:data_type>
+      <b:source>
+        <b:initial_file>
+          <b:csv_field_name>relationship_code</b:csv_field_name>
+          <b:convert_to_enum_function>intToRelationshipEnum</b:convert_to_enum_function>
+        </b:initial_file>
+      </b:source>
+    </b:agent_attribute>
+  </b:agent>
+  
+  <b:location name="Household">
+    <b:data_type>Household</b:data_type>
+    <b:filename>households.csv</b:filename>
+    <b:latitude>
+      <b:csv_field_name>latitude</b:csv_field_name>
+    </b:latitude>
+    <b:longitude>
+      <b:csv_field_name>longitude</b:csv_field_name>
+    </b:longitude>
+    <b:elevation>
+      <b:csv_field_name>elevation</b:csv_field_name>
+    </b:elevation>
+    <b:location_attribute attr_name="stateFipsCode">
+      <b:data_type>String</b:data_type>
+      <b:source>
+        <b:initial_file>
+          <b:csv_field_name>state_fips_cd</b:csv_field_name>
+        </b:initial_file>
+      </b:source>
+    </b:location_attribute>
+    <b:location_attribute attr_name="countyFipsCode">
+      <b:data_type>String</b:data_type>
+      <b:source>
+        <b:initial_file>
+          <b:csv_field_name>county_fips_cd</b:csv_field_name>
+        </b:initial_file>
+      </b:source>
+    </b:location_attribute>
+    <b:location_attribute attr_name="tractFipsCode">
+      <b:data_type>String</b:data_type>
+      <b:source>
+        <b:initial_file>
+          <b:csv_field_name>tract_fips_cd</b:csv_field_name>
+        </b:initial_file>
+      </b:source>
+    </b:location_attribute>
+    <b:location_attribute attr_name="householdIncome">
+      <b:data_type>double</b:data_type>
+      <b:source>
+        <b:initial_file>
+          <b:csv_field_name>hh_income</b:csv_field_name>
+        </b:initial_file>
+      </b:source>
+    </b:location_attribute>
+  </b:location>
+  <b:location name="Workplace">
+    <b:data_type>Workplace</b:data_type>
+    <b:filename>workplaces.csv</b:filename>
+    <b:latitude>
+      <b:csv_field_name>latitude</b:csv_field_name>
+    </b:latitude>
+    <b:longitude>
+      <b:csv_field_name>longitude</b:csv_field_name>
+    </b:longitude>
+    <b:elevation>
+      <b:csv_field_name>elevation</b:csv_field_name>
+    </b:elevation>
+  </b:location>
+  <b:location name="School">
+    <b:data_type>School</b:data_type>
+    <b:filename>schools.csv</b:filename>
+    <b:latitude>
+      <b:csv_field_name>latitude</b:csv_field_name>
+    </b:latitude>
+    <b:longitude>
+      <b:csv_field_name>longitude</b:csv_field_name>
+    </b:longitude>
+    <b:elevation>
+      <b:csv_field_name>elevation</b:csv_field_name>
+    </b:elevation>
+    <b:location_attribute attr_name="stateFipsCode">
+      <b:data_type>String</b:data_type>
+      <b:source>
+        <b:initial_file>
+          <b:csv_field_name>state_fips_cd</b:csv_field_name>
+        </b:initial_file>
+      </b:source>
+    </b:location_attribute>
+    <b:location_attribute attr_name="countyFipsCode">
+      <b:data_type>String</b:data_type>
+      <b:source>
+        <b:initial_file>
+          <b:csv_field_name>county_fips_cd</b:csv_field_name>
+        </b:initial_file>
+      </b:source>
+    </b:location_attribute>
+  </b:location>
+</b:persephone_base_parameters>

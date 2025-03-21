@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!--
+    Copyright (c) 2019, Epistemix / University of Pittsburgh
+    All rights reserved.
+-->
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://persephone.epistemix.com/persephoneParameters"
+           xmlns="http://persephone.epistemix.com/persephoneParameters"
+           elementFormDefault="qualified">
+    
+    <xs:element name="persephone_parameters" type="persephoneParametersType"/>
+    
+    <xs:complexType name="persephoneParametersType" mixed="true">
+        <xs:sequence>
+            <xs:element name="simulation" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence> 
+                        <xs:element name="rng_seed" minOccurs="1" maxOccurs="1" type="xs:nonNegativeInteger"/>
+                        <xs:element name="home_directory" minOccurs="1" maxOccurs="1" type="xs:string"/>
+                        <xs:element name="start_date" minOccurs="1" maxOccurs="1" type="xs:date"/>
+                        <xs:element name="end_date" minOccurs="1" maxOccurs="1" type="xs:date"/>
+                        <xs:element name="population_directory" minOccurs="1" maxOccurs="1" type="xs:string"/>
+                        <xs:element name="population" minOccurs="1" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence> 
+                                    <xs:element name="identifier" minOccurs="1" maxOccurs="unbounded" type="xs:string"/>
+                                    <xs:element name="country" minOccurs="1" maxOccurs="1" type="xs:string"/>
+                                    <xs:element name="version" minOccurs="1" maxOccurs="1" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="message_queue" minOccurs="0" maxOccurs="1" type="messageQueuingType"/>
+            <xs:element name="model" minOccurs="1" maxOccurs="1" type="modelType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    
+    <xs:complexType name="modelType">
+        <xs:sequence> 
+            <xs:element name="condition" minOccurs="1" maxOccurs="unbounded" type="conditionType"/>
+            <xs:element name="place" minOccurs="1" maxOccurs="unbounded" type="placeType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="conditionType">
+        <xs:sequence>
+            <xs:element name="condition_name" minOccurs="1" maxOccurs="1" type="allCaps"/>
+            <xs:element name="transmission_mode" minOccurs="1" maxOccurs="1" type="transmissionModeType"/>
+            <xs:element name="transmissibility" minOccurs="1" maxOccurs="1" type="xs:decimal"/>
+            <xs:element name="state" minOccurs="1" maxOccurs="unbounded" type="stateType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="stateType">
+        <xs:sequence>
+            <xs:element name="state_name" minOccurs="1" maxOccurs="1" type="pascalCase"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="placeType">
+        <xs:sequence>
+            <xs:element name="place_name" minOccurs="1" maxOccurs="1" type="pascalCase"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="messageQueuingType">
+        <xs:sequence> 
+            <xs:element name="host" minOccurs="1" maxOccurs="1" type="xs:string"/>
+            <xs:element name="username" minOccurs="1" maxOccurs="1" type="xs:string"/>
+            <xs:element name="password" minOccurs="1" maxOccurs="1" type="xs:string"/>
+            <xs:element name="rpc_lstnr_queue_name" minOccurs="1" maxOccurs="1" type="xs:string"/>
+            <xs:element name="cntrllr_rpc_lstnr_queue_name" minOccurs="1" maxOccurs="1" type="xs:string"/>
+            <xs:element name="rpc_timeout" minOccurs="1" maxOccurs="1" type="xs:nonNegativeInteger"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    
+    <xs:simpleType name="allCaps">
+        <xs:annotation>
+            <xs:documentation>All capital letters with words separated by underscore.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:pattern value="[A-Z]+(_[A-Z]+)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="pascalCase">
+        <xs:annotation>
+            <xs:documentation>camelCase with a leading capital letter.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:pattern value="([A-Z][a-z0-9]*)+"/>
+        </xs:restriction>
+    </xs:simpleType>
+        
+    <xs:simpleType name = "transmissionModeType">
+        <xs:annotation>
+            <xs:documentation>How a condition is transmitted from one agent to another</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base = "xs:string">
+            <xs:enumeration value = "proximity"/>
+            <xs:enumeration value = "vector"/>
+            <xs:enumeration value = "network"/>
+            <xs:enumeration value = "none"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+</xs:schema>

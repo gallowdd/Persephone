@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panther_brace_properties xmlns="http://pantherbrace.cs2550.pitt.edu/pantherBRACEProperties"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://pantherbrace.cs2550.pitt.edu/pantherBRACEProperties pantherBRACEProperties.xsd">
+    <program_filenames>
+        <program_filename>/Users/ddg5/Desktop/Temp/LoadX.txt</program_filename>
+        <program_filename>/Users/ddg5/Desktop/Temp/LoadY.txt</program_filename>
+    </program_filenames>
+    <tables>
+        <table>X</table>
+        <table>Y</table>
+    </tables>
+    <buffer_pages>2</buffer_pages>
+    <random_number_seed>12345</random_number_seed>
+    <transaction_manager_type>RANDOM</transaction_manager_type>
+</panther_brace_properties>

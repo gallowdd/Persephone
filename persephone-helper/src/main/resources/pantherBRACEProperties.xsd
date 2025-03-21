@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://pantherbrace.cs2550.pitt.edu/pantherBRACEProperties"
+            xmlns="http://pantherbrace.cs2550.pitt.edu/pantherBRACEProperties"
+            elementFormDefault="qualified">
+    
+    <xsd:element name="panther_brace_properties" type="pantherBracePropertiesType"/>
+    
+    <xsd:complexType name="pantherBracePropertiesType" mixed="true">
+        <xsd:sequence>
+            <xsd:element name="program_filenames" minOccurs="1" maxOccurs="1" type="programFilenameType"/>
+            <xsd:element name="tables" minOccurs="1" maxOccurs="1" type="tableNameType"/>
+            <xsd:element name="buffer_pages" minOccurs="1" maxOccurs="1" type="xsd:integer"/>
+            <xsd:element name="random_number_seed" minOccurs="1" maxOccurs="1" type="xsd:integer"/>
+            <xsd:element name="transaction_manager_type" minOccurs="1" maxOccurs="1" type="transactionManagerReadType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+  
+    <xsd:complexType name="programFilenameType">   
+        <xsd:sequence> 
+            <xsd:element name="program_filename" minOccurs="1" maxOccurs="unbounded" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="tableNameType">   
+        <xsd:sequence> 
+            <xsd:element name="table" minOccurs="1" maxOccurs="unbounded" type="xsd:string"/>      
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:simpleType name="transactionManagerReadType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="WEIGHTED_ROUND_ROBIN"/>
+            <xsd:enumeration value="RANDOM"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

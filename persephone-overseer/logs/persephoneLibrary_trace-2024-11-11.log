@@ -1,0 +1,839 @@
+TRACE: 2024-11-11T08:59:50,597 [main] edu.pitt.gallowdd.persephone.util.Params - Default AGENTS:
+TRACE: 2024-11-11T08:59:50,604 [main] edu.pitt.gallowdd.persephone.util.Params - ... << Person
+TRACE: 2024-11-11T08:59:50,604 [main] edu.pitt.gallowdd.persephone.util.Params - ... << GroupQuartersPerson
+TRACE: 2024-11-11T08:59:50,604 [main] edu.pitt.gallowdd.persephone.util.Params - Default LOCATIONS:
+TRACE: 2024-11-11T08:59:50,604 [main] edu.pitt.gallowdd.persephone.util.Params - ... << Household
+TRACE: 2024-11-11T08:59:50,604 [main] edu.pitt.gallowdd.persephone.util.Params - ... << Workplace
+TRACE: 2024-11-11T08:59:50,604 [main] edu.pitt.gallowdd.persephone.util.Params - ... << School
+TRACE: 2024-11-11T08:59:50,797 [main] edu.pitt.gallowdd.persephone.util.Params - Default HOME_DIRECTORY << /Users/ddg5/Eclipse_J2EE_Projects/Persephone
+TRACE: 2024-11-11T08:59:50,797 [main] edu.pitt.gallowdd.persephone.util.Params - Default POPULATION_DIRECTORY << /Volumes/LaCie/Persephone_Synthetic_Environment
+TRACE: 2024-11-11T08:59:50,798 [main] edu.pitt.gallowdd.persephone.util.Params - Default SEED << 123456
+TRACE: 2024-11-11T08:59:50,798 [main] edu.pitt.gallowdd.persephone.util.Params - Default START_DATE << 2019-09-01
+TRACE: 2024-11-11T08:59:50,798 [main] edu.pitt.gallowdd.persephone.util.Params - Default END_DATE << 2019-09-30
+TRACE: 2024-11-11T08:59:50,799 [main] edu.pitt.gallowdd.persephone.util.Params - Default SYNTH_ENV_DESCRIPTORS:
+TRACE: 2024-11-11T08:59:50,799 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01001
+TRACE: 2024-11-11T08:59:50,799 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01003
+TRACE: 2024-11-11T08:59:50,800 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01005
+TRACE: 2024-11-11T08:59:50,800 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01007
+TRACE: 2024-11-11T08:59:50,800 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01009
+TRACE: 2024-11-11T08:59:50,800 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01011
+TRACE: 2024-11-11T08:59:50,800 [main] edu.pitt.gallowdd.persephone.util.Params - Default USER_DEFINED_AGENTS:
+TRACE: 2024-11-11T08:59:50,800 [main] edu.pitt.gallowdd.persephone.util.Params - ... << 
+TRACE: 2024-11-11T08:59:50,801 [main] edu.pitt.gallowdd.persephone.util.Params - Default USER_DEFINED_LOCATIONS:
+TRACE: 2024-11-11T08:59:50,801 [main] edu.pitt.gallowdd.persephone.util.Params - ... << 
+DEBUG: 2024-11-11T08:59:50,935 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]
+DEBUG: 2024-11-11T08:59:50,994 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]
+ERROR: 2024-11-11T08:59:51,015 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01005/syntheticEnvironmentInfo.xml; lineNumber: 7; columnNumber: 17; cvc-complex-type.2.4.a: Invalid content was found starting with element 'identifier'. One of '{"http://persephone.gallowdd.pitt.edu/xml/synthenv":identifier}' is expected.
+ERROR: 2024-11-11T08:59:51,021 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01005/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-complex-type.2.4.a: Invalid content was found starting with element 'identifier'. One of '{"http://persephone.gallowdd.pitt.edu/xml/synthenv":identifier}' is expected.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator$XSIErrorReporter.reportError(XMLSchemaValidator.java:512) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.reportSchemaError(XMLSchemaValidator.java:3596) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:1972) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2735) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T08:59:51,028 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0]
+ERROR: 2024-11-11T08:59:51,091 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01007/syntheticEnvironmentInfo.xml; lineNumber: 2; columnNumber: 81; cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+ERROR: 2024-11-11T08:59:51,091 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01007/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:2133) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl$NSContentDriver.scanRootElementHook(XMLNSDocumentScannerImpl.java:614) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:3088) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:866) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T08:59:51,092 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0]
+ERROR: 2024-11-11T08:59:51,114 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01009/syntheticEnvironmentInfo.xml; lineNumber: 2; columnNumber: 81; cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+ERROR: 2024-11-11T08:59:51,115 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01009/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:2133) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl$NSContentDriver.scanRootElementHook(XMLNSDocumentScannerImpl.java:614) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:3088) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:866) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T08:59:51,115 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0]
+ERROR: 2024-11-11T08:59:51,153 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01011/syntheticEnvironmentInfo.xml; lineNumber: 2; columnNumber: 81; cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+ERROR: 2024-11-11T08:59:51,153 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01011/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:2133) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl$NSContentDriver.scanRootElementHook(XMLNSDocumentScannerImpl.java:614) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:3088) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:866) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T08:59:51,154 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0]
+DEBUG: 2024-11-11T08:59:51,154 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - ---------------------------------------------- myEnvironmentList ----------------------------------------------
+DEBUG: 2024-11-11T08:59:51,155 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]
+DEBUG: 2024-11-11T08:59:51,155 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]
+DEBUG: 2024-11-11T08:59:51,155 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0]
+DEBUG: 2024-11-11T08:59:51,155 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0]
+DEBUG: 2024-11-11T08:59:51,155 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0]
+DEBUG: 2024-11-11T08:59:51,155 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0]
+DEBUG: 2024-11-11T08:59:51,155 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - --------------------------------------------------------------------------------------------------------------
+DEBUG: 2024-11-11T08:59:51,156 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - ------------------------------------------ Sorted: myEnvironmentList ------------------------------------------
+DEBUG: 2024-11-11T08:59:51,156 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0]
+DEBUG: 2024-11-11T08:59:51,156 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0]
+DEBUG: 2024-11-11T08:59:51,156 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0]
+DEBUG: 2024-11-11T08:59:51,156 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0]
+DEBUG: 2024-11-11T08:59:51,156 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]
+DEBUG: 2024-11-11T08:59:51,156 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]
+DEBUG: 2024-11-11T08:59:51,156 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - --------------------------------------------------------------------------------------------------------------
+DEBUG: 2024-11-11T08:59:51,157 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Array Out:
+DEBUG: 2024-11-11T08:59:51,157 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - [SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]]
+DEBUG: 2024-11-11T08:59:51,157 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - [SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]]
+DEBUG: 2024-11-11T08:59:51,218 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_2ec914e0-08a1-464b-b418-9fdab80d0218 PHASE[OverseerInitializeRequest]. Waiting for others to advance ...
+DEBUG: 2024-11-11T08:59:51,218 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_90486516-a7dc-4c7d-b410-d0a66a88163d PHASE[OverseerInitializeRequest]. Waiting for others to advance ...
+DEBUG: 2024-11-11T08:59:52,371 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 27325
+DEBUG: 2024-11-11T08:59:52,371 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 27325
+DEBUG: 2024-11-11T08:59:52,389 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 27325
+DEBUG: 2024-11-11T08:59:52,744 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 9820 households
+DEBUG: 2024-11-11T08:59:52,802 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 2027 workplaces
+DEBUG: 2024-11-11T08:59:52,828 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 16 schools
+DEBUG: 2024-11-11T08:59:52,966 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 11863
+DEBUG: 2024-11-11T08:59:52,966 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 11863
+DEBUG: 2024-11-11T08:59:52,970 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 39188
+DEBUG: 2024-11-11T08:59:54,711 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 22845
+DEBUG: 2024-11-11T08:59:54,711 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 22845
+DEBUG: 2024-11-11T08:59:54,717 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 62033
+DEBUG: 2024-11-11T08:59:54,798 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 7953 households
+DEBUG: 2024-11-11T08:59:54,817 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 3221 workplaces
+DEBUG: 2024-11-11T08:59:54,848 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 21 schools
+DEBUG: 2024-11-11T08:59:55,056 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 11195
+DEBUG: 2024-11-11T08:59:55,056 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 11195
+DEBUG: 2024-11-11T08:59:55,058 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 73228
+DEBUG: 2024-11-11T08:59:58,760 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 56898
+DEBUG: 2024-11-11T08:59:58,760 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 56898
+DEBUG: 2024-11-11T08:59:58,765 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 130126
+DEBUG: 2024-11-11T08:59:58,783 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 182069
+DEBUG: 2024-11-11T08:59:58,783 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 182069
+DEBUG: 2024-11-11T08:59:58,800 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 182069
+DEBUG: 2024-11-11T08:59:58,960 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 21578 households
+DEBUG: 2024-11-11T08:59:59,001 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 8187 workplaces
+DEBUG: 2024-11-11T08:59:59,056 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 41 schools
+DEBUG: 2024-11-11T08:59:59,457 [pool-2-thread-1] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 73180 households
+DEBUG: 2024-11-11T08:59:59,549 [pool-2-thread-1] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 16995 workplaces
+DEBUG: 2024-11-11T08:59:59,562 [pool-2-thread-1] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 45 schools
+DEBUG: 2024-11-11T08:59:59,842 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 29806
+DEBUG: 2024-11-11T08:59:59,842 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 29806
+DEBUG: 2024-11-11T08:59:59,847 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 159932
+DEBUG: 2024-11-11T09:00:00,493 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 10869
+DEBUG: 2024-11-11T09:00:00,493 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 10869
+DEBUG: 2024-11-11T09:00:00,500 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 170801
+DEBUG: 2024-11-11T09:00:00,539 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 3745 households
+DEBUG: 2024-11-11T09:00:00,572 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 1356 workplaces
+DEBUG: 2024-11-11T09:00:00,679 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 9 schools
+DEBUG: 2024-11-11T09:00:00,941 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 5110
+DEBUG: 2024-11-11T09:00:00,941 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 5110
+DEBUG: 2024-11-11T09:00:00,946 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 175911
+DEBUG: 2024-11-11T09:00:04,084 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 54534
+DEBUG: 2024-11-11T09:00:04,086 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 54534
+DEBUG: 2024-11-11T09:00:04,091 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 230445
+DEBUG: 2024-11-11T09:00:04,181 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 90220
+DEBUG: 2024-11-11T09:00:04,181 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 90220
+DEBUG: 2024-11-11T09:00:04,186 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 272289
+DEBUG: 2024-11-11T09:00:04,290 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 20221 households
+DEBUG: 2024-11-11T09:00:04,377 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 6251 workplaces
+DEBUG: 2024-11-11T09:00:04,383 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 24 schools
+DEBUG: 2024-11-11T09:00:05,583 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 26496
+DEBUG: 2024-11-11T09:00:05,583 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 26496
+DEBUG: 2024-11-11T09:00:05,590 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 256941
+DEBUG: 2024-11-11T09:00:05,591 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_2ec914e0-08a1-464b-b418-9fdab80d0218 PHASE[ControllerInitializationResponse]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:00:05,591 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_90486516-a7dc-4c7d-b410-d0a66a88163d PHASE[ControllerInitializationResponse]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:00:05,592 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_90486516-a7dc-4c7d-b410-d0a66a88163d PHASE[OverseerNormalizeRequest]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:00:05,592 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_2ec914e0-08a1-464b-b418-9fdab80d0218 PHASE[OverseerNormalizeRequest]. Waiting for others to advance ...
+INFO: 2024-11-11T09:00:06,014 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - Controller CNTRLR_2ec914e0-08a1-464b-b418-9fdab80d0218 removed 0 networks during Normalization Phase
+INFO: 2024-11-11T09:00:06,014 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - Controller CNTRLR_2ec914e0-08a1-464b-b418-9fdab80d0218 removed 218 locations during Normalization Phase
+DEBUG: 2024-11-11T09:00:06,014 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_2ec914e0-08a1-464b-b418-9fdab80d0218 PHASE[ControllerNormalizeResponse]. Waiting for others to advance ...
+INFO: 2024-11-11T09:00:06,015 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - Controller CNTRLR_90486516-a7dc-4c7d-b410-d0a66a88163d removed 0 networks during Normalization Phase
+INFO: 2024-11-11T09:00:06,015 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - Controller CNTRLR_90486516-a7dc-4c7d-b410-d0a66a88163d removed 1063 locations during Normalization Phase
+DEBUG: 2024-11-11T09:00:06,015 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_90486516-a7dc-4c7d-b410-d0a66a88163d PHASE[ControllerNormalizeResponse]. Waiting for others to advance ...
+TRACE: 2024-11-11T09:38:17,000 [main] edu.pitt.gallowdd.persephone.util.Params - Default AGENTS:
+TRACE: 2024-11-11T09:38:17,003 [main] edu.pitt.gallowdd.persephone.util.Params - ... << Person
+TRACE: 2024-11-11T09:38:17,003 [main] edu.pitt.gallowdd.persephone.util.Params - ... << GroupQuartersPerson
+TRACE: 2024-11-11T09:38:17,003 [main] edu.pitt.gallowdd.persephone.util.Params - Default LOCATIONS:
+TRACE: 2024-11-11T09:38:17,003 [main] edu.pitt.gallowdd.persephone.util.Params - ... << Household
+TRACE: 2024-11-11T09:38:17,003 [main] edu.pitt.gallowdd.persephone.util.Params - ... << Workplace
+TRACE: 2024-11-11T09:38:17,003 [main] edu.pitt.gallowdd.persephone.util.Params - ... << School
+TRACE: 2024-11-11T09:38:17,222 [main] edu.pitt.gallowdd.persephone.util.Params - Default HOME_DIRECTORY << /Users/ddg5/Eclipse_J2EE_Projects/Persephone
+TRACE: 2024-11-11T09:38:17,222 [main] edu.pitt.gallowdd.persephone.util.Params - Default POPULATION_DIRECTORY << /Volumes/LaCie/Persephone_Synthetic_Environment
+TRACE: 2024-11-11T09:38:17,222 [main] edu.pitt.gallowdd.persephone.util.Params - Default SEED << 123456
+TRACE: 2024-11-11T09:38:17,222 [main] edu.pitt.gallowdd.persephone.util.Params - Default START_DATE << 2019-09-01
+TRACE: 2024-11-11T09:38:17,222 [main] edu.pitt.gallowdd.persephone.util.Params - Default END_DATE << 2019-09-30
+TRACE: 2024-11-11T09:38:17,223 [main] edu.pitt.gallowdd.persephone.util.Params - Default SYNTH_ENV_DESCRIPTORS:
+TRACE: 2024-11-11T09:38:17,223 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01001
+TRACE: 2024-11-11T09:38:17,223 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01003
+TRACE: 2024-11-11T09:38:17,223 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01005
+TRACE: 2024-11-11T09:38:17,223 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01007
+TRACE: 2024-11-11T09:38:17,223 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01009
+TRACE: 2024-11-11T09:38:17,223 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01011
+TRACE: 2024-11-11T09:38:17,224 [main] edu.pitt.gallowdd.persephone.util.Params - Default USER_DEFINED_AGENTS:
+TRACE: 2024-11-11T09:38:17,224 [main] edu.pitt.gallowdd.persephone.util.Params - ... << 
+TRACE: 2024-11-11T09:38:17,224 [main] edu.pitt.gallowdd.persephone.util.Params - Default USER_DEFINED_LOCATIONS:
+TRACE: 2024-11-11T09:38:17,224 [main] edu.pitt.gallowdd.persephone.util.Params - ... << 
+DEBUG: 2024-11-11T09:38:17,347 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]
+DEBUG: 2024-11-11T09:38:17,406 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]
+ERROR: 2024-11-11T09:38:17,425 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01005/syntheticEnvironmentInfo.xml; lineNumber: 7; columnNumber: 17; cvc-complex-type.2.4.a: Invalid content was found starting with element 'identifier'. One of '{"http://persephone.gallowdd.pitt.edu/xml/synthenv":identifier}' is expected.
+ERROR: 2024-11-11T09:38:17,431 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01005/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-complex-type.2.4.a: Invalid content was found starting with element 'identifier'. One of '{"http://persephone.gallowdd.pitt.edu/xml/synthenv":identifier}' is expected.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator$XSIErrorReporter.reportError(XMLSchemaValidator.java:512) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.reportSchemaError(XMLSchemaValidator.java:3596) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:1972) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2735) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T09:38:17,439 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0]
+ERROR: 2024-11-11T09:38:17,476 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01007/syntheticEnvironmentInfo.xml; lineNumber: 2; columnNumber: 81; cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+ERROR: 2024-11-11T09:38:17,476 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01007/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:2133) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl$NSContentDriver.scanRootElementHook(XMLNSDocumentScannerImpl.java:614) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:3088) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:866) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T09:38:17,478 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0]
+ERROR: 2024-11-11T09:38:17,509 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01009/syntheticEnvironmentInfo.xml; lineNumber: 2; columnNumber: 81; cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+ERROR: 2024-11-11T09:38:17,509 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01009/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:2133) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl$NSContentDriver.scanRootElementHook(XMLNSDocumentScannerImpl.java:614) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:3088) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:866) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T09:38:17,510 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0]
+ERROR: 2024-11-11T09:38:17,547 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01011/syntheticEnvironmentInfo.xml; lineNumber: 2; columnNumber: 81; cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+ERROR: 2024-11-11T09:38:17,547 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01011/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:2133) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl$NSContentDriver.scanRootElementHook(XMLNSDocumentScannerImpl.java:614) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:3088) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:866) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T09:38:17,548 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0]
+DEBUG: 2024-11-11T09:38:17,548 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - ---------------------------------------------- myEnvironmentList ----------------------------------------------
+DEBUG: 2024-11-11T09:38:17,549 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]
+DEBUG: 2024-11-11T09:38:17,549 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]
+DEBUG: 2024-11-11T09:38:17,549 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0]
+DEBUG: 2024-11-11T09:38:17,549 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0]
+DEBUG: 2024-11-11T09:38:17,549 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0]
+DEBUG: 2024-11-11T09:38:17,549 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0]
+DEBUG: 2024-11-11T09:38:17,550 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - --------------------------------------------------------------------------------------------------------------
+DEBUG: 2024-11-11T09:38:17,550 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - ------------------------------------------ Sorted: myEnvironmentList ------------------------------------------
+DEBUG: 2024-11-11T09:38:17,550 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0]
+DEBUG: 2024-11-11T09:38:17,550 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0]
+DEBUG: 2024-11-11T09:38:17,550 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0]
+DEBUG: 2024-11-11T09:38:17,550 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0]
+DEBUG: 2024-11-11T09:38:17,551 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]
+DEBUG: 2024-11-11T09:38:17,551 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]
+DEBUG: 2024-11-11T09:38:17,551 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - --------------------------------------------------------------------------------------------------------------
+DEBUG: 2024-11-11T09:38:17,551 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Array Out:
+DEBUG: 2024-11-11T09:38:17,551 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - [SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]]
+DEBUG: 2024-11-11T09:38:17,551 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - [SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]]
+DEBUG: 2024-11-11T09:38:17,608 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_ee39ff07-0038-4e79-925a-15b76162db9d PHASE[OverseerInitializeRequest]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:38:17,608 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_40f42bdd-ef28-41c3-9332-f94e3e6fd325 PHASE[OverseerInitializeRequest]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:38:18,451 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 27325
+DEBUG: 2024-11-11T09:38:18,452 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 27325
+DEBUG: 2024-11-11T09:38:18,469 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 27325
+DEBUG: 2024-11-11T09:38:18,767 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 9820 households
+DEBUG: 2024-11-11T09:38:18,812 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 2027 workplaces
+DEBUG: 2024-11-11T09:38:18,846 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 16 schools
+DEBUG: 2024-11-11T09:38:18,944 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 11863
+DEBUG: 2024-11-11T09:38:18,944 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 11863
+DEBUG: 2024-11-11T09:38:18,948 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 39188
+DEBUG: 2024-11-11T09:38:21,433 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 22845
+DEBUG: 2024-11-11T09:38:21,433 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 22845
+DEBUG: 2024-11-11T09:38:21,437 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 62033
+DEBUG: 2024-11-11T09:38:21,531 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 7953 households
+DEBUG: 2024-11-11T09:38:21,548 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 3221 workplaces
+DEBUG: 2024-11-11T09:38:21,592 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 21 schools
+TRACE: 2024-11-11T09:39:59,255 [main] edu.pitt.gallowdd.persephone.util.Params - Default AGENTS:
+TRACE: 2024-11-11T09:39:59,258 [main] edu.pitt.gallowdd.persephone.util.Params - ... << Person
+TRACE: 2024-11-11T09:39:59,258 [main] edu.pitt.gallowdd.persephone.util.Params - ... << GroupQuartersPerson
+TRACE: 2024-11-11T09:39:59,258 [main] edu.pitt.gallowdd.persephone.util.Params - Default LOCATIONS:
+TRACE: 2024-11-11T09:39:59,258 [main] edu.pitt.gallowdd.persephone.util.Params - ... << Household
+TRACE: 2024-11-11T09:39:59,258 [main] edu.pitt.gallowdd.persephone.util.Params - ... << Workplace
+TRACE: 2024-11-11T09:39:59,258 [main] edu.pitt.gallowdd.persephone.util.Params - ... << School
+TRACE: 2024-11-11T09:39:59,311 [main] edu.pitt.gallowdd.persephone.util.Params - Default HOME_DIRECTORY << /Users/ddg5/Eclipse_J2EE_Projects/Persephone
+TRACE: 2024-11-11T09:39:59,311 [main] edu.pitt.gallowdd.persephone.util.Params - Default POPULATION_DIRECTORY << /Volumes/LaCie/Persephone_Synthetic_Environment
+TRACE: 2024-11-11T09:39:59,311 [main] edu.pitt.gallowdd.persephone.util.Params - Default SEED << 123456
+TRACE: 2024-11-11T09:39:59,312 [main] edu.pitt.gallowdd.persephone.util.Params - Default START_DATE << 2019-09-01
+TRACE: 2024-11-11T09:39:59,312 [main] edu.pitt.gallowdd.persephone.util.Params - Default END_DATE << 2019-09-30
+TRACE: 2024-11-11T09:39:59,312 [main] edu.pitt.gallowdd.persephone.util.Params - Default SYNTH_ENV_DESCRIPTORS:
+TRACE: 2024-11-11T09:39:59,312 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01001
+TRACE: 2024-11-11T09:39:59,312 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01003
+TRACE: 2024-11-11T09:39:59,312 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01005
+TRACE: 2024-11-11T09:39:59,312 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01007
+TRACE: 2024-11-11T09:39:59,313 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01009
+TRACE: 2024-11-11T09:39:59,313 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01011
+TRACE: 2024-11-11T09:39:59,313 [main] edu.pitt.gallowdd.persephone.util.Params - Default USER_DEFINED_AGENTS:
+TRACE: 2024-11-11T09:39:59,313 [main] edu.pitt.gallowdd.persephone.util.Params - ... << 
+TRACE: 2024-11-11T09:39:59,313 [main] edu.pitt.gallowdd.persephone.util.Params - Default USER_DEFINED_LOCATIONS:
+TRACE: 2024-11-11T09:39:59,314 [main] edu.pitt.gallowdd.persephone.util.Params - ... << 
+DEBUG: 2024-11-11T09:39:59,339 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]
+DEBUG: 2024-11-11T09:39:59,350 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]
+ERROR: 2024-11-11T09:39:59,362 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01005/syntheticEnvironmentInfo.xml; lineNumber: 7; columnNumber: 17; cvc-complex-type.2.4.a: Invalid content was found starting with element 'identifier'. One of '{"http://persephone.gallowdd.pitt.edu/xml/synthenv":identifier}' is expected.
+ERROR: 2024-11-11T09:39:59,363 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01005/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-complex-type.2.4.a: Invalid content was found starting with element 'identifier'. One of '{"http://persephone.gallowdd.pitt.edu/xml/synthenv":identifier}' is expected.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator$XSIErrorReporter.reportError(XMLSchemaValidator.java:512) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.reportSchemaError(XMLSchemaValidator.java:3596) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:1972) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2735) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T09:39:59,370 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0]
+ERROR: 2024-11-11T09:39:59,380 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01007/syntheticEnvironmentInfo.xml; lineNumber: 2; columnNumber: 81; cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+ERROR: 2024-11-11T09:39:59,380 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01007/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:2133) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl$NSContentDriver.scanRootElementHook(XMLNSDocumentScannerImpl.java:614) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:3088) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:866) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T09:39:59,381 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0]
+ERROR: 2024-11-11T09:39:59,388 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01009/syntheticEnvironmentInfo.xml; lineNumber: 2; columnNumber: 81; cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+ERROR: 2024-11-11T09:39:59,388 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01009/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:2133) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl$NSContentDriver.scanRootElementHook(XMLNSDocumentScannerImpl.java:614) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:3088) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:866) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T09:39:59,389 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0]
+ERROR: 2024-11-11T09:39:59,397 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01011/syntheticEnvironmentInfo.xml; lineNumber: 2; columnNumber: 81; cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+ERROR: 2024-11-11T09:39:59,397 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01011/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:2133) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl$NSContentDriver.scanRootElementHook(XMLNSDocumentScannerImpl.java:614) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:3088) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:866) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T09:39:59,398 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0]
+DEBUG: 2024-11-11T09:39:59,398 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - ---------------------------------------------- myEnvironmentList ----------------------------------------------
+DEBUG: 2024-11-11T09:39:59,398 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]
+DEBUG: 2024-11-11T09:39:59,398 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]
+DEBUG: 2024-11-11T09:39:59,398 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0]
+DEBUG: 2024-11-11T09:39:59,399 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0]
+DEBUG: 2024-11-11T09:39:59,399 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0]
+DEBUG: 2024-11-11T09:39:59,399 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0]
+DEBUG: 2024-11-11T09:39:59,399 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - --------------------------------------------------------------------------------------------------------------
+DEBUG: 2024-11-11T09:39:59,399 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - ------------------------------------------ Sorted: myEnvironmentList ------------------------------------------
+DEBUG: 2024-11-11T09:39:59,400 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0]
+DEBUG: 2024-11-11T09:39:59,400 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0]
+DEBUG: 2024-11-11T09:39:59,400 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0]
+DEBUG: 2024-11-11T09:39:59,400 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0]
+DEBUG: 2024-11-11T09:39:59,400 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]
+DEBUG: 2024-11-11T09:39:59,400 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]
+DEBUG: 2024-11-11T09:39:59,401 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - --------------------------------------------------------------------------------------------------------------
+DEBUG: 2024-11-11T09:39:59,401 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Array Out:
+DEBUG: 2024-11-11T09:39:59,401 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - [SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]]
+DEBUG: 2024-11-11T09:39:59,401 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - [SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]]
+DEBUG: 2024-11-11T09:39:59,410 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_8e232641-2fb5-4ac0-acf1-12e8eeddfddf PHASE[OverseerInitializeRequest]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:39:59,410 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_16a0ec20-abf5-4a7f-93b5-7778f61657f6 PHASE[OverseerInitializeRequest]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:40:00,019 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 27325
+DEBUG: 2024-11-11T09:40:00,020 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 27325
+DEBUG: 2024-11-11T09:40:00,030 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 27325
+DEBUG: 2024-11-11T09:40:00,210 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 9820 households
+DEBUG: 2024-11-11T09:40:00,226 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 2027 workplaces
+DEBUG: 2024-11-11T09:40:00,230 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 16 schools
+DEBUG: 2024-11-11T09:40:00,342 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 11863
+DEBUG: 2024-11-11T09:40:00,343 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 11863
+DEBUG: 2024-11-11T09:40:00,347 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 39188
+DEBUG: 2024-11-11T09:40:02,593 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 22845
+DEBUG: 2024-11-11T09:40:02,594 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 22845
+DEBUG: 2024-11-11T09:40:02,598 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 62033
+DEBUG: 2024-11-11T09:40:02,697 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 7953 households
+DEBUG: 2024-11-11T09:40:02,742 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 3221 workplaces
+DEBUG: 2024-11-11T09:40:02,770 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 21 schools
+DEBUG: 2024-11-11T09:40:02,966 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 11195
+DEBUG: 2024-11-11T09:40:02,966 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 11195
+DEBUG: 2024-11-11T09:40:02,969 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 73228
+DEBUG: 2024-11-11T09:40:05,763 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 182069
+DEBUG: 2024-11-11T09:40:05,763 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 182069
+DEBUG: 2024-11-11T09:40:05,767 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 56898
+DEBUG: 2024-11-11T09:40:05,767 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 56898
+DEBUG: 2024-11-11T09:40:05,778 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 130126
+DEBUG: 2024-11-11T09:40:05,783 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 182069
+DEBUG: 2024-11-11T09:40:05,987 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 21578 households
+DEBUG: 2024-11-11T09:40:06,072 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 8187 workplaces
+DEBUG: 2024-11-11T09:40:06,078 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 41 schools
+DEBUG: 2024-11-11T09:40:06,424 [pool-2-thread-1] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 73180 households
+DEBUG: 2024-11-11T09:40:06,554 [pool-2-thread-1] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 16995 workplaces
+DEBUG: 2024-11-11T09:40:06,561 [pool-2-thread-1] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 45 schools
+DEBUG: 2024-11-11T09:40:06,904 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 29806
+DEBUG: 2024-11-11T09:40:06,904 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 29806
+DEBUG: 2024-11-11T09:40:06,907 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 159932
+DEBUG: 2024-11-11T09:40:07,293 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 10869
+DEBUG: 2024-11-11T09:40:07,293 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 10869
+DEBUG: 2024-11-11T09:40:07,297 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 170801
+DEBUG: 2024-11-11T09:40:07,332 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 3745 households
+DEBUG: 2024-11-11T09:40:07,360 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 1356 workplaces
+DEBUG: 2024-11-11T09:40:07,402 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 9 schools
+DEBUG: 2024-11-11T09:40:07,610 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 5110
+DEBUG: 2024-11-11T09:40:07,610 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 5110
+DEBUG: 2024-11-11T09:40:07,613 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 175911
+DEBUG: 2024-11-11T09:40:10,066 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 54534
+DEBUG: 2024-11-11T09:40:10,066 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 54534
+DEBUG: 2024-11-11T09:40:10,073 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 230445
+DEBUG: 2024-11-11T09:40:10,233 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 90220
+DEBUG: 2024-11-11T09:40:10,233 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 90220
+DEBUG: 2024-11-11T09:40:10,242 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 272289
+DEBUG: 2024-11-11T09:40:10,370 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 20221 households
+DEBUG: 2024-11-11T09:40:10,449 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 6251 workplaces
+DEBUG: 2024-11-11T09:40:10,466 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 24 schools
+DEBUG: 2024-11-11T09:40:12,058 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 26496
+DEBUG: 2024-11-11T09:40:12,058 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 26496
+DEBUG: 2024-11-11T09:40:12,066 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 256941
+DEBUG: 2024-11-11T09:40:12,066 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_16a0ec20-abf5-4a7f-93b5-7778f61657f6 PHASE[ControllerInitializationResponse]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:40:12,066 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_8e232641-2fb5-4ac0-acf1-12e8eeddfddf PHASE[ControllerInitializationResponse]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:40:12,067 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_16a0ec20-abf5-4a7f-93b5-7778f61657f6 PHASE[OverseerNormalizeRequest]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:40:12,067 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_8e232641-2fb5-4ac0-acf1-12e8eeddfddf PHASE[OverseerNormalizeRequest]. Waiting for others to advance ...
+INFO: 2024-11-11T09:40:12,233 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - Controller CNTRLR_8e232641-2fb5-4ac0-acf1-12e8eeddfddf removed 0 networks during Normalization Phase
+INFO: 2024-11-11T09:40:12,234 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - Controller CNTRLR_16a0ec20-abf5-4a7f-93b5-7778f61657f6 removed 0 networks during Normalization Phase
+INFO: 2024-11-11T09:40:12,234 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - Controller CNTRLR_8e232641-2fb5-4ac0-acf1-12e8eeddfddf removed 218 locations during Normalization Phase
+INFO: 2024-11-11T09:40:12,234 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - Controller CNTRLR_16a0ec20-abf5-4a7f-93b5-7778f61657f6 removed 1063 locations during Normalization Phase
+DEBUG: 2024-11-11T09:40:12,234 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_8e232641-2fb5-4ac0-acf1-12e8eeddfddf PHASE[ControllerNormalizeResponse]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:40:12,234 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_16a0ec20-abf5-4a7f-93b5-7778f61657f6 PHASE[ControllerNormalizeResponse]. Waiting for others to advance ...
+TRACE: 2024-11-11T09:41:18,075 [main] edu.pitt.gallowdd.persephone.util.Params - Default AGENTS:
+TRACE: 2024-11-11T09:41:18,078 [main] edu.pitt.gallowdd.persephone.util.Params - ... << Person
+TRACE: 2024-11-11T09:41:18,078 [main] edu.pitt.gallowdd.persephone.util.Params - ... << GroupQuartersPerson
+TRACE: 2024-11-11T09:41:18,079 [main] edu.pitt.gallowdd.persephone.util.Params - Default LOCATIONS:
+TRACE: 2024-11-11T09:41:18,079 [main] edu.pitt.gallowdd.persephone.util.Params - ... << Household
+TRACE: 2024-11-11T09:41:18,079 [main] edu.pitt.gallowdd.persephone.util.Params - ... << Workplace
+TRACE: 2024-11-11T09:41:18,079 [main] edu.pitt.gallowdd.persephone.util.Params - ... << School
+TRACE: 2024-11-11T09:41:18,135 [main] edu.pitt.gallowdd.persephone.util.Params - Default HOME_DIRECTORY << /Users/ddg5/Eclipse_J2EE_Projects/Persephone
+TRACE: 2024-11-11T09:41:18,135 [main] edu.pitt.gallowdd.persephone.util.Params - Default POPULATION_DIRECTORY << /Volumes/LaCie/Persephone_Synthetic_Environment
+TRACE: 2024-11-11T09:41:18,135 [main] edu.pitt.gallowdd.persephone.util.Params - Default SEED << 123456
+TRACE: 2024-11-11T09:41:18,136 [main] edu.pitt.gallowdd.persephone.util.Params - Default START_DATE << 2019-09-01
+TRACE: 2024-11-11T09:41:18,136 [main] edu.pitt.gallowdd.persephone.util.Params - Default END_DATE << 2019-09-30
+TRACE: 2024-11-11T09:41:18,136 [main] edu.pitt.gallowdd.persephone.util.Params - Default SYNTH_ENV_DESCRIPTORS:
+TRACE: 2024-11-11T09:41:18,136 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01001
+TRACE: 2024-11-11T09:41:18,136 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01003
+TRACE: 2024-11-11T09:41:18,136 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01005
+TRACE: 2024-11-11T09:41:18,136 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01007
+TRACE: 2024-11-11T09:41:18,137 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01009
+TRACE: 2024-11-11T09:41:18,137 [main] edu.pitt.gallowdd.persephone.util.Params - ... << USA:PERSEPHONE_V_1_0:01011
+TRACE: 2024-11-11T09:41:18,137 [main] edu.pitt.gallowdd.persephone.util.Params - Default USER_DEFINED_AGENTS:
+TRACE: 2024-11-11T09:41:18,137 [main] edu.pitt.gallowdd.persephone.util.Params - ... << 
+TRACE: 2024-11-11T09:41:18,137 [main] edu.pitt.gallowdd.persephone.util.Params - Default USER_DEFINED_LOCATIONS:
+TRACE: 2024-11-11T09:41:18,138 [main] edu.pitt.gallowdd.persephone.util.Params - ... << 
+DEBUG: 2024-11-11T09:41:18,182 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]
+DEBUG: 2024-11-11T09:41:18,196 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]
+ERROR: 2024-11-11T09:41:18,215 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01005/syntheticEnvironmentInfo.xml; lineNumber: 7; columnNumber: 17; cvc-complex-type.2.4.a: Invalid content was found starting with element 'identifier'. One of '{"http://persephone.gallowdd.pitt.edu/xml/synthenv":identifier}' is expected.
+ERROR: 2024-11-11T09:41:18,217 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01005/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-complex-type.2.4.a: Invalid content was found starting with element 'identifier'. One of '{"http://persephone.gallowdd.pitt.edu/xml/synthenv":identifier}' is expected.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator$XSIErrorReporter.reportError(XMLSchemaValidator.java:512) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.reportSchemaError(XMLSchemaValidator.java:3596) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:1972) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2735) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T09:41:18,224 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0]
+ERROR: 2024-11-11T09:41:18,250 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01007/syntheticEnvironmentInfo.xml; lineNumber: 2; columnNumber: 81; cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+ERROR: 2024-11-11T09:41:18,251 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01007/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:2133) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl$NSContentDriver.scanRootElementHook(XMLNSDocumentScannerImpl.java:614) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:3088) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:866) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T09:41:18,252 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0]
+ERROR: 2024-11-11T09:41:18,266 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01009/syntheticEnvironmentInfo.xml; lineNumber: 2; columnNumber: 81; cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+ERROR: 2024-11-11T09:41:18,266 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01009/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:2133) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl$NSContentDriver.scanRootElementHook(XMLNSDocumentScannerImpl.java:614) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:3088) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:866) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T09:41:18,267 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0]
+ERROR: 2024-11-11T09:41:18,279 [main] edu.pitt.gallowdd.persephone.util.Utils - org.xml.sax.SAXParseException; systemId: file:/Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01011/syntheticEnvironmentInfo.xml; lineNumber: 2; columnNumber: 81; cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+ERROR: 2024-11-11T09:41:18,279 [main] edu.pitt.gallowdd.persephone.util.Utils - ERR_XML_VALIDATION: There was an error when trying to Validate XML File: /Volumes/LaCie/Persephone_Synthetic_Environment/country/USA/Persephone.v1.0/01011/syntheticEnvironmentInfo.xml, against XML Schema file: schema/persephoneSyntheticEnvironment.xsd
+org.xml.sax.SAXParseException: cvc-elt.1.a: Cannot find the declaration of element 'synthetic_environment'.
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:135) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:396) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:284) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:2133) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:830) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl$NSContentDriver.scanRootElementHook(XMLNSDocumentScannerImpl.java:614) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:3088) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:866) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.StreamValidatorHelper.validate(StreamValidatorHelper.java:176) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.validation.ValidatorImpl.validate(ValidatorImpl.java:115) ~[?:?]
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124) ~[?:?]
+	at edu.pitt.gallowdd.persephone.util.Utils.validateXmlFile(Utils.java:247) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.calculateApproximateMemoryRequirementsForSyntheticEnvironment(Overseer.java:557) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.initTaskSynthEnvArr(Overseer.java:233) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.<init>(Overseer.java:153) [main/:?]
+	at edu.pitt.gallowdd.persephone.overseer.Overseer.main(Overseer.java:441) [main/:?]
+DEBUG: 2024-11-11T09:41:18,280 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Added syntheticEnvironment: SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0]
+DEBUG: 2024-11-11T09:41:18,280 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - ---------------------------------------------- myEnvironmentList ----------------------------------------------
+DEBUG: 2024-11-11T09:41:18,281 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]
+DEBUG: 2024-11-11T09:41:18,281 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]
+DEBUG: 2024-11-11T09:41:18,281 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0]
+DEBUG: 2024-11-11T09:41:18,281 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0]
+DEBUG: 2024-11-11T09:41:18,281 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0]
+DEBUG: 2024-11-11T09:41:18,281 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0]
+DEBUG: 2024-11-11T09:41:18,281 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - --------------------------------------------------------------------------------------------------------------
+DEBUG: 2024-11-11T09:41:18,282 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - ------------------------------------------ Sorted: myEnvironmentList ------------------------------------------
+DEBUG: 2024-11-11T09:41:18,282 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0]
+DEBUG: 2024-11-11T09:41:18,282 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0]
+DEBUG: 2024-11-11T09:41:18,282 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0]
+DEBUG: 2024-11-11T09:41:18,282 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0]
+DEBUG: 2024-11-11T09:41:18,282 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]
+DEBUG: 2024-11-11T09:41:18,283 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]
+DEBUG: 2024-11-11T09:41:18,283 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - --------------------------------------------------------------------------------------------------------------
+DEBUG: 2024-11-11T09:41:18,283 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - Array Out:
+DEBUG: 2024-11-11T09:41:18,283 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - [SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01003, estMemRequirement=1359988509]]
+DEBUG: 2024-11-11T09:41:18,283 [main] edu.pitt.gallowdd.persephone.overseer.Overseer - [SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01005, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01007, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01009, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01011, estMemRequirement=0], SynthEnvRec[country=USA, version=Persephone.v1.0, identifier=01001, estMemRequirement=401652456]]
+DEBUG: 2024-11-11T09:41:18,291 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_2cffdc5b-ec97-480a-95f6-73b15ad3c34a PHASE[OverseerInitializeRequest]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:41:18,291 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_fcc3f332-e026-42c4-aee0-30d93f86c719 PHASE[OverseerInitializeRequest]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:41:18,860 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 27325
+DEBUG: 2024-11-11T09:41:18,860 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 27325
+DEBUG: 2024-11-11T09:41:18,873 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 27325
+DEBUG: 2024-11-11T09:41:19,070 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 9820 households
+DEBUG: 2024-11-11T09:41:19,090 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 2027 workplaces
+DEBUG: 2024-11-11T09:41:19,092 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 16 schools
+DEBUG: 2024-11-11T09:41:19,173 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 11863
+DEBUG: 2024-11-11T09:41:19,173 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 11863
+DEBUG: 2024-11-11T09:41:19,178 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 39188
+DEBUG: 2024-11-11T09:41:21,835 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 22845
+DEBUG: 2024-11-11T09:41:21,835 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 22845
+DEBUG: 2024-11-11T09:41:21,839 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 62033
+DEBUG: 2024-11-11T09:41:21,914 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 7953 households
+DEBUG: 2024-11-11T09:41:21,933 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 3221 workplaces
+DEBUG: 2024-11-11T09:41:21,951 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 21 schools
+DEBUG: 2024-11-11T09:41:22,142 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 11195
+DEBUG: 2024-11-11T09:41:22,142 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 11195
+DEBUG: 2024-11-11T09:41:22,144 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 73228
+DEBUG: 2024-11-11T09:41:24,678 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 56898
+DEBUG: 2024-11-11T09:41:24,678 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 56898
+DEBUG: 2024-11-11T09:41:24,683 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 130126
+DEBUG: 2024-11-11T09:41:24,833 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 21578 households
+DEBUG: 2024-11-11T09:41:24,865 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 8187 workplaces
+DEBUG: 2024-11-11T09:41:24,866 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 41 schools
+DEBUG: 2024-11-11T09:41:25,074 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 182069
+DEBUG: 2024-11-11T09:41:25,074 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 182069
+DEBUG: 2024-11-11T09:41:25,099 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 182069
+DEBUG: 2024-11-11T09:41:25,587 [pool-2-thread-1] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 73180 households
+DEBUG: 2024-11-11T09:41:25,636 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 29806
+DEBUG: 2024-11-11T09:41:25,636 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 29806
+DEBUG: 2024-11-11T09:41:25,640 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 159932
+DEBUG: 2024-11-11T09:41:25,664 [pool-2-thread-1] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 16995 workplaces
+DEBUG: 2024-11-11T09:41:25,665 [pool-2-thread-1] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 45 schools
+DEBUG: 2024-11-11T09:41:26,004 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 10869
+DEBUG: 2024-11-11T09:41:26,004 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 10869
+DEBUG: 2024-11-11T09:41:26,008 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 170801
+DEBUG: 2024-11-11T09:41:26,035 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 3745 households
+DEBUG: 2024-11-11T09:41:26,040 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 1356 workplaces
+DEBUG: 2024-11-11T09:41:26,041 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 9 schools
+DEBUG: 2024-11-11T09:41:26,147 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 5110
+DEBUG: 2024-11-11T09:41:26,147 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 5110
+DEBUG: 2024-11-11T09:41:26,150 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 175911
+DEBUG: 2024-11-11T09:41:28,603 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgents.size() = 54534
+DEBUG: 2024-11-11T09:41:28,604 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedAgentIds.size() = 54534
+DEBUG: 2024-11-11T09:41:28,609 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 230445
+DEBUG: 2024-11-11T09:41:28,755 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 20221 households
+DEBUG: 2024-11-11T09:41:28,781 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 6251 workplaces
+DEBUG: 2024-11-11T09:41:28,783 [pool-2-thread-2] edu.pitt.gallowdd.persephone.location.initializer.LocationListManagerInitializer - Added 24 schools
+DEBUG: 2024-11-11T09:41:29,714 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 90220
+DEBUG: 2024-11-11T09:41:29,714 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 90220
+DEBUG: 2024-11-11T09:41:29,722 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 272289
+DEBUG: 2024-11-11T09:41:29,910 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocations.size() = 26496
+DEBUG: 2024-11-11T09:41:29,910 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - addedLocationIds.size() = 26496
+DEBUG: 2024-11-11T09:41:29,915 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - threadCommQueue.size() = 256941
+DEBUG: 2024-11-11T09:41:29,916 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_fcc3f332-e026-42c4-aee0-30d93f86c719 PHASE[ControllerInitializationResponse]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:41:29,916 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_2cffdc5b-ec97-480a-95f6-73b15ad3c34a PHASE[ControllerInitializationResponse]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:41:29,916 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_2cffdc5b-ec97-480a-95f6-73b15ad3c34a PHASE[OverseerNormalizeRequest]. Waiting for others to advance ...
+DEBUG: 2024-11-11T09:41:29,916 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_fcc3f332-e026-42c4-aee0-30d93f86c719 PHASE[OverseerNormalizeRequest]. Waiting for others to advance ...
+INFO: 2024-11-11T09:41:30,042 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - Controller CNTRLR_fcc3f332-e026-42c4-aee0-30d93f86c719 removed 0 networks during Normalization Phase
+INFO: 2024-11-11T09:41:30,042 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - Controller CNTRLR_fcc3f332-e026-42c4-aee0-30d93f86c719 removed 218 locations during Normalization Phase
+INFO: 2024-11-11T09:41:30,042 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - Controller CNTRLR_2cffdc5b-ec97-480a-95f6-73b15ad3c34a removed 0 networks during Normalization Phase
+DEBUG: 2024-11-11T09:41:30,042 [pool-2-thread-1] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_fcc3f332-e026-42c4-aee0-30d93f86c719 PHASE[ControllerNormalizeResponse]. Waiting for others to advance ...
+INFO: 2024-11-11T09:41:30,042 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - Controller CNTRLR_2cffdc5b-ec97-480a-95f6-73b15ad3c34a removed 1063 locations during Normalization Phase
+DEBUG: 2024-11-11T09:41:30,043 [pool-2-thread-2] edu.pitt.gallowdd.persephone.controller.Controller - CNTRLR_2cffdc5b-ec97-480a-95f6-73b15ad3c34a PHASE[ControllerNormalizeResponse]. Waiting for others to advance ...

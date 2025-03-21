@@ -1,0 +1,27 @@
+CREATE TABLE household (
+  hh_id integer PRIMARY KEY,
+  hh_id_persephone text NOT NULL UNIQUE
+);
+
+CREATE TABLE group_quarter (
+  gq_id integer PRIMARY KEY,
+  gq_id_persephone text NOT NULL UNIQUE
+);
+
+
+CREATE TABLE school (
+  school_id integer PRIMARY KEY,
+  school_id_persephone text NOT NULL UNIQUE
+);
+
+
+CREATE TABLE workplace (
+  workplace_id integer PRIMARY KEY,
+  workplace_id_persephone text NOT NULL UNIQUE
+);
+
+
+CREATE TABLE hospital (
+  hospital_id integer PRIMARY KEY,
+  hospital_id_persephone text NOT NULL UNIQUE
+);

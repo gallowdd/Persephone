@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://persephone.gallowdd.pitt.edu/parameters"
+    xmlns="http://persephone.gallowdd.pitt.edu/parameters"
+    elementFormDefault="qualified">
+    
+  <xsd:include schemaLocation="persephoneHeader.xsd"/>
+  
+  <xsd:element name="persephone_default_parameters">
+    <xsd:complexType mixed="false">
+      <xsd:sequence>
+        <xsd:element name="agent" minOccurs="2" maxOccurs="2" type="agentXmlType" />
+        <xsd:element name="location" minOccurs="1" maxOccurs="unbounded" type="locationXmlType" />
+        <xsd:element name="network" minOccurs="0" maxOccurs="unbounded" type="networkXmlType" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:complexType name="agentXmlType">
+    <xsd:sequence>
+      <xsd:element name="java_class" minOccurs="1" maxOccurs="1" type="agentJavaClassXmlEnum" />
+      <xsd:element name="agent_attribute" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="data_type" minOccurs="1" maxOccurs="1" type="dataTypeXmlEnum" />
+            <xsd:element name="source" minOccurs="0" maxOccurs="1">
+              <!-- The way to assign attributes to agents that are in the initial population files -->
+              <xsd:complexType>
+                <xsd:choice>
+                  <!-- The initialization file for agents has a field with this information -->
+                  <xsd:element name="initial_file" minOccurs="1" maxOccurs="1">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="csv_field_name" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                        <xsd:element name="convert_to_enum_function" minOccurs="0" maxOccurs="1" type="xsd:string" />
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                  <!-- The initialization file for agents does NOT have a field with this information, 
+                       so there will be a separate file with agent ID and this field -->
+                  <xsd:element name="link_file" minOccurs="1" maxOccurs="1">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="filename" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                        <xsd:element name="csv_field_name" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                        <xsd:element name="convert_to_enum_function" minOccurs="0" maxOccurs="1" type="xsd:string" />
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:choice>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+          <xsd:attribute name="attr_name" type="xsd:string" use="required"/>
+        </xsd:complexType>
+      </xsd:element>
+<!--       <xsd:element name="agent_assignment" minOccurs="0" maxOccurs="unbounded" type="agentAssignmentType" /> -->
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="locationXmlType">
+    <xsd:sequence>
+      <xsd:element name="java_class" minOccurs="1" maxOccurs="1" type="locationJavaClassXmlEnum" />
+      <xsd:element name="latitude" minOccurs="1" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="csv_field_name" minOccurs="1" maxOccurs="1" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="longitude" minOccurs="1" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="csv_field_name" minOccurs="1" maxOccurs="1" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="elevation" minOccurs="0" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="csv_field_name" minOccurs="1" maxOccurs="1" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="location_attribute" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="data_type" minOccurs="1" maxOccurs="1" type="dataTypeXmlEnum" />
+            <xsd:element name="source" minOccurs="0" maxOccurs="1">
+              <xsd:complexType>
+                <xsd:choice>
+                  <!-- The initialization file for locations has a field with this information -->
+                  <xsd:element name="initial_file" minOccurs="1" maxOccurs="1">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="csv_field_name" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                        <xsd:element name="convert_to_enum_function" minOccurs="0" maxOccurs="1" type="xsd:string" />
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                  <!-- The initialization file for location does NOT have a field with this information, 
+                       so there will be a separate file with location ID and this field -->
+                  <xsd:element name="link_file" minOccurs="1" maxOccurs="1">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="filename" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                        <xsd:element name="csv_field_name" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                        <xsd:element name="convert_to_enum_function" minOccurs="0" maxOccurs="1" type="xsd:string" />
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:choice>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+          <xsd:attribute name="attr_name" type="xsd:string" use="required"/>
+        </xsd:complexType>
+      </xsd:element>
+<!--       <xsd:element name="agent_assignment" minOccurs="0" maxOccurs="unbounded" type="agentAssignmentType" /> -->
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  
+    <xsd:complexType name="networkXmlType">
+    <xsd:sequence>
+      <xsd:element name="java_class" minOccurs="1" maxOccurs="1" type="locationJavaClassXmlEnum" />
+      <xsd:element name="network_attribute" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="data_type" minOccurs="1" maxOccurs="1" type="dataTypeXmlEnum" />
+            <xsd:element name="source" minOccurs="0" maxOccurs="1">
+              <xsd:complexType>
+                <xsd:choice>
+                  <!-- The initialization file for locations has a field with this information -->
+                  <xsd:element name="initial_file_link" minOccurs="1" maxOccurs="1">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="init_file_csv_field_name" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                        <xsd:element name="convert_to_enum_function" minOccurs="0" maxOccurs="1" type="xsd:string" />
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                  <!-- The initialization file for location does NOT have a field with this information, 
+                       so there will be a separate file with location ID and this field -->
+                  <xsd:element name="link" minOccurs="1" maxOccurs="1">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="link_file_name" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                        <xsd:element name="link_file_csv_field_name" minOccurs="1" maxOccurs="1" type="xsd:string" />
+                        <xsd:element name="convert_to_enum_function" minOccurs="0" maxOccurs="1" type="xsd:string" />
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:choice>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+          <xsd:attribute name="attr_name" type="xsd:string" use="required"/>
+        </xsd:complexType>
+      </xsd:element>
+<!--       <xsd:element name="agent_assignment" minOccurs="0" maxOccurs="unbounded" type="agentAssignmentType" /> -->
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://persephone.gallowdd.pitt.edu/synthenvinfo"
+    xmlns="http://persephone.gallowdd.pitt.edu/synthenvinfo" 
+    elementFormDefault="qualified">
+  
+  <xsd:element name="synthetic_environment">
+    <xsd:complexType mixed="false">
+      <xsd:sequence>
+        <xsd:element name="identifier" minOccurs="1" maxOccurs="1" type="xsd:string" />
+        <xsd:element name="country" minOccurs="1" maxOccurs="1" type="countryCodeXmlEnum" />
+        <xsd:element name="version" minOccurs="1" maxOccurs="1" type="popVersionXmlEnum" />
+        <xsd:element name="agent" minOccurs="1" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="agent_type" minOccurs="1" maxOccurs="1" type="agentXmlEnum" />
+              <xsd:element name="filename" minOccurs="1" maxOccurs="1" type="xsd:string" />
+              <xsd:element name="entry_count" minOccurs="1" maxOccurs="1" type="xsd:integer" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="location" minOccurs="1" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="location_type" minOccurs="1" maxOccurs="1" type="locationXmlEnum" />
+              <xsd:element name="filename" minOccurs="1" maxOccurs="1" type="xsd:string" />
+              <xsd:element name="entry_count" minOccurs="1" maxOccurs="1" type="xsd:integer" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:simpleType name="countryCodeXmlEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="USA" />
+      <xsd:enumeration value="other" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="popVersionXmlEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Persephone.v1.0" />
+      <xsd:enumeration value="other" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="agentXmlEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="person" />
+      <xsd:enumeration value="other" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="locationXmlEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="household" />
+      <xsd:enumeration value="workplace" />
+      <xsd:enumeration value="school" />
+      <xsd:enumeration value="nursing_facility" />
+      <xsd:enumeration value="college_dorm" />
+      <xsd:enumeration value="military_barracks" />
+      <xsd:enumeration value="prison" />
+      <xsd:enumeration value="hospital" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+</xsd:schema>

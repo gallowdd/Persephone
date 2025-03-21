@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error" name="persephone">
+    <Properties>
+        <Property name="log_path">logs</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console_log" target="SYSTEM_OUT">
+            <PatternLayout pattern="%level: %d{ISO8601} [%t] %c{10} - %msg%n" />
+        </Console>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%m%n"/>
+        </Console>
+        <RollingFile name="trace_log" fileName="${log_path}/persephoneHelper_trace.log"
+            filePattern="${log_path}/persephoneHelper_trace-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%level: %d{ISO8601} [%t] %c{10} - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="250 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="4"/>
+        </RollingFile>
+        <RollingFile name="debug_log" fileName="${log_path}/persephoneHelper_debug.log"
+            filePattern="${log_path}/persephoneHelper_debug-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%level: %d{ISO8601} [%t] %c{10} - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="250 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="4"/>
+        </RollingFile>        
+        <RollingFile name="info_log" fileName="${log_path}/persephoneHelper_info.log"
+            filePattern="${log_path}/persephoneHelper_info-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%level: %d{ISO8601} [%t] %c{10} - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="250 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="4"/>
+        </RollingFile>        
+        <RollingFile name="error_log" fileName="${log_path}/persephoneHelper_error.log"
+            filePattern="${log_path}/persephoneHelper_error-%d{yyyy-MM-dd}.log">
+            <!-- <PatternLayout pattern="%level: %d{ISO8601} [%t] %c{10} %L - %msg%n" /> -->
+            <PatternLayout pattern="%level: %d{ISO8601} [%t] %c{10} - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="250 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="4"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="edu.pitt.publichealth.persephone.helper.util" level="debug" additivity="false">
+            <AppenderRef ref="trace_log" level="trace" />
+            <AppenderRef ref="debug_log" level="debug" />
+            <AppenderRef ref="info_log" level="info" />
+            <AppenderRef ref="error_log" level="error" />
+            <AppenderRef ref="console_log" level="trace" />
+        </Logger>
+        <Root level="debug">
+            <AppenderRef ref="error_log" level="error" />
+            <AppenderRef ref="console_log" level="debug" />
+        </Root>
+    </Loggers>
+</Configuration>

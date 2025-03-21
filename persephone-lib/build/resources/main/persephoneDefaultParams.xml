@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persephone_default_parameters xmlns="http://persephone.gallowdd.pitt.edu/parameters"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://persephone.gallowdd.pitt.edu/parameters schema/persephoneDefaultParameters.xsd">
+    <agent name="people">
+        <java_class>Person</java_class>
+        <agent_attribute attr_name="initAge">
+            <data_type>int</data_type>
+            <source>
+                <initial_file>
+                    <csv_field_name>age</csv_field_name>
+                </initial_file>
+            </source>
+        </agent_attribute>
+        <agent_attribute attr_name="sex">
+            <data_type>String</data_type>
+            <source>
+                <initial_file>
+                    <csv_field_name>sex</csv_field_name>
+                    <convert_to_enum_function>stringToSexEnum</convert_to_enum_function>
+                </initial_file>
+            </source>
+        </agent_attribute>
+        <agent_attribute attr_name="race">
+            <data_type>int</data_type>
+            <source>
+                <initial_file>
+                    <csv_field_name>race_code</csv_field_name>
+                    <convert_to_enum_function>intToRaceEnum</convert_to_enum_function>
+                </initial_file>
+            </source>
+        </agent_attribute>
+        <agent_attribute attr_name="relationship">
+            <data_type>int</data_type>
+            <source>
+                <initial_file>
+                    <csv_field_name>relationship_code</csv_field_name>
+                    <convert_to_enum_function>intToRelationshipEnum</convert_to_enum_function>
+                </initial_file>
+            </source>
+        </agent_attribute>
+    </agent>
+    <agent name="gq_people">
+        <java_class>Person</java_class>
+        <agent_attribute attr_name="initAge">
+            <data_type>int</data_type>
+            <source>
+                <initial_file>
+                    <csv_field_name>age</csv_field_name>
+                </initial_file>
+            </source>
+        </agent_attribute>
+        <agent_attribute attr_name="sex">
+            <data_type>String</data_type>
+            <source>
+                <initial_file>
+                    <csv_field_name>sex</csv_field_name>
+                    <convert_to_enum_function>stringToSexEnum</convert_to_enum_function>
+                </initial_file>
+            </source>
+        </agent_attribute>
+        <agent_attribute attr_name="race">
+            <data_type>int</data_type>
+            <source>
+                <initial_file>
+                    <csv_field_name>race_code</csv_field_name>
+                    <convert_to_enum_function>intToRaceEnum</convert_to_enum_function>
+                </initial_file>
+            </source>
+        </agent_attribute>
+        <agent_attribute attr_name="relationship">
+            <data_type>int</data_type>
+            <source>
+                <initial_file>
+                    <csv_field_name>relationship_code</csv_field_name>
+                    <convert_to_enum_function>intToRelationshipEnum</convert_to_enum_function>
+                </initial_file>
+            </source>
+        </agent_attribute>
+    </agent>
+    <location name="households">
+        <java_class>Household</java_class>
+        <latitude>
+            <csv_field_name>latitude</csv_field_name>
+        </latitude>
+        <longitude>
+            <csv_field_name>longitude</csv_field_name>
+        </longitude>
+        <elevation>
+            <csv_field_name>elevation</csv_field_name>
+        </elevation>
+        <location_attribute attr_name="stateFipsCode">
+            <data_type>String</data_type>
+            <source>
+                <initial_file>
+                    <csv_field_name>state_fips_cd</csv_field_name>
+                </initial_file>
+            </source>
+        </location_attribute>
+        <location_attribute attr_name="countyFipsCode">
+            <data_type>String</data_type>
+            <source>
+                <initial_file>
+                    <csv_field_name>county_fips_cd</csv_field_name>
+                </initial_file>
+            </source>
+        </location_attribute>
+        <location_attribute attr_name="tractFipsCode">
+            <data_type>String</data_type>
+            <source>
+                <initial_file>
+                    <csv_field_name>tract_fips_cd</csv_field_name>
+                </initial_file>
+            </source>
+        </location_attribute>
+        <location_attribute attr_name="householdIncome">
+            <data_type>double</data_type>
+            <source>
+                <initial_file>
+                    <csv_field_name>hh_income</csv_field_name>
+                </initial_file>
+            </source>
+        </location_attribute>
+    </location>
+    <location name="schools">
+        <java_class>School</java_class>
+        <latitude>
+            <csv_field_name>latitude</csv_field_name>
+        </latitude>
+        <longitude>
+            <csv_field_name>longitude</csv_field_name>
+        </longitude>
+        <elevation>
+            <csv_field_name>elevation</csv_field_name>
+        </elevation>
+        <location_attribute attr_name="stateFipsCode">
+            <data_type>String</data_type>
+            <source>
+                <initial_file>
+                    <csv_field_name>state_fips_cd</csv_field_name>
+                </initial_file>
+            </source>
+        </location_attribute>
+        <location_attribute attr_name="countyFipsCode">
+            <data_type>String</data_type>
+            <source>
+                <initial_file>
+                    <csv_field_name>county_fips_cd</csv_field_name>
+                </initial_file>
+            </source>
+        </location_attribute>
+    </location>
+</persephone_default_parameters>

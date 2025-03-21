@@ -1,0 +1,44 @@
+# Set Kafka Home directory
+#----------------------------------------------------
+export KAFKA_HOME=/Users/ddg5/KafkaReactiveStreamsExample/kafka_2.13-3.8.0
+
+# Generate a Cluster UUID
+#----------------------------------------------------
+export KAFKA_CLUSTER_ID="$($KAFKA_HOME/bin/kafka-storage.sh random-uuid)"
+
+
+# Format Log Directories
+#----------------------------------------------------
+$KAFKA_HOME/bin/kafka-storage.sh format -t $KAFKA_CLUSTER_ID -c $KAFKA_HOME/config/kraft/server.properties
+
+# Start the Kafka Server
+#----------------------------------------------------
+$KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/kraft/server.properties
+
+# Create a Kafka topic:
+#----------------------------------------------------
+$KAFKA_HOME/bin/kafka-topics.sh --create --replication-factor 1 --partitions 2 --topic input-topic --bootstrap-server localhost:9092
+
+# Check that Kafka topic was created successfully:
+#----------------------------------------------------
+$KAFKA_HOME/bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe
+
+# Produce some messages for that topic:
+#----------------------------------------------------
+$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic input-topic --property "parse.key=true" --property "key.separator=:"
+
+# Enter some text in the console:
+#----------------------------------------------------
+key1:My Name is David
+key2:No My Name is David
+key3:My Name is David also
+key4:No way man My Name is David also
+
+$KAFKA_HOME/bin/kafka-delete-records.sh --bootstrap-server localhost:9092 --offset-json-file {"partitions":[{"topic":"demo-topic","partition": 0,"offset":1}],"version":1}
+
+$KAFKA_HOME/bin/kafka-topics.sh --bootstrap-server localhost:9092 \
+--topic wordcount-live-test-KSTREAM-AGGREGATE-STATE-STORE-0000000003-changelog \
+--delete
+
+
+
